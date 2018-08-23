@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rss version="0.91">
+  <channel>
+    <title>Changes report</title>
+    <link>http://jakarta.apache.org/bcel/</link>
+    <description>Changes report</description>
+    <language>en-us</language>
+    <copyright>Copyright 2004 The Apache Software Foundation</copyright>
+    <item>
+      <title>57 change(s) for version 5.2</title>
+      <link>http://jakarta.apache.org/bcel//changes-report.html</link>
+      <description>
+        <table border="1">
+          <tr>
+            <th style="width:50px">Type</th>
+            <th>Changes</th>
+            <th style="width:70px">By</th>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>Deprecated: public final org.apache.bcel.classfile.LocalVariable getLocalVariable(int)</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>Deprecated: public java.lang.String getClassName(org.apache.bcel.generic.ConstantPoolGen)</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>Deprecated: public org.apache.bcel.generic.ObjectType getClassType(org.apache.bcel.generic.ConstantPoolGen)</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>Deprecated: public boolean referencesClass()</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>Deprecated: public boolean referencesInterface()</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>Deprecated: public org.apache.bcel.util.ClassVector implements java.io.Serializable</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Examples with enum breaks Gump (JDK1.5) Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32664">32664</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Truncated "class" string in returned class name Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32901">32901</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Simple Javadoc cleanup Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32980">32980</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>InnerClass doesn't implement Serializable Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=34449">34449</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Unable to generate method that returns an array of integers Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=35991">35991</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>A bug in LocalVariableGen Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=36110">36110</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>JasminVisitor is outdated Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=37648">37648</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>BCEL depends on AWT Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=37666">37666</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>BCEL cannot be used as java.system.class.loader Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=38377">38377</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>nullpointer exception in InstructionHandle Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=38834">38834</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Typo in javadocs Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=12568">12568</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>ConstantPoolGen.lookupClass(String) finds LAST entry rath... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=18031">18031</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Size of LDC_W's operand can be incorrect Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=18323">18323</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>InstructionList.copy() fails with Select instruction. Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=18731">18731</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>annoying print statement in org.apache.bcel.classfile.Sig... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=19014">19014</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>JavaClass.getAllInterfaces() can throw NullPointerExcepti... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=19068">19068</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Repository ignores classes that have been added to it Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=19122">19122</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>ANEWARRAY does not implement StackConsumer Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=19352">19352</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Repository.instanceOf() can throw NullPointerException Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=19476">19476</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>StackMapType.printIndex fails if index is -1 Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=19784">19784</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>ReturnaddressType.equals() fails with NullPointerException Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24274">24274</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Verification failure when nested finally blocks Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24315">24315</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>PUTFIELD error msg wrong Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24350">24350</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Suggestion to solve the Problem with generic.Instruction ... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=24766">24766</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Incorrect verification of class files Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=26049">26049</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>OutOfRange exception in Pass2Verifier.validJavaIdentifier Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=26087">26087</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Code attribute set for native (and abstract?) methods. Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=26179">26179</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>InstructionList.move is broken when target == il.getEnd() Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=26532">26532</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>bad iinc behavior with large local variable index Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=26533">26533</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>StructuralVerifier can't find protected fields of ... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=27855">27855</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>BCEL does not compile with JDK 1.5.0-beta-b32c Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=28329">28329</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Corrupted instruction list created on valid class file Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=29275">29275</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>LDC_W emits output with only one parameter byte Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=29903">29903</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Build problems against jdk1.5 Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=31604">31604</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>ClassPath.getClassPath() does not handle multiple java.ex... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=31630">31630</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Public modifier for OperandStack.size() Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=27646">27646</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Version information missing from MANIFEST.MF file. Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=17753">17753</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Wrong word in manual: use 'factorial', not 'faculty' Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=33822">33822</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>A security issue with public mutable static fields in BECL Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32205">32205</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Unnecessary string object allocation in ConstantPoolGen Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=33513">33513</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>ClassCastException on justice Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=34418">34418</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>XSLT transforms broken in Turkish Locale. Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=38787">38787</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Branch target offset too large for short Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=35405">35405</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>"Illegal Opcode Detected" exception thrown in "new Method... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=33235">33235</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>Source downloads are broken Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=35610">35610</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>fix</td>
+            <td>LineNumberTable toString method uses jdk 1.4 StringBuffer... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=38424">38424</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>LocalVariableTable.getLocalVariable isn't good en... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32077">32077</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>Verifer does not report the signature of methods not found Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=20465">20465</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>Allow to get the InFrame of the ControlFlowGraph Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=27854">27854</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>Add support for new Jdk5.0 access flags Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=33302">33302</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+          <tr>
+            <td>add</td>
+            <td>Wrap JavaClass repository class (map values) with... Fixes
+              <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32945">32945</a>.</td>
+            <td>
+              <a href="http://jakarta.apache.org/bcel//team-list.html#tcurdt">tcurdt</a>
+            </td>
+          </tr>
+        </table>
+      </description>
+    </item>
+  </channel>
+</rss>

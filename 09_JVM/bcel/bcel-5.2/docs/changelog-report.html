@@ -1,0 +1,1025 @@
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  
+      
+  
+
+      
+      
+      
+      
+      
+      
+        
+         
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+  
+  
+
+  
+  
+
+   
+   
+
+   
+   
+
+  
+  
+  
+
+
+
+    
+	
+	
+
+    
+    
+
+    
+    
+      
+      
+    
+      
+	
+	
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+    <html>
+      <head>
+        
+        
+          <title>
+            BCEL - 
+          Changelog Report
+        
+          </title>
+        
+        
+        
+        
+        
+
+        
+          <style type="text/css">
+             @import url("http://jakarta.apache.org/commons/style/tigris.css");
+             @import url("http://jakarta.apache.org/commons/style/maven.css");
+             @import url("http://jakarta.apache.org/commons/style/project.css");
+           </style>
+          <link rel="stylesheet" href="http://jakarta.apache.org/commons/style/print.css" type="text/css" media="print"></link>
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
+
+
+       
+        
+        
+        
+      </head>
+
+      <body class="composite">
+
+        <div id="banner">
+          <table border="0" width="100%" cellpadding="8" cellspacing="0">
+            <tr>
+              
+              <td>
+                
+                
+                  
+                  
+                  
+                    
+                  
+                  
+                  
+                  
+                  
+                  <a href="http://www.apache.org">
+                    <img border="0" name="organization-logo" alt="Apache Software Foundation" src="http://jakarta.apache.org/images/jakarta-logo.gif" align="left"></img>
+                  </a>
+                
+              </td>
+
+              
+              <td>
+                <div id="login" align="right">
+                  
+                  
+                    
+                    
+                    
+                      
+                    
+
+                    <a href="http://jakarta.apache.org/bcel/">
+                      <img border="0" alt="jakarta-bcel" src="./images/bcel-logo.gif" align="right"></img>
+                    </a>
+                  
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+<script type="text/javascript">
+<!--
+  var myWidth = 0, myHeight = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    //Non-IE
+    myWidth = window.innerWidth;
+    myHeight = window.innerHeight;
+  } else if( document.documentElement &&
+      ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+    //IE 6+ in 'standards compliant mode'
+    myWidth = document.documentElement.clientWidth;
+    myHeight = document.documentElement.clientHeight;
+  } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+    //IE 4 compatible
+    myWidth = document.body.clientWidth;
+    myHeight = document.body.clientHeight;
+  }
+  // window.alert( 'Width = ' + myWidth );
+  if (myWidth < 850) {
+    document['organization-logo'].src='http://jakarta.apache.org/images/original-jakarta-logo.gif';
+  }
+// -->
+</script>
+
+        <div id="breadcrumbs">
+          <table border="0" width="100%" cellpadding="4" cellspacing="0">
+            <tr>
+              
+                
+                <td>Last published: Jun 3, 2006
+                  | Doc for 5.2
+                </td>
+              
+              <td>
+                <div align="right">
+                  
+                  
+                  
+                  
+                    
+                  
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <table border="0" width="100%" cellpadding="8" cellspacing="0"> 
+          <tr valign="top">
+            <td width="20%" id="leftcol">
+              <div id="navcolumn">
+                
+
+				
+                
+    <div>
+      <strong>BCEL</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="index.html">Front Page</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="news.html">News and Status</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="http://jakarta.apache.org/site/downloads/downloads_bcel.cgi" class="externalLink" title="External Link">Downloads</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+    <div>
+      <strong>Documentation</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="manual.html">Manual</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="faq.html">FAQ</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+    <div>
+      <strong>Get Involved</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="projects.html">Projects</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+				
+    <div>
+      <strong>Project Documentation</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="index.html">About jakarta-bcel</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		
+		
+          
+		
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="project-info.html">Project Info</a>
+      	
+      </small>
+	  
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		
+          
+		
+		
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="maven-reports.html">Project Reports</a>
+      	
+      </small>
+	  
+        
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="license.html">Project License</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      		<b><a href="changelog-report.html">Change Log</a></b>
+      	
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="changes-report.html">Changes</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="developer-activity-report.html">Developer Activity</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="apidocs/index.html">JavaDocs</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="javadoc.html">JavaDoc Report</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="javadoc-warnings-report.html">JavaDoc Warnings Report</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="xref/index.html">Source Xref</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="pmd-report.html">PMD Report</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="http://jakarta.apache.org/site/management.html" class="externalLink" title="External Link">Development Process</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+                
+
+                
+                
+
+                
+                
+                
+                
+                	<div style="margin-top: 20px; width: 100%; text-align: center;">
+                		<a href="http://maven.apache.org/" title="Built by Maven"><img style="border: 1px solid black" alt="Built by Maven" src="./images/logos/maven-feather.png"></img></a>
+                	</div>
+                
+              
+                
+              </div>
+            </td>
+            <td rowspan="2">
+              <div id="bodycol">
+                
+                <div class="app">
+                  
+                  
+    <div class="h3">
+      
+      
+        <h3>
+          <a name="Changelog Report">Changelog Report</a>
+        </h3>
+      
+      <p>Timeframe: 30 days, Total Commits: 5 Total Number of Files Changed: 48</p>
+    
+    <table border="1" width="100%" cellspacing="2" cellpadding="3">
+      <thead>
+          
+    
+      
+      
+        
+      
+    
+
+    
+    <tr class="a"><th>Date</th><th>Author</th><th>File/Message</th></tr>
+  
+        </thead><tbody>
+          
+    
+      
+        
+      
+      
+    
+
+    
+    <tr class="b"><td>2006-06-03 00:38:35</td><td>Torsten Curdt</td><td>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/KEYS">/jakarta/bcel/branches/BCEL_5_2/KEYS</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/KEYS?rev=411172&amp;content-type=text/vnd.viewcvs-markup">v 411172</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/README.html">/jakarta/bcel/branches/BCEL_5_2/README.html</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/README.html?rev=411172&amp;content-type=text/vnd.viewcvs-markup">v 411172</a>
+              </p>files for the dist area</td></tr>
+  
+          
+    
+      
+      
+        
+      
+    
+
+    
+    <tr class="a"><td>2006-06-01 01:12:58</td><td>Torsten Curdt</td><td>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/xdocs/changes.xml">/jakarta/bcel/branches/BCEL_5_2/xdocs/changes.xml</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/xdocs/changes.xml?rev=410559&amp;content-type=text/vnd.viewcvs-markup">v 410559</a>
+              </p>changes</td></tr>
+  
+          
+    
+      
+        
+      
+      
+    
+
+    
+    <tr class="b"><td>2006-06-01 00:25:31</td><td>Torsten Curdt</td><td>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/project.properties">/jakarta/bcel/branches/BCEL_5_2/project.properties</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/project.properties?rev=410538&amp;content-type=text/vnd.viewcvs-markup">v 410538</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/project.xml">/jakarta/bcel/branches/BCEL_5_2/project.xml</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/project.xml?rev=410538&amp;content-type=text/vnd.viewcvs-markup">v 410538</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/xdocs/index.xml">/jakarta/bcel/branches/BCEL_5_2/xdocs/index.xml</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/xdocs/index.xml?rev=410538&amp;content-type=text/vnd.viewcvs-markup">v 410538</a>
+              </p>release fixes</td></tr>
+  
+          
+    
+      
+      
+        
+      
+    
+
+    
+    <tr class="a"><td>2006-05-31 23:46:58</td><td>Torsten Curdt</td><td>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/xdocs/news.xml">/jakarta/bcel/branches/BCEL_5_2/xdocs/news.xml</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/xdocs/news.xml?rev=410525&amp;content-type=text/vnd.viewcvs-markup">v 410525</a>
+              </p>aim for a release</td></tr>
+  
+          
+    
+      
+        
+      
+      
+    
+
+    
+    <tr class="b"><td>2006-05-29 22:12:19</td><td>Torsten Curdt</td><td>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/HelloWorldBuilder.java">/jakarta/bcel/branches/BCEL_5_2/examples/HelloWorldBuilder.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/HelloWorldBuilder.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/JasminVisitor.java">/jakarta/bcel/branches/BCEL_5_2/examples/JasminVisitor.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/JasminVisitor.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASCII_CharStream.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASCII_CharStream.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASCII_CharStream.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTExpr.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTExpr.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTExpr.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFactor.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFactor.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFactor.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFunAppl.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFunAppl.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFunAppl.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFunDecl.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFunDecl.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTFunDecl.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTIdent.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTIdent.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTIdent.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTIfExpr.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTIfExpr.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTIfExpr.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTInteger.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTInteger.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTInteger.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTLetExpr.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTLetExpr.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTLetExpr.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTProgram.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTProgram.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTProgram.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTTerm.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTTerm.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ASTTerm.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/EnvEntry.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/EnvEntry.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/EnvEntry.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Environment.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Environment.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Environment.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Function.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Function.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Function.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/JJTMiniParserState.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/JJTMiniParserState.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/JJTMiniParserState.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniC.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniC.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniC.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParser.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParser.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParser.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserConstants.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserConstants.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserConstants.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserTokenManager.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserTokenManager.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserTokenManager.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserTreeConstants.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserTreeConstants.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/MiniParserTreeConstants.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Node.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Node.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Node.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ParseException.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ParseException.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/ParseException.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/SimpleNode.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/SimpleNode.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/SimpleNode.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Token.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Token.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Token.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/TokenMgrError.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/TokenMgrError.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/TokenMgrError.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Variable.java">/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Variable.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Mini/Variable.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Package.java">/jakarta/bcel/branches/BCEL_5_2/examples/Package.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Package.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Peephole.java">/jakarta/bcel/branches/BCEL_5_2/examples/Peephole.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/Peephole.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/ProxyCreator.java">/jakarta/bcel/branches/BCEL_5_2/examples/ProxyCreator.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/ProxyCreator.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/TransitiveHull.java">/jakarta/bcel/branches/BCEL_5_2/examples/TransitiveHull.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/TransitiveHull.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/helloify.java">/jakarta/bcel/branches/BCEL_5_2/examples/helloify.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/helloify.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/id.java">/jakarta/bcel/branches/BCEL_5_2/examples/id.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/id.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/listclass.java">/jakarta/bcel/branches/BCEL_5_2/examples/listclass.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/listclass.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/maxstack.java">/jakarta/bcel/branches/BCEL_5_2/examples/maxstack.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/maxstack.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/patchclass.java">/jakarta/bcel/branches/BCEL_5_2/examples/patchclass.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/examples/patchclass.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/Constants.java">/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/Constants.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/Constants.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/generic/FieldGenOrMethodGen.java">/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/generic/FieldGenOrMethodGen.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/generic/FieldGenOrMethodGen.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/util/BCELComparator.java">/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/util/BCELComparator.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/util/BCELComparator.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>
+              <p>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/util/BCELFactory.java">/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/util/BCELFactory.java</a>
+                <a href="http://svn.apache.org/repos/asf/jakarta/bcel/trunk/jakarta/bcel/branches/BCEL_5_2/src/java/org/apache/bcel/util/BCELFactory.java?rev=410087&amp;content-type=text/vnd.viewcvs-markup">v 410087</a>
+              </p>fixed license headers</td></tr>
+  
+        </tbody>
+    </table>
+  
+    </div>
+  
+                  
+                  
+                  
+                  
+                  
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="footer">
+          <table border="0" style="width:100%" cellpadding="4" cellspacing="0">
+            
+            <tr>
+              <td>
+                
+                  
+                    
+                    
+                      © 2002-2006, Apache Software Foundation
+                    
+                  
+                  
+                
+
+                
+              </td>
+              
+            </tr>
+          </table>
+        </div>
+      </body>
+    </html>
+  

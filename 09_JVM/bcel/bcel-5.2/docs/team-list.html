@@ -1,0 +1,858 @@
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  
+      
+  
+
+      
+      
+      
+      
+      
+      
+        
+         
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      
+
+      
+
+  
+  
+
+  
+  
+
+   
+   
+
+   
+   
+
+  
+  
+  
+
+
+
+    
+	
+	
+
+    
+    
+
+    
+    
+      
+      
+    
+      
+	
+	
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+    <html>
+      <head>
+        
+        
+          <title>
+            BCEL - 
+          
+            
+        
+        
+          </title>
+        
+        
+        
+        
+        
+
+        
+          <style type="text/css">
+             @import url("http://jakarta.apache.org/commons/style/tigris.css");
+             @import url("http://jakarta.apache.org/commons/style/maven.css");
+             @import url("http://jakarta.apache.org/commons/style/project.css");
+           </style>
+          <link rel="stylesheet" href="http://jakarta.apache.org/commons/style/print.css" type="text/css" media="print"></link>
+        
+
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></meta>
+
+
+       
+        
+        <script type="text/javascript">
+            function offsetDate(id, offset) {
+              var now = new Date() ;
+              var nowTime = now.getTime() ;
+              var localOffset = now.getTimezoneOffset() ;
+              var developerTime = nowTime + (offset * 60 * 60 * 1000) + (localOffset * 60 * 1000) ;
+              var developerDate = new Date(developerTime) ;
+
+              document.getElementById(id).innerHTML = developerDate;
+            }
+
+            function init() {
+                                                                                                                                                                                                                                                                                                                                                                                                                                            }
+        </script>
+        
+      </head>
+
+      <body class="composite" onload="init();">
+
+        <div id="banner">
+          <table border="0" width="100%" cellpadding="8" cellspacing="0">
+            <tr>
+              
+              <td>
+                
+                
+                  
+                  
+                  
+                    
+                  
+                  
+                  
+                  
+                  
+                  <a href="http://www.apache.org">
+                    <img border="0" name="organization-logo" alt="Apache Software Foundation" src="http://jakarta.apache.org/images/jakarta-logo.gif" align="left"></img>
+                  </a>
+                
+              </td>
+
+              
+              <td>
+                <div id="login" align="right">
+                  
+                  
+                    
+                    
+                    
+                      
+                    
+
+                    <a href="http://jakarta.apache.org/bcel/">
+                      <img border="0" alt="jakarta-bcel" src="./images/bcel-logo.gif" align="right"></img>
+                    </a>
+                  
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+<script type="text/javascript">
+<!--
+  var myWidth = 0, myHeight = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    //Non-IE
+    myWidth = window.innerWidth;
+    myHeight = window.innerHeight;
+  } else if( document.documentElement &&
+      ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+    //IE 6+ in 'standards compliant mode'
+    myWidth = document.documentElement.clientWidth;
+    myHeight = document.documentElement.clientHeight;
+  } else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) {
+    //IE 4 compatible
+    myWidth = document.body.clientWidth;
+    myHeight = document.body.clientHeight;
+  }
+  // window.alert( 'Width = ' + myWidth );
+  if (myWidth < 850) {
+    document['organization-logo'].src='http://jakarta.apache.org/images/original-jakarta-logo.gif';
+  }
+// -->
+</script>
+
+        <div id="breadcrumbs">
+          <table border="0" width="100%" cellpadding="4" cellspacing="0">
+            <tr>
+              
+                
+                <td>Last published: Jun 3, 2006
+                  | Doc for 5.2
+                </td>
+              
+              <td>
+                <div align="right">
+                  
+                  
+                  
+                  
+                    
+                  
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <table border="0" width="100%" cellpadding="8" cellspacing="0"> 
+          <tr valign="top">
+            <td width="20%" id="leftcol">
+              <div id="navcolumn">
+                
+
+				
+                
+    <div>
+      <strong>BCEL</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="index.html">Front Page</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="news.html">News and Status</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="http://jakarta.apache.org/site/downloads/downloads_bcel.cgi" class="externalLink" title="External Link">Downloads</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+    <div>
+      <strong>Documentation</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="manual.html">Manual</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="faq.html">FAQ</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+    <div>
+      <strong>Get Involved</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="projects.html">Projects</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+				
+    <div>
+      <strong>Project Documentation</strong>
+      
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="index.html">About jakarta-bcel</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		
+          
+		
+		
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="project-info.html">Project Info</a>
+      	
+      </small>
+	  
+        
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="mail-lists.html">Mailing Lists</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      		<b><a href="team-list.html">Project Team</a></b>
+      	
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="dependencies.html">Dependencies</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="cvs-usage.html">Source Repository</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="issue-tracking.html">Issue Tracking</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+      
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		
+		
+          
+		
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="maven-reports.html">Project Reports</a>
+      	
+      </small>
+	  
+    </div>
+  
+    
+    
+    
+    
+	
+	
+	
+	
+	
+		   
+	
+    <div>
+      <small>
+      	
+      	
+      		<a href="http://jakarta.apache.org/site/management.html" class="externalLink" title="External Link">Development Process</a>
+      	
+      </small>
+	  
+        
+      
+    </div>
+  
+    </div>
+  
+                
+
+                
+                
+
+                
+                
+                
+                
+                	<div style="margin-top: 20px; width: 100%; text-align: center;">
+                		<a href="http://maven.apache.org/" title="Built by Maven"><img style="border: 1px solid black" alt="Built by Maven" src="./images/logos/maven-feather.png"></img></a>
+                	</div>
+                
+              
+                
+              </div>
+            </td>
+            <td rowspan="2">
+              <div id="bodycol">
+                
+                <div class="app">
+                  
+                  
+    <div class="h3">
+      
+      
+        <h3>
+          <a name="The Team">The Team</a>
+        </h3>
+      
+      <p>
+                A successful project requires many people to play many roles. Some members write code or documentation, while others are valuable as testers, submitting patches and suggestions.
+            </p><p>
+                The team is comprised of Members and Contributors. Members have direct access to the source of a project and actively evolve the code-base. Contributors improve the project through submission of patches and suggestions to the Members. The number of Contributors to the project is unbounded. Get involved today. All contributions to the project are greatly appreciated.
+            </p>
+    <div class="h4">
+      
+      
+        <h4>
+          <a name="Members">Members</a>
+        </h4>
+      
+      <p>
+                    The following is a list of developers with commit privileges that have directly contributed to the project in one way or another.  
+                </p>
+    
+    <table border="1" width="100%" cellspacing="2" cellpadding="3">
+      <thead>
+                        
+    
+      
+        
+      
+      
+    
+
+    
+    <tr class="b"><th>
+                                Name
+                            </th><th>
+                                Id
+                            </th><th>
+                                Email
+                            </th><th>
+                                Organization
+                            </th><th>
+                                Roles
+                            </th><th>
+                                TZ Offset
+                            </th><th>
+                                Time
+                            </th></tr>
+  
+                    </thead><tbody>
+                                                
+    
+      
+      
+        
+      
+    
+
+    
+    <tr class="a"><td>Markus Dahm</td><td>
+                                <a name="mdahm"></a>
+                                mdahm
+                            </td><td>
+                                <a href="mailto:m.dahm at gmx.de">
+                                    m.dahm at gmx.de
+                                </a>
+                            </td><td>it-frameworksolutions</td><td>
+                                                            </td><td></td><td>
+                                <span id="developer-mdahm">
+                                    Unknown
+                                </span>
+                            </td></tr>
+  
+                                                
+    
+      
+        
+      
+      
+    
+
+    
+    <tr class="b"><td>Jason van Zyl</td><td>
+                                <a name="jvanzyl"></a>
+                                jvanzyl
+                            </td><td>
+                                <a href="mailto:jason at zenplex.com">
+                                    jason at zenplex.com
+                                </a>
+                            </td><td>Zenplex</td><td>
+                                                            </td><td></td><td>
+                                <span id="developer-jvanzyl">
+                                    Unknown
+                                </span>
+                            </td></tr>
+  
+                                                
+    
+      
+      
+        
+      
+    
+
+    
+    <tr class="a"><td>Enver Haase</td><td>
+                                <a name="ehaase"></a>
+                                ehaase
+                            </td><td>
+                                <a href="mailto:enver at convergence.de">
+                                    enver at convergence.de
+                                </a>
+                            </td><td>convergence</td><td>
+                                                            </td><td></td><td>
+                                <span id="developer-ehaase">
+                                    Unknown
+                                </span>
+                            </td></tr>
+  
+                                                
+    
+      
+        
+      
+      
+    
+
+    
+    <tr class="b"><td>Dave Brosius</td><td>
+                                <a name="dbrosius"></a>
+                                dbrosius
+                            </td><td>
+                                <a href="mailto:dbrosius at mebigfatguy.com">
+                                    dbrosius at mebigfatguy.com
+                                </a>
+                            </td><td></td><td>
+                                                            </td><td></td><td>
+                                <span id="developer-dbrosius">
+                                    Unknown
+                                </span>
+                            </td></tr>
+  
+                                                
+    
+      
+      
+        
+      
+    
+
+    
+    <tr class="a"><td>Torsten Curdt</td><td>
+                                <a name="tcurdt"></a>
+                                tcurdt
+                            </td><td>
+                                <a href="mailto:tcurdt at apache.org">
+                                    tcurdt at apache.org
+                                </a>
+                            </td><td></td><td>
+                                                            </td><td></td><td>
+                                <span id="developer-tcurdt">
+                                    Unknown
+                                </span>
+                            </td></tr>
+  
+                                            </tbody>
+    </table>
+  
+    </div>
+  
+    <div class="h4">
+      
+      
+        <h4>
+          <a name="Contributors">Contributors</a>
+        </h4>
+      
+      <p>
+                    There are no contributors listed for this project. Please check back again later.
+                </p>
+    </div>
+  
+    </div>
+  
+                  
+                  
+                  
+                  
+                  
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="footer">
+          <table border="0" style="width:100%" cellpadding="4" cellspacing="0">
+            
+            <tr>
+              <td>
+                
+                  
+                    
+                    
+                      © 2002-2006, Apache Software Foundation
+                    
+                  
+                  
+                
+
+                
+              </td>
+              
+            </tr>
+          </table>
+        </div>
+      </body>
+    </html>
+  
