@@ -6,5 +6,3 @@ Then type: python run.py test ParserSuite
 Then type: python run.py test ASTGenSuite
 Then type: python run.py test CheckSuite
 Then type: python run.py test CodeGenSuite
-
-

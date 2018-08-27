@@ -72,7 +72,7 @@ class SyntaxException(Exception):
 class TestParser:
     @staticmethod
     def createErrorListener():
-         return NewErrorListener.INSTANCE
+        return NewErrorListener.INSTANCE
 
     @staticmethod
     def test(input,expect,num):

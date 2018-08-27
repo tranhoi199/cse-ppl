@@ -20,8 +20,7 @@ def main(argv):
         subprocess.run(["java","-jar",ANTLR_JAR,"-o","../target","-no-listener","-visitor","main/mp/parser/MP.g4"])
     elif argv[0] == 'clean':
         subprocess.run(["rm","-rf",TARGET_DIR + "/*"])
-               
-    elif argv[0] == 'test':     
+    elif argv[0] == 'test':
         if not os.path.isdir(TARGET_DIR + "/" + GENERATE_DIR):
             subprocess.run(["java","-jar",ANTLR_JAR,"-o",GENERATE_DIR,"-no-listener","-visitor","main/mp/parser/MP.g4"])
         if not (TARGET_DIR + "/" + GENERATE_DIR) in sys.path:
@@ -75,4 +74,4 @@ def printUsage():
     print("python3 run.py test CodeGenSuite")
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
