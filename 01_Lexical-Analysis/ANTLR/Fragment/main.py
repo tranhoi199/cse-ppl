@@ -7,16 +7,16 @@ from antlr4 import *
 ANTLR_JAR = os.environ.get('ANTLR_LIB')
 
 DIR = os.path.dirname(__file__)
-SRC = os.path.join(DIR, './Hello.g4')
+SRC = os.path.join(DIR, './Fragment.g4')
 DIST = os.path.join(DIR, './dist')
 TESTS = os.path.join(DIR, './tests')
 
 
 
 def printUsage():
-    print('python3 Hello.py gen')
-    print('python3 Hello.py clean')
-    print('python3 Hello.py test')
+    print('python3 main.py gen')
+    print('python3 main.py clean')
+    print('python3 main.py test')
 
 
 def printBreak():
@@ -42,19 +42,21 @@ def runTest():
     if not DIST in sys.path:
         sys.path.append(DIST)
 
-    from HelloLexer import HelloLexer
+    from Fragment import Fragment
 
     # Read all test files
     testfiles = sorted(os.listdir(TESTS))
 
     for filename in testfiles:
+        printBreak()
         print('Running test : ' + filename)
+        printBreak()
         filepath = os.path.join(DIR, './tests', filename)
         # file = open(filepath, 'r')
         # code = file.read()
         # print(code)
         # file.close()
-        lexer = HelloLexer(FileStream(filepath))
+        lexer = Fragment(FileStream(filepath))
         tokens = []
         token = lexer.nextToken()
         while token.type != Token.EOF:
