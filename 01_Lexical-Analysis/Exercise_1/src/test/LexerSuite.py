@@ -8,9 +8,11 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test("abc", "abc,<EOF>", 101))
         self.assertTrue(TestLexer.test("aCBbdc", "a,C,B,bdc,<EOF>", 102))
         self.assertTrue(TestLexer.test("aAsVN", "a,A,s,V,N,<EOF>", 103))
+        
     def test_integer(self):
         """test integers"""
         self.assertTrue(TestLexer.test("123a123", "123,a123,<EOF>", 104))
+
     def test_real(self):
         '''test real numbers'''
         self.assertTrue(TestLexer.test(
@@ -25,3 +27,16 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(
             '123e-4.5 e3 e4.3 3.4e3.5', 
             '123e-4,.,5,e3,e4,.,3,3.4e3,.,5,<EOF>', 204))
+
+    def test_strings(self):
+        '''test strings'''
+        self.assertTrue(TestLexer.test(
+            "abc 'abc' 'abc 123' '  123  abc  ' '123'   ''123'  \'",
+            "abc,'abc','abc 123','  123  abc  ','123','',123,'  ',<EOF>",
+            301
+        ))
+        self.assertTrue(TestLexer.test(
+            "var s = 'hello world!'; s += ' ''Python'' --'",
+            "var,s,=,'hello world!',;,s,+,=,' ''Python'' --',<EOF>",
+            302
+        ))
