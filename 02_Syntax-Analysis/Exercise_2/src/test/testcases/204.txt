@@ -1,7 +1,3 @@
 
-            int a, b, c;
-            float a, b12, c9    ;
-            int c; float f;     int k_123, g_pq11, y__164_u1;
-            float hal4_1rte__as126_4_26__yyx;
-            int tt;
+            int a, b,   c,      d
         

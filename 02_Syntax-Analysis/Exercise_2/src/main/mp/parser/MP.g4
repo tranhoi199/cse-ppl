@@ -8,21 +8,21 @@ options{
 	language=Python3;
 }
 
-program: (variables_declaration | function_declaration)*;
+program: (variables_declaration | function_declaration)* EOF ;
 
 // Variable declaration
 variables_declaration: variables SM ;
 
+// Function declaration
+function_declaration: mc_type ID LP (variables (SM variables)*)? RP LB body RB ;
+
+body: ( variables_declaration | stmt_assign | stmt_call | stmt_return )* ;
+
 variables: mc_type ID (CM ID)* ;
 
-// Function declaration
-function_declaration: mc_type ID LP (variables (SM variables)*)? RP LB body RP ;
+stmt_assign: ID EQ exp SM ;
 
-body: (stmt_assign | stmt_call | stmt_return )* ;
-
-stmt_assign: ID EQ exp SM;
-
-stmt_call: ID LP (exp (CM exp)*)? RP SM ;
+stmt_call: func_call SM ;
 
 stmt_return: RETURN exp SM ;
 
@@ -37,19 +37,21 @@ exp : <assoc=right> exp ADD exp
 	| operands
 	;
 
-operands: (LP exp RP) | stmt_call | ID | INTLIT | FLOATLIT ;
+operands: (LP exp RP) | func_call | ID | INTLIT | FLOATLIT ;
 
-mc_type: INT | FLOAT;
+func_call: ID LP (exp (CM exp)*)? RP;
+
+mc_type: INT | FLOAT ;
 
 
-// Lexer
-fragment LETTER: [a-zA-Z];
+/** Lexer */
 
-ID: LETTER (LETTER | [0-9_])* ;
+// Keywords
+RETURN : 'return';
+FLOAT  : 'float';
+INT    : 'int';
 
-INTLIT: [0-9]+;
-FLOATLIT: [0-9]+;
-
+// Specific characters
 LB: '{';
 RB: '}';
 LP: '(';
@@ -65,12 +67,16 @@ SUB: '-';
 MUL: '*';
 DIV: '/';
 
-RETURN: 'return';
-FLOAT: 'float';
-INT: 'int';
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+FLOATLIT  : INTLIT ([.][0-9]+)? ([eE][+-]? [0-9]+)? ;
 
-// ERROR_CHAR: .;
-// UNCLOSE_STRING: .;
-// ILLEGAL_ESCAPE: .;
+INTLIT    : [1-9] [0-9]* | '0';
+
+ID        : [_a-zA-Z] [_a-zA-Z0-9]* ;
+
+
+WS: [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+
+ERROR_CHAR: .;
+UNCLOSE_STRING: .;
+ILLEGAL_ESCAPE: .;
