@@ -10,18 +10,106 @@ options{
 	language=Python3;
 }
 
-program: PROCEDURE 'main' LP RP LCB body? RCB EOF ;
 
-method_types: PROCEDURE | FUNCTION ;
 
-data_types: INT | REAL | STR | BOOL;
 
-body: SEMI;
+/** 
+ * 2 Program Structure
+ */
+program: (var_def | func_def | proc_def)* EOF ;
+
+// 2.1 Variable declaration
+var_def: VAR (ids_list_with_type SEMI)+;
+
+//2.2 Function declaration
+func_def: FUNCTION ID LP params_list? RP COLON data_types SEMI var_def compound_stmt ;
+
+// 2.3 Procedure declaration
+proc_def: PROCEDURE ID LP params_list? RP SEMI var_def compound_stmt ;
+
+
+
+
+
+/** 
+ * 6 Statements and Control Flow 
+ */
+stmts
+	: compound_stmt
+	| if_stmt 
+	| while_stmt | for_stmt | with_stmt
+	| brk_stmt | cont_stmt | ret_stmt 
+	| assign_stmt 
+	| call_stmt
+	;
+
+// Assign
+assign_stmt: <assoc=right> exp OP_ASS exp SEMI;
+
+// Flow
+if_stmt: IF exp_bool THEN stmts (ELSE stmts)?;
+
+// Loop
+while_stmt: WHILE exp_bool DO stmts ;
+
+for_stmt: FOR ID OP_ASS exp (TO | DOWNTO) exp DO stmts ;
+
+with_stmt: WITH (ids_list_with_type SEMI)+ DO stmts ;
+
+// Stop
+brk_stmt: BREAK SEMI ;
+
+cont_stmt: CONTINUE SEMI ;
+
+ret_stmt: SEMI;
+
+// Call
+call_stmt: ID LP exps_list? RP SEMI;
+
+// Complex
+compound_stmt: BEGIN stmts* END ;
+
+
+
+
 
 
 /**
- * Built-in Functions
+ * 7 Built-in Functions 
  */
+
+
+
+
+/** 
+ * 5 Expressions
+ */
+exp_bool: ;
+
+exp: ;
+
+
+
+/**
+ * Utilities
+ */
+params_list: ids_list_with_type (SEMI ids_list_with_type)*;
+
+ids_list_with_type: ids_list COLON data_types ;
+
+ids_list: ID (COMMA ID)? ;
+
+exps_list: exp (COMMA exp)? ;
+
+method_types: PROCEDURE | FUNCTION ;
+
+data_types: primitive_types | compound_types;
+
+compound_types: ARRAY LSB LIT_INT DOTDOT LIT_INT RSB OF primitive_types ;
+
+primitive_types: INT | REAL | STR | BOOL;
+
+
 
 
 
@@ -62,13 +150,13 @@ RETURN  : 'return'  ;
 BREAK   : 'break'   ;
 CONTINUE: 'continue';
 
-// Data Types
+// Primitive Types
 INT : 'integer';
 STR : 'string' ;
 REAL: 'real'   ;
 BOOL: 'boolean';
 
-// Data Structures
+// Compound Types
 ARRAY: 'array';
 
 // Others
@@ -126,11 +214,18 @@ ID: [a-zA-Z]+ ;
 
 
 // Domain Values
-LIT_INT : [0-9]+;
+LIT_INT : [+-]?[0-9]+;
 LIT_BOOL: TRUE | FALSE ;
 
 
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+// Comments
+BLOCK_COMMENT: '(*' .*? '*)' | LCB .*? RCB -> skip ;
+LINE_COMMENT : '//' ~[\r\n]* -> skip ;
+
+
+
+WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
+
 
 ERROR_CHAR: .;
 UNCLOSE_STRING: .;
