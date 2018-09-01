@@ -1,1 +1,0 @@
-Error on line 1 col 10: {

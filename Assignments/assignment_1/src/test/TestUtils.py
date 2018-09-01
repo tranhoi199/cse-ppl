@@ -8,11 +8,6 @@ if os.path.isdir('../target/main/mp/parser') and not '../target/main/mp/parser/'
 from MPLexer import MPLexer
 from MPParser import MPParser
 from lexererr import *
-# from ASTGeneration import ASTGeneration
-# from StaticCheck import StaticChecker
-# from StaticError import *
-# from CodeGenerator import CodeGenerator
-# import subprocess
 
 JASMIN_JAR = "./external/jasmin.jar"
 TEST_DIR = "./test/testcases/"
@@ -100,95 +95,3 @@ class TestParser:
             dest.write(str(e))
         finally:
             dest.close()
-
-# class TestAST:
-#     @staticmethod
-#     def test(input,expect,num):
-#         inputfile = TestUtil.makeSource(input,num)
-#         TestAST.check(SOL_DIR,inputfile,num)
-#         dest = open(SOL_DIR + str(num) + ".txt","r")
-#         line = dest.read()
-#         return line == expect
-
-#     @staticmethod
-#     def check(soldir,inputfile,num):
-#         dest = open(soldir + "/" + str(num) + ".txt","w")
-#         lexer = Lexer(inputfile)
-#         tokens = CommonTokenStream(lexer)
-#         parser = Parser(tokens)
-#         tree = parser.program()
-#         asttree = ASTGeneration().visit(tree)
-#         dest.write(str(asttree))
-#         dest.close()
-
-# class TestChecker:
-#     @staticmethod
-#     def test(input,expect,num):       
-#         if type(input) is str:
-#             inputfile = TestUtil.makeSource(input,num)
-#             lexer = Lexer(inputfile)
-#             tokens = CommonTokenStream(lexer)
-#             parser = Parser(tokens)
-#             tree = parser.program()
-#             asttree = ASTGeneration().visit(tree)
-#         else:
-#             inputfile = TestUtil.makeSource(str(input),num)
-#             asttree = input       
-#         TestChecker.check(SOL_DIR,asttree,num)
-#         dest = open(SOL_DIR + "/" + str(num) + ".txt","r")
-#         line = dest.read()
-#         return line == expect
-
-#     @staticmethod
-#     def check(soldir,asttree,num):  
-#         dest = open(soldir + "/" + str(num) + ".txt","w")     
-#         checker = StaticChecker(asttree)
-#         try:
-#             res = checker.check()
-#             dest.write(str(list(res)))
-#         except StaticError as e:
-#             dest.write(str(e))
-#         finally:
-#             dest.close()
-
-# class TestCodeGen():
-#     @staticmethod
-#     def test(input, expect, num):
-#         if type(input) is str:
-#             inputfile = TestUtil.makeSource(input,num)
-#             lexer = Lexer(inputfile)
-#             tokens = CommonTokenStream(lexer)
-#             parser = Parser(tokens)
-#             tree = parser.program()
-#             asttree = ASTGeneration().visit(tree)
-#         else:
-#             inputfile = TestUtil.makeSource(str(input),num)
-#             asttree = input
-        
-#         TestCodeGen.check(SOL_DIR,asttree,num)
-        
-#         dest = open(SOL_DIR + "/" + str(num) + ".txt","r")
-#         line = dest.read()
-#         return line == expect
-
-#     @staticmethod
-#     def check(soldir,asttree,num):
-#         codeGen = CodeGenerator()
-#         path = soldir + "/" + str(num)
-#         if not os.path.isdir(path):
-#             os.mkdir(path)
-#         f = open(soldir + "/" + str(num) + ".txt","w")
-#         try:
-#             codeGen.gen(asttree, path)
-            
-#             subprocess.call("java  -jar "+ JASMIN_JAR + " " + path + "/MCClass.j",shell=True,stderr=subprocess.STDOUT)
-            
-#             subprocess.run("java -cp ./lib:. MCClass",shell=True, stdout = f, timeout=10)
-#         except StaticError as e:
-#             f.write(str(e))
-#         except subprocess.TimeoutExpired:
-#             f.write("Time out\n")
-#         except subprocess.CalledProcessError as e:
-#             raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
-#         finally:
-#             f.close()

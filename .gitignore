@@ -1,6 +1,7 @@
 .DS_Store
 *.zip
 .antlr4
+__pycache__/
 
 # Python
 # Byte-compiled / optimized / DLL files
