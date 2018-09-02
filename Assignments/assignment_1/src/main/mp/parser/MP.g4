@@ -14,34 +14,6 @@ options{
 
 }
 
-// tokens {
-// 	FUNCTION, PROCEDURE,
-// 	BEGIN, END,
-// 	TRUE, FALSE,
-// 	IF, THEN, ELSE,
-// 	FOR, WHILE, DO, TO, DOWNTO, WITH,
-// 	RETURN, BREAK, CONTINUE,
-
-// 	INT, STR, REAL, BOOL, 
-// 	ARRAY,
-// 	VAR, OF,
-
-// 	OP_AND_THEN, OP_OR_ELSE,
-// 	OP_DIV_INT, OP_MOD, OP_NOT, OP_AND,
-// 	OP_OR, OP_ADD, OP_SUB, OP_MUL, OP_DIV,
-// 	OP_ASS, OP_LT, OP_LTE, OP_GTE, OP_GT, OP_EQ, OP_NEQ,
-	
-// 	LP, RP, LCB, RCB, LSB, RSB,
-
-// 	SEMI, COMMA, COLON, DOT, DOTDOT,
-
-// 	ID,
-
-// 	LIT_BOOL, LIT_INT, LIT_REAL, LIT_STR,
-
-// 	BLOCK_COMMENT, LINE_COMMENT
-// }
-
 
 /** 
  * 2 Program Structure
@@ -253,38 +225,43 @@ RSB: ']'; // Right Square Bracket
 SEMI: ';'; // Semicolon
 COMMA: ','; // Comma
 COLON: ':'; // Colon
+DOTDOT: '..'; // Dot Dot should be before Dot
 DOT: '.';
-DOTDOT: '..';
 
 
 
-ID: [a-zA-Z]+ ;
 
 
 // Domain Values
-LIT_INT : [0-9]+;
-
 LIT_BOOL: TRUE | FALSE ;
 
 LIT_STR: '"' ~[\b\f\r\n\t'"\\]* '"';
 
 LIT_REAL
-	: [0-9]+ DOT [0-9]* EXPONENT?
-	| [0-9]+ EXPONENT?
-	| [0-9]+ EXPONENT
+	: DIGIT+ DOT DIGIT* // 12.(05)
+	| DIGIT* DOT DIGIT+ EXPONENT? // (12).05(e-4)
+	| DIGIT+ EXPONENT // 12e-5
 	;
 
-fragment EXPONENT: [eE] [+-]? [0-9]+ ;
+// Integer should be after Real
+LIT_INT : [1-9][0-9]* | '0';
+
+fragment EXPONENT: [eE] [+-]? DIGIT+ ;
+fragment DIGIT: [0-9] ;
 
 
-// Comments
+
+ID: [_a-zA-Z][_a-zA-Z0-9]+ ;
+
+
+
+// Skip comments
 BLOCK_COMMENT: ('(*' .*? '*)' | LCB .*? RCB) -> skip ;
 
 LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 
-
-
-WS : [ \t\r\n\f]+ -> skip ; // skip spaces, tabs, newlines
+// Skip spaces, tabs, newlines
+WS : [ \t\r\n\f]+ -> skip ; 
 
 
 ERROR_CHAR: .;

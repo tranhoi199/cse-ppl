@@ -1,0 +1,13 @@
+
+            "Backspace  "
+            "Formfeed   "
+            "Return     "
+            "Newline    
+"
+            "Newline
+                multiple lines
+            "
+            "Tab        	"
+            "Quotes ''   '  ""  "   "
+            "Backslash  \"
+            
