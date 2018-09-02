@@ -3,11 +3,26 @@ from TestUtils import TestLexer
 
 class LexerSuite(unittest.TestCase):
 
-    def test_identifier(self):
-        """test identifiers"""
-        self.assertTrue(TestLexer.test("abc","abc,<EOF>",101))
-        self.assertTrue(TestLexer.test("aCBbdc","aCBbdc,<EOF>",102))
-        self.assertTrue(TestLexer.test("aAsVN","aAsVN,<EOF>",103))
-    def test_integer(self):
-        """test integers"""
-        self.assertTrue(TestLexer.test("123a123","123,a,123,<EOF>",104))
+    def testValidKeywords(self):
+        "Test Valid Keywords"
+        self.assertTrue(TestLexer.test(
+            """
+            function procedure
+            begin end
+            true false
+            if then else
+            for while with do to downto
+            return break continue
+            integer string real boolean
+            array
+            var of
+            and then
+            or else
+            div mod not and or
+            + - * / := <= >= <> = < >
+            ( ) { } [ ] ; , : , ..
+            """,
+
+            "function,procedure,begin,end,true,false,if,then,else,for,while,with,do,to,downto,return,break,continue,integer,string,real,boolean,array,var,of,and then,or else,div,mod,not,and,or,+,-,*,/,:=,<=,>=,<>,=,<,>,(,),[,],;,,,:,,,..,<EOF>",
+            101
+        ))

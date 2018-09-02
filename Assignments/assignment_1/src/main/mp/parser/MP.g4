@@ -10,7 +10,37 @@ options{
 	language=Python3;
 }
 
+@actionName {
 
+}
+
+// tokens {
+// 	FUNCTION, PROCEDURE,
+// 	BEGIN, END,
+// 	TRUE, FALSE,
+// 	IF, THEN, ELSE,
+// 	FOR, WHILE, DO, TO, DOWNTO, WITH,
+// 	RETURN, BREAK, CONTINUE,
+
+// 	INT, STR, REAL, BOOL, 
+// 	ARRAY,
+// 	VAR, OF,
+
+// 	OP_AND_THEN, OP_OR_ELSE,
+// 	OP_DIV_INT, OP_MOD, OP_NOT, OP_AND,
+// 	OP_OR, OP_ADD, OP_SUB, OP_MUL, OP_DIV,
+// 	OP_ASS, OP_LT, OP_LTE, OP_GTE, OP_GT, OP_EQ, OP_NEQ,
+	
+// 	LP, RP, LCB, RCB, LSB, RSB,
+
+// 	SEMI, COMMA, COLON, DOT, DOTDOT,
+
+// 	ID,
+
+// 	LIT_BOOL, LIT_INT, LIT_REAL, LIT_STR,
+
+// 	BLOCK_COMMENT, LINE_COMMENT
+// }
 
 
 /** 
@@ -86,9 +116,24 @@ compound_stmt: BEGIN stmts* END ;
  */
 exp_bool: ;
 
-exp: ;
+exp_int: ;
 
+exp_real: ;
 
+exp_str: ;
+
+exp
+	: exp ( OP_AND_THEN | OP_OR_ELSE ) exp
+	| operands ( OP_EQ | OP_NEQ | OP_GT | OP_LT | OP_GTE | OP_LTE ) operands
+	| exp ( OP_ADD | OP_SUB | OP_OR ) exp
+	| exp ( OP_DIV | OP_MUL | OP_MOD | OP_DIV_INT | OP_AND ) exp
+	| <assoc=right> OP_NOT exp
+	| LP exp RP
+	;
+
+operands
+	: 
+	;
 
 /**
  * Utilities
@@ -168,16 +213,19 @@ OF: 'of';
  * Operators
  * Please use name with prefix OP_
  */
-OP_ADD: '+';
-OP_SUB: '-';
-OP_MUL: '*';
-OP_DIV: '/';
+OP_AND_THEN: 'and then';
+OP_OR_ELSE : 'or else' ;
 
 OP_DIV_INT: 'div';
 OP_MOD: 'mod';
 OP_NOT: 'not';
 OP_AND: 'and';
 OP_OR : 'or' ;
+
+OP_ADD: '+';
+OP_SUB: '-';
+OP_MUL: '*';
+OP_DIV: '/';
 
 OP_ASS: ':=';
 OP_LTE: '<=';
@@ -214,12 +262,23 @@ ID: [a-zA-Z]+ ;
 
 
 // Domain Values
-LIT_INT : [+-]?[0-9]+;
+LIT_INT : [0-9]+;
+
 LIT_BOOL: TRUE | FALSE ;
+
+LIT_STR: '"' ~[\b\f\r\n\t'"\\]* '"';
+
+LIT_REAL
+	: [0-9]+ DOT [0-9]* EXPONENT?
+	| [0-9]+ EXPONENT?
+	| [0-9]+ EXPONENT
+	;
+
+fragment EXPONENT: [eE] [+-]? [0-9]+ ;
 
 
 // Comments
-BLOCK_COMMENT: '(*' .*? '*)' | LCB .*? RCB -> skip ;
+BLOCK_COMMENT: ('(*' .*? '*)' | LCB .*? RCB) -> skip ;
 LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 
 
