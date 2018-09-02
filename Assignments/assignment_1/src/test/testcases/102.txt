@@ -1,0 +1,26 @@
+
+                (* This is a block comment *)
+
+                { This is a block comment }
+
+                //This is a line comment
+
+                (* Comment with multiple lines
+                    Hello comments
+                *)
+
+                {
+                    Comment multiple lines
+                }
+
+                (* nestest comments { 
+                    block 
+                    comment
+                        // inline comment
+                    } 
+                    
+                    // inline comment { block 
+                    
+                    comment } 
+                *)
+            

@@ -279,6 +279,7 @@ fragment EXPONENT: [eE] [+-]? [0-9]+ ;
 
 // Comments
 BLOCK_COMMENT: ('(*' .*? '*)' | LCB .*? RCB) -> skip ;
+
 LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 
 
