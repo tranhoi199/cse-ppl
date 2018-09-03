@@ -175,11 +175,3 @@ class ParserSuite(unittest.TestCase):
         self.assertTrue(TestParser.test(input,expect,220))
 
     ### Test Statements in Function Error
-
-
-    def test_template(self):
-        input = """
-
-        """
-        expect = "successful"
-        self.assertTrue(TestParser.test(input,expect,100))

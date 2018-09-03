@@ -14,23 +14,23 @@ class MPVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MPParser#variables_declaration.
-    def visitVariables_declaration(self, ctx:MPParser.Variables_declarationContext):
+    # Visit a parse tree produced by MPParser#var_declare.
+    def visitVar_declare(self, ctx:MPParser.Var_declareContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MPParser#function_declaration.
-    def visitFunction_declaration(self, ctx:MPParser.Function_declarationContext):
+    # Visit a parse tree produced by MPParser#func_declare.
+    def visitFunc_declare(self, ctx:MPParser.Func_declareContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MPParser#ids_list.
+    def visitIds_list(self, ctx:MPParser.Ids_listContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#body.
     def visitBody(self, ctx:MPParser.BodyContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MPParser#variables.
-    def visitVariables(self, ctx:MPParser.VariablesContext):
         return self.visitChildren(ctx)
 
 
