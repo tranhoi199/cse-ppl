@@ -1,1 +1,8 @@
-Error Token ...
+True:            5
+False:            6
+trUe:            5
+faLSE:            6
+trues:            59
+falses:            59
+Fals:            59
+<EOF>

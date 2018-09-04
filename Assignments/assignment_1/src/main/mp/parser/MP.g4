@@ -139,61 +139,61 @@ primitive_types: INT | REAL | STR | BOOL;
  */
 
 // Methods
-FUNCTION : 'function' ;
-PROCEDURE: 'procedure';
+FUNCTION : F U N C T I O N ;
+PROCEDURE: P R O C E D U R E ;
 
 // Scope
-BEGIN: 'begin';
-END  : 'end'  ;
+BEGIN: B E G I N ;
+END  : E N D ;
 
 // Value
-TRUE : 'true' ;
-FALSE: 'false';
+TRUE : T R U E ;
+FALSE: F A L S E ;
 
 // Flow Statement
-IF  : 'if'  ;
-THEN: 'then';
-ELSE: 'else';
+IF  : I F ;
+THEN: T H E N ;
+ELSE: E L S E ;
 
 // Loop Statement
-FOR   : 'for'   ;
-WHILE : 'while' ;
-WITH  : 'with'  ;
-DO    : 'do'    ;
-TO    : 'to'    ;
-DOWNTO: 'downto';
+FOR   : F O R ;
+WHILE : W H I L E ;
+WITH  : W I T H ;
+DO    : D O ;
+TO    : T O ;
+DOWNTO: D O W N T O ;
 
 // Stop Statement
-RETURN  : 'return'  ;
-BREAK   : 'break'   ;
-CONTINUE: 'continue';
+RETURN  : R E T U R N ;
+BREAK   : B R E A K ;
+CONTINUE: C O N T I N U E ;
 
 // Primitive Types
-INT : 'integer';
-STR : 'string' ;
-REAL: 'real'   ;
-BOOL: 'boolean';
+INT : I N T E G E R ;
+STR : S T R I N G ;
+REAL: R E A L ;
+BOOL: B O O L E A N ;
 
 // Compound Types
-ARRAY: 'array';
+ARRAY: A R R A Y ;
 
 // Others
-VAR: 'var';
-OF: 'of';
+VAR: V A R ;
+OF: O F ;
 
 
 /**
  * Operators
  * Please use name with prefix OP_
  */
-OP_AND_THEN: 'and then';
-OP_OR_ELSE : 'or else' ;
+OP_AND_THEN: A N D ' ' T H E N;
+OP_OR_ELSE : O R ' ' E L S E ;
 
-OP_DIV_INT: 'div';
-OP_MOD: 'mod';
-OP_NOT: 'not';
-OP_AND: 'and';
-OP_OR : 'or' ;
+OP_DIV_INT: D I V ;
+OP_MOD: M O D;
+OP_NOT: N O T;
+OP_AND: A N D;
+OP_OR : O R  ;
 
 OP_ADD: '+';
 OP_SUB: '-';
@@ -267,13 +267,13 @@ WS : [ \t\r\n\f]+ -> skip ;
 
 UNCLOSE_STRING: '"' ~[\b\f\r\n\t'"\\]*
 	{
-		raise UncloseString('...')
+		raise UncloseString(str(self.text)[1:])
 	}
 	;
 
 ILLEGAL_ESCAPE: '"' .*? ESCAPE
 	{
-		raise IllegalEscape('...')
+		raise IllegalEscape(str(self.text)[1:])
 	}
 	;
 
@@ -282,6 +282,35 @@ fragment ESCAPE: [\b\f\r\n\t'"\\];
 
 ERROR_CHAR: .
 	{
-		raise ErrorToken('...')
+		raise ErrorToken(self.text)
 	}
 	;
+
+
+
+fragment A : [aA];
+fragment B : [bB];
+fragment C : [cC];
+fragment D : [dD];
+fragment E : [eE];
+fragment F : [fF];
+fragment G : [gG];
+fragment H : [hH];
+fragment I : [iI];
+fragment J : [jJ];
+fragment K : [kK];
+fragment L : [lL];
+fragment M : [mM];
+fragment N : [nN];
+fragment O : [oO];
+fragment P : [pP];
+fragment Q : [qQ];
+fragment R : [rR];
+fragment S : [sS];
+fragment T : [tT];
+fragment U : [uU];
+fragment V : [vV];
+fragment W : [wW];
+fragment X : [xX];
+fragment Y : [yY];
+fragment Z : [zZ];
