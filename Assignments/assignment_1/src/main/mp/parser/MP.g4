@@ -236,7 +236,7 @@ DOT: '.';
 // Domain Values
 LIT_BOOL: TRUE | FALSE ;
 
-LIT_STR: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"] )* '"';
+LIT_STR: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"'] )* '"';
 
 LIT_REAL
 	: DIGIT+ DOT DIGIT* // 12.(05)
@@ -265,7 +265,7 @@ LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 WS : [ \t\r\n\f]+ -> skip ; 
 
 
-UNCLOSE_STRING: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"] )*
+UNCLOSE_STRING: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"'] )*
 	{
 		raise UncloseString(str(self.text)[1:])
 	}

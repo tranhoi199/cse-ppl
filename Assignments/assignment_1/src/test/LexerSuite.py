@@ -21,7 +21,7 @@ or else
 div mod not and or
             """,
 
-            "",
+            "function,procedure,begin,end,true,false,if,then,else,for,while,with,do,to,downto,return,break,continue,integer,string,real,boolean,array,var,of,and then,or else,div,mod,not,and,or,<EOF>",
             101
         ))
 
@@ -44,7 +44,7 @@ or eLse
 dIV mOd NOT and OR
             """,
 
-            "",
+            "FuNctiOn,prOceDure,Begin,END,True,FalSE,IF,thEn,ELSE,fOR,While,with,DO,To,downTo,RETURN,break,COntiNue,integer,string,REAL,BOOLean,ARRAY,VAR,Of,anD Then,or eLse,dIV,mOd,NOT,and,OR,<EOF>",
             102
         ))
 
@@ -57,7 +57,7 @@ dIV mOd NOT and OR
 ( ) { } [ ] ; , : , ..
             """,
 
-            "",
+            "+,-,*,/,:=,<=,>=,<>,=,<,>,(,),[,],;,,,:,,,..,<EOF>",
             103
         ))
 
@@ -105,7 +105,7 @@ comment }
 0 1 2 3 4 123 123456789
             """,
 
-            "",
+            "0,1,2,3,4,123,123456789,<EOF>",
             105
         ))
 
@@ -118,7 +118,7 @@ comment }
 12.     .05     12.05 1e-5      1.5e-6  0.0005e3   2e21
             """,
 
-            "",
+            "1.2,1.,.1,1e2,1.2E-2,1.2e-2,.1E2,9.0,12e8,0.33E-3,128e-42,12.,.05,12.05,1e-5,1.5e-6,0.0005e3,2e21,<EOF>",
             106
         ))
 
@@ -137,25 +137,6 @@ comment }
 
 
 
-    def test_escape_string_literal(self):
-        self.assertTrue(TestLexer.test(
-            """
-"Backspace  \b"
-"Formfeed   \f"
-"Return     \r"
-"Newline    \n"
-"Newline
-multiple lines
-"
-"Tab        \t"
-"Quotes ''   '  ""  "   "
-"Backslash  \\"
-            """,
-
-            "",
-            108
-        ))
-
 
 
     def test_identifiers(self):
@@ -169,8 +150,8 @@ abc ABC aBC Abc _ABC __ABc __123ABc
 h98f394__VWT_b5_VT_YGU87udhf__T_
             """,
 
-            "",
-            109
+            "a,abc,a123,a_,a_bc,a_bc123,a_123,a_123bc,a_bc_123,_,_abc,_123,_abc123,_abc_123,_123_abc,__,____,____123____,abc,ABC,aBC,Abc,_ABC,__ABc,__123ABc,h98f394__VWT_b5_VT_YGU87udhf__T_,<EOF>",
+            108
         ))
 
 
@@ -180,8 +161,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         self.assertTrue(TestLexer.test(
             """123abc 123_abc 00000123_123abc""",
 
-            "",
-            110
+            "123,abc,123,_abc,0,0,0,0,0,123,_123abc,<EOF>",
+            109
         ))
 
 
@@ -198,8 +179,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 (* comment not correct close )
             """,
 
-            "",
-            111
+            "is,multiple,lines,(,block,comment,missing,*,{,comment,without,close,(,*,comment,not,correct,close,),<EOF>",
+            110
         ))
 
 
@@ -209,8 +190,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         self.assertTrue(TestLexer.test(
             """e-12 e12 . 1e 12e 12.05e .05e ee e01""",
 
-            "",
-            112
+            "e,-,12,e12,.,1,e,12,e,12.05,e,.05,e,ee,e01,<EOF>",
+            111
         ))
 
 
@@ -219,8 +200,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         self.assertTrue(TestLexer.test(
             "array [1..3] of integer",
 
-            "",
-            113
+            "array,[,1.,.3,],of,integer,<EOF>",
+            112
         ))
 
 
@@ -229,8 +210,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         self.assertTrue(TestLexer.test(
             """  " hello lexer """,
 
-            "",
-            114
+            "Unclosed String:  hello lexer ",
+            113
         ))
 
 
@@ -240,8 +221,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
             """  " hello lexer 
             """,
 
-            "",
-            115
+            "Unclosed String:  hello lexer ",
+            114
         ))
 
 
@@ -253,8 +234,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 " string    \\\\ \\ttt \\bbb \aaa "
             """,
 
-            "",
-            116
+            """" hello lexer \b \t \n \f \r \" \'  "," string    \\ \ttt \bbb aa ",<EOF>""",
+            115
         ))
 
 
@@ -263,15 +244,67 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         self.assertTrue(TestLexer.test(
             """ " hello lexer \t "     asdf  """,
 
-            "",
-            117
+            "Illegal Escape In String:  hello lexer 	 ",
+            116
         ))
 
 
 
-
-
-
+    def test_escape_string_literal(self):
+        self.assertTrue(TestLexer.test(
+            """
+"Backspace  \b"
+            """,
+            "Illegal Escape In String: Backspace  ",
+            117
+        ))
+        self.assertTrue(TestLexer.test(
+            """
+"Formfeed   \f"
+            """,
+            "Illegal Escape In String: Formfeed   ",
+            118
+        ))
+        self.assertTrue(TestLexer.test(
+            """
+"Return     \r"
+            """,
+            """Illegal Escape In String: Return     
+""",
+            119
+        ))
+        self.assertTrue(TestLexer.test(
+            """
+"Newline    \n"
+            """,
+            """Illegal Escape In String: Newline    
+""",
+            120
+        ))
+        self.assertTrue(TestLexer.test(
+            """
+"Newline
+    multiple lines
+"           """,
+            """Illegal Escape In String: Newline
+    multiple lines
+""",
+            121
+        ))
+        self.assertTrue(TestLexer.test(
+            """
+"Tab        \t"
+            """,
+            "Illegal Escape In String: Tab        	",
+            122
+        ))
+        self.assertTrue(TestLexer.test(
+            """
+"Backslash  \\ "
+            """,
+            "Illegal Escape In String: Backslash  \ ",
+            123
+        ))
 
 
 
