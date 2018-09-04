@@ -236,7 +236,7 @@ DOT: '.';
 // Domain Values
 LIT_BOOL: TRUE | FALSE ;
 
-LIT_STR: '"' ~[\b\f\r\n\t'"\\]* '"';
+LIT_STR: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"] )* '"';
 
 LIT_REAL
 	: DIGIT+ DOT DIGIT* // 12.(05)
@@ -252,7 +252,7 @@ fragment DIGIT: [0-9] ;
 
 
 
-ID: [_a-zA-Z][_a-zA-Z0-9]+ ;
+ID: [_a-zA-Z][_a-zA-Z0-9]* ;
 
 
 
@@ -265,19 +265,18 @@ LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 WS : [ \t\r\n\f]+ -> skip ; 
 
 
-UNCLOSE_STRING: '"' ~[\b\f\r\n\t'"\\]*
+UNCLOSE_STRING: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"] )*
 	{
 		raise UncloseString(str(self.text)[1:])
 	}
 	;
 
-ILLEGAL_ESCAPE: '"' .*? ESCAPE
+ILLEGAL_ESCAPE: '"' ('\\' ~[btnfr"'\\] | ~'\\')* '"'
 	{
-		raise IllegalEscape(str(self.text)[1:])
+		y = str(self.text)
+		raise IllegalEscape(y[1:len(y)-1])
 	}
 	;
-
-fragment ESCAPE: [\b\f\r\n\t'"\\];
 
 
 ERROR_CHAR: .
