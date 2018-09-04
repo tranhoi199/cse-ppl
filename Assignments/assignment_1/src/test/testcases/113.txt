@@ -1,1 +1,1 @@
-True False trUe faLSE trues falses Fals
+array [1 .. 3] of integer

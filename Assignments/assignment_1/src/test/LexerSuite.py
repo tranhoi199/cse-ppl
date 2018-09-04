@@ -144,14 +144,6 @@ class LexerSuite(unittest.TestCase):
             109
         ))
 
-    def testArray(self):
-        """Test Array"""
-        self.assertTrue(TestLexer.test(
-            "array [1..3] of integer",
-            "array,[,1,..,3,],of,integer,<EOF>",
-            110
-        ))
-
     def testInvalidComment(self):
         """Test Invalid Comment"""
         self.assertTrue(TestLexer.test(
@@ -163,7 +155,7 @@ class LexerSuite(unittest.TestCase):
             (* comment not correct close )
             """,
             "is,multiple,lines,(,block,comment,missing,*,{,comment,without,close,(,*,comment,not,correct,close,),<EOF>",
-            111
+            110
         ))
 
     def testInvalidLiteralReal(self):
@@ -171,7 +163,7 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(
             """e-12 e12 . 1e 12e 12.05e .05e ee e01""",
             "e,-,12,e12,.,1,e,12,e,12.05,e,.05,e,ee,e01,<EOF>",
-            112
+            111
         ))
 
     def testInvalidLiteralBoolean(self):
@@ -179,13 +171,21 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test(
             """True False trUe faLSE trues falses Fals""",
             "True,False,trUe,faLSE,trues,falses,Fals,<EOF>",
-            113
+            112
         ))
 
-
-
-
-
+    def testArray(self):
+        """Test Array"""
+        self.assertTrue(TestLexer.test(
+            "array [1 .. 3] of integer",
+            "array,[,1,..,3,],of,integer,<EOF>",
+            113
+        ))
+        self.assertTrue(TestLexer.test(
+            "array [1..3] of integer",
+            "array,[,1,..,3,],of,integer,<EOF>",
+            114
+        ))
 
 
 
