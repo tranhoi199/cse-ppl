@@ -32,10 +32,10 @@ stmt_return: RETURN exp SM ;
  * *, / is highest precendence, left associative
  */
 exp
-	: <assoc=right> exp ADD exp
-	| operands SUB operands
+	: operands
 	| exp (MUL | DIV) exp
-	| operands
+	| operands SUB operands
+	| <assoc=right> exp ADD exp
 	;
 
 operands: (LP exp RP) | func_call | ID | INTLIT | FLOATLIT ;
@@ -82,6 +82,6 @@ ID: [_a-zA-Z] [_a-zA-Z0-9]* ;
 
 WS: [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-// ERROR_CHAR: .;
-// UNCLOSE_STRING: .;
-// ILLEGAL_ESCAPE: '"' ('\\' ~[btnfr"'\\] | ~'\\')*;
+ERROR_CHAR: .;
+UNCLOSE_STRING: .;
+ILLEGAL_ESCAPE: .;

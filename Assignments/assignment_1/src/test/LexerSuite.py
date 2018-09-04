@@ -182,7 +182,27 @@ class LexerSuite(unittest.TestCase):
             113
         ))
 
-
+    def testUncloseString(self):
+        """Test Unclose String"""
+        self.assertTrue(TestLexer.test(
+            ''' "unclose string here    ''',
+            "Unclosed String: ...",
+            114
+        ))
+        self.assertTrue(TestLexer.test(
+            ''' 
+                "unclose string here    ''',
+            "Unclosed String: ...",
+            115
+        ))
+        self.assertTrue(TestLexer.test(
+            ''' 
+                "unclose string here   
+                
+            ''',
+            "Unclosed String: ...",
+            116
+        ))
 
 
 
