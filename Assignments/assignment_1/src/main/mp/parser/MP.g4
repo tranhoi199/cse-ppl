@@ -63,7 +63,7 @@ brk_stmt: BREAK SEMI ;
 
 cont_stmt: CONTINUE SEMI ;
 
-ret_stmt: SEMI;
+ret_stmt: RETURN SEMI;
 
 // Call
 call_stmt: ID LP exps_list? RP SEMI;
@@ -95,16 +95,17 @@ exp_real: ;
 exp_str: ;
 
 exp
-	: exp ( OP_AND_THEN | OP_OR_ELSE ) exp
-	| operands ( OP_EQ | OP_NEQ | OP_GT | OP_LT | OP_GTE | OP_LTE ) operands
-	| exp ( OP_ADD | OP_SUB | OP_OR ) exp
-	| exp ( OP_DIV | OP_MUL | OP_MOD | OP_DIV_INT | OP_AND ) exp
+	: operands
 	| <assoc=right> OP_NOT exp
-	| LP exp RP
+	| exp ( OP_DIV | OP_MUL | OP_MOD | OP_DIV_INT | OP_AND ) exp
+	| exp ( OP_ADD | OP_SUB | OP_OR ) exp
+	| operands ( OP_EQ | OP_NEQ | OP_GT | OP_LT | OP_GTE | OP_LTE ) operands
+	| exp ( OP_AND_THEN | OP_OR_ELSE ) exp
 	;
 
 operands
-	: 
+	: LP exp RP
+	| LIT_STR | LIT_REAL | LIT_INT | LIT_BOOL
 	;
 
 /**
@@ -264,6 +265,23 @@ LINE_COMMENT : '//' ~[\r\n]* -> skip ;
 WS : [ \t\r\n\f]+ -> skip ; 
 
 
-ERROR_CHAR: .;
-UNCLOSE_STRING: .;
-ILLEGAL_ESCAPE: .;
+UNCLOSE_STRING: '"' ~[\b\f\r\n\t'"\\]*
+	{
+		raise UncloseString('...')
+	}
+	;
+
+ILLEGAL_ESCAPE: '"' .*? ESCAPE
+	{
+		raise IllegalEscape('...')
+	}
+	;
+
+fragment ESCAPE: [\b\f\r\n\t'"\\];
+
+
+ERROR_CHAR: .
+	{
+		raise ErrorToken('...')
+	}
+	;

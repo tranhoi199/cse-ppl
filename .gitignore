@@ -3,6 +3,9 @@
 .antlr4
 __pycache__/
 
+solution/*.txt
+testcases/*.txt
+
 # Python
 # Byte-compiled / optimized / DLL files
 __pycache__/

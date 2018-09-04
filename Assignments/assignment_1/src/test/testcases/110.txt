@@ -1,7 +1,0 @@
-
-            // inline comment but
-                is multiple lines
-            ( block comment missing *
-            { comment without close
-            (* comment not correct close )
-            
