@@ -7,7 +7,7 @@ import sys
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\24")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27")
         buf.write("\u0087\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\3\2")
         buf.write("\3\2\7\2\35\n\2\f\2\16\2 \13\2\3\2\3\2\3\3\3\3\3\3\3\3")
@@ -38,16 +38,16 @@ def serializedATN():
         buf.write("\2IL\3\2\2\2JH\3\2\2\2JK\3\2\2\2K\13\3\2\2\2LJ\3\2\2\2")
         buf.write("MN\7\23\2\2NO\7\f\2\2OP\5\22\n\2PQ\7\n\2\2Q\r\3\2\2\2")
         buf.write("RS\5\26\f\2ST\7\n\2\2T\17\3\2\2\2UV\7\3\2\2VW\5\22\n\2")
-        buf.write("WX\7\n\2\2X\21\3\2\2\2YZ\b\n\1\2Z[\5\24\13\2[\\\7\16\2")
-        buf.write("\2\\]\5\24\13\2]`\3\2\2\2^`\5\24\13\2_Y\3\2\2\2_^\3\2")
-        buf.write("\2\2`i\3\2\2\2ab\f\6\2\2bc\7\r\2\2ch\5\22\n\6de\f\4\2")
-        buf.write("\2ef\t\2\2\2fh\5\22\n\5ga\3\2\2\2gd\3\2\2\2hk\3\2\2\2")
-        buf.write("ig\3\2\2\2ij\3\2\2\2j\23\3\2\2\2ki\3\2\2\2lm\7\b\2\2m")
-        buf.write("n\5\22\n\2no\7\t\2\2ou\3\2\2\2pu\5\26\f\2qu\7\23\2\2r")
-        buf.write("u\7\22\2\2su\7\21\2\2tl\3\2\2\2tp\3\2\2\2tq\3\2\2\2tr")
-        buf.write("\3\2\2\2ts\3\2\2\2u\25\3\2\2\2vw\7\23\2\2w\u0080\7\b\2")
-        buf.write("\2x}\5\22\n\2yz\7\13\2\2z|\5\22\n\2{y\3\2\2\2|\177\3\2")
-        buf.write("\2\2}{\3\2\2\2}~\3\2\2\2~\u0081\3\2\2\2\177}\3\2\2\2\u0080")
+        buf.write("WX\7\n\2\2X\21\3\2\2\2YZ\b\n\1\2Z`\5\24\13\2[\\\5\24\13")
+        buf.write("\2\\]\7\16\2\2]^\5\24\13\2^`\3\2\2\2_Y\3\2\2\2_[\3\2\2")
+        buf.write("\2`i\3\2\2\2ab\f\5\2\2bc\t\2\2\2ch\5\22\n\6de\f\3\2\2")
+        buf.write("ef\7\r\2\2fh\5\22\n\3ga\3\2\2\2gd\3\2\2\2hk\3\2\2\2ig")
+        buf.write("\3\2\2\2ij\3\2\2\2j\23\3\2\2\2ki\3\2\2\2lm\7\b\2\2mn\5")
+        buf.write("\22\n\2no\7\t\2\2ou\3\2\2\2pu\5\26\f\2qu\7\23\2\2ru\7")
+        buf.write("\22\2\2su\7\21\2\2tl\3\2\2\2tp\3\2\2\2tq\3\2\2\2tr\3\2")
+        buf.write("\2\2ts\3\2\2\2u\25\3\2\2\2vw\7\23\2\2w\u0080\7\b\2\2x")
+        buf.write("}\5\22\n\2yz\7\13\2\2z|\5\22\n\2{y\3\2\2\2|\177\3\2\2")
+        buf.write("\2}{\3\2\2\2}~\3\2\2\2~\u0081\3\2\2\2\177}\3\2\2\2\u0080")
         buf.write("x\3\2\2\2\u0080\u0081\3\2\2\2\u0081\u0082\3\2\2\2\u0082")
         buf.write("\u0083\7\t\2\2\u0083\27\3\2\2\2\u0084\u0085\t\3\2\2\u0085")
         buf.write("\31\3\2\2\2\17\34\36\62\65AHJ_git}\u0080")
@@ -70,7 +70,8 @@ class MPParser ( Parser ):
 
     symbolicNames = [ "<INVALID>", "RETURN", "FLOAT", "INT", "LB", "RB", 
                       "LP", "RP", "SM", "CM", "EQ", "ADD", "SUB", "MUL", 
-                      "DIV", "FLOATLIT", "INTLIT", "ID", "WS" ]
+                      "DIV", "FLOATLIT", "INTLIT", "ID", "WS", "ERROR_CHAR", 
+                      "UNCLOSE_STRING", "ILLEGAL_ESCAPE" ]
 
     RULE_program = 0
     RULE_var_declare = 1
@@ -108,6 +109,9 @@ class MPParser ( Parser ):
     INTLIT=16
     ID=17
     WS=18
+    ERROR_CHAR=19
+    UNCLOSE_STRING=20
+    ILLEGAL_ESCAPE=21
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -669,14 +673,14 @@ class MPParser ( Parser ):
                 return self.getTypedRuleContext(MPParser.ExpContext,i)
 
 
-        def ADD(self):
-            return self.getToken(MPParser.ADD, 0)
-
         def MUL(self):
             return self.getToken(MPParser.MUL, 0)
 
         def DIV(self):
             return self.getToken(MPParser.DIV, 0)
+
+        def ADD(self):
+            return self.getToken(MPParser.ADD, 0)
 
         def getRuleIndex(self):
             return MPParser.RULE_exp
@@ -705,14 +709,14 @@ class MPParser ( Parser ):
             if la_ == 1:
                 self.state = 88
                 self.operands()
-                self.state = 89
-                self.match(MPParser.SUB)
-                self.state = 90
-                self.operands()
                 pass
 
             elif la_ == 2:
-                self.state = 92
+                self.state = 89
+                self.operands()
+                self.state = 90
+                self.match(MPParser.SUB)
+                self.state = 91
                 self.operands()
                 pass
 
@@ -733,11 +737,16 @@ class MPParser ( Parser ):
                         localctx = MPParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 95
-                        if not self.precpred(self._ctx, 4):
+                        if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
                         self.state = 96
-                        self.match(MPParser.ADD)
+                        _la = self._input.LA(1)
+                        if not(_la==MPParser.MUL or _la==MPParser.DIV):
+                            self._errHandler.recoverInline(self)
+                        else:
+                            self._errHandler.reportMatch(self)
+                            self.consume()
                         self.state = 97
                         self.exp(4)
                         pass
@@ -746,18 +755,13 @@ class MPParser ( Parser ):
                         localctx = MPParser.ExpContext(self, _parentctx, _parentState)
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_exp)
                         self.state = 98
-                        if not self.precpred(self._ctx, 2):
+                        if not self.precpred(self._ctx, 1):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
                         self.state = 99
-                        _la = self._input.LA(1)
-                        if not(_la==MPParser.MUL or _la==MPParser.DIV):
-                            self._errHandler.recoverInline(self)
-                        else:
-                            self._errHandler.reportMatch(self)
-                            self.consume()
+                        self.match(MPParser.ADD)
                         self.state = 100
-                        self.exp(3)
+                        self.exp(1)
                         pass
 
              
@@ -1006,11 +1010,11 @@ class MPParser ( Parser ):
 
     def exp_sempred(self, localctx:ExpContext, predIndex:int):
             if predIndex == 0:
-                return self.precpred(self._ctx, 4)
+                return self.precpred(self._ctx, 3)
          
 
             if predIndex == 1:
-                return self.precpred(self._ctx, 2)
+                return self.precpred(self._ctx, 1)
          
 
 

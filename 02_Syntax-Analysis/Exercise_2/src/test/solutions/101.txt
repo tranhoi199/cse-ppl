@@ -1,0 +1,10 @@
+a: 17
+abc: 17
+abc123: 17
+BC: 17
+abcABC: 17
+abc123A: 17
+abc_abc: 17
+abc_123__AB: 17
+ABc123_: 17
+<EOF>
