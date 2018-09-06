@@ -1,0 +1,10 @@
+// Test If Statement
+
+procedure foo();
+var a: real;
+begin
+    if a = 1 then begin
+        a := 5;
+        b := c := e * 2;
+    end
+end

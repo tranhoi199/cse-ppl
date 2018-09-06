@@ -1,0 +1,7 @@
+// Test For while with break continue return statement
+
+procedure foo();
+var a: real;
+begin
+    with a: integer; do a := a + 1;
+end

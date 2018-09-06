@@ -1,0 +1,34 @@
+// Test complex code
+
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================
+    *)
+end

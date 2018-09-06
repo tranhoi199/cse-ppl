@@ -1,0 +1,10 @@
+// Test Assoc / * div mod and
+
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    a := b / 2 * n / 4 div 5 mod g and 2 * 9 / 4 mod 2;
+end

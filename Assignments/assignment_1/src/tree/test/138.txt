@@ -1,0 +1,10 @@
+// Test call statement
+
+procedure foo();
+var a: real;
+begin
+    foo();
+    bar(1);
+    nty(1, 2, 3);
+    pty(hyy, dyf(), ily(123, 456, fay), jtq(gyh())) ;
+end

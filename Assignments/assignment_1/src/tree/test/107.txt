@@ -1,0 +1,5 @@
+procedure foo();
+var a: real;
+begin
+
+end

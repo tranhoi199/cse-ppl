@@ -1,0 +1,10 @@
+// Test Assoc and then, or else
+
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    a := TRUE and then FALSE or     else True or      else (1 and       then 2) ;
+end

@@ -1,0 +1,11 @@
+procedure foo(x: integer; y, z: real; g, h: string);
+var 
+    a, b, c: real;
+    p: boolean;
+    q: string;
+    i, j: integer;
+
+begin
+
+
+end

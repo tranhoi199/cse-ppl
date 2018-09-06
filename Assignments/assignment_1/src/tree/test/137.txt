@@ -1,0 +1,13 @@
+// Test For while with break continue return statement
+
+procedure foo();
+var a: real;
+begin
+    with 
+        a: integer;
+        b, c: array [0..15] of Boolean;
+        x, y, z: real;
+    do begin
+        a := x := y := 3;
+    end
+end

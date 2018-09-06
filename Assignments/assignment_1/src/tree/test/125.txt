@@ -1,0 +1,10 @@
+// Test TRUE FALSE 
+
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    a := True ;
+end

@@ -1,0 +1,7 @@
+// Test If Statement
+
+procedure foo();
+var a: real;
+begin
+    if a = 1 then ok();
+end

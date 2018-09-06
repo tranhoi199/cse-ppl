@@ -1,0 +1,10 @@
+// Test Assoc + - or
+
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    a := b + 2 + n or 4 + 5 - g or 2 - 9;
+end

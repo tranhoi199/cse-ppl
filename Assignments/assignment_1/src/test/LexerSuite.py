@@ -18,6 +18,8 @@ array
 var of
 and then
 or else
+and         then
+or          else
 div mod not and or
             """,
 

@@ -1,0 +1,10 @@
+// Test while statement
+
+procedure foo();
+var a: real;
+begin
+    While i < 1 do begin
+        i := i+1;
+        if i = 1 then i := i - 1;
+    end
+end
