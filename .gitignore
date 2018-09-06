@@ -6,9 +6,6 @@ __pycache__/
 solutions/
 testcases/
 target/
-tree/antlr/
-tree/*.class
-
 
 # Python
 # Byte-compiled / optimized / DLL files
