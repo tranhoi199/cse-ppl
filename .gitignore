@@ -3,14 +3,9 @@
 .antlr4
 __pycache__/
 
-*/*/test/solutions/
-*/*/test/testcases/
-
-*/*/*/test/solutions/
-*/*/*/test/testcases/
-
-*/*/*/*/test/solutions/
-*/*/*/*/test/testcases/
+solutions/
+testcases/
+target/
 
 
 # Python
