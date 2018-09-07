@@ -19,10 +19,10 @@ program: (var_declare | func_declare | proc_declare)* EOF ;
 var_declare: VAR (ids_list_with_type SEMI)+;
 
 //2.2 Function declaration
-func_declare: FUNCTION ID LP params_list? RP COLON data_types SEMI var_declare compound_stmt ;
+func_declare: FUNCTION ID LP params_list? RP COLON data_types SEMI var_declare? compound_stmt ;
 
 // 2.3 Procedure declaration
-proc_declare: PROCEDURE ID LP params_list? RP SEMI var_declare compound_stmt ;
+proc_declare: PROCEDURE ID LP params_list? RP SEMI var_declare? compound_stmt ;
 
 
 

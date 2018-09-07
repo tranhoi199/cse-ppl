@@ -2,7 +2,7 @@ procedure foo(
     x: integer;
     y, z: real;
     g, h: string;
-    arr_nodes: Array[0..1000] of real
+    arr_nodes: Array[0 .. 1000] of real
 );
 
 var 

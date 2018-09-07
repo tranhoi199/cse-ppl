@@ -200,9 +200,9 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 
     def test_array(self):
         self.assertTrue(TestLexer.test(
-            "array [1..3] of integer",
+            "array [1 .. 3] of integer",
 
-            "array,[,1.,.3,],of,integer,<EOF>",
+            "array,[,1,..,3,],of,integer,<EOF>",
             112
         ))
 
@@ -229,14 +229,14 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 
 
     
-    def test_illegal_escape_ok(self):
+    def test_escape_string(self):
         self.assertTrue(TestLexer.test(
             """ 
-" hello lexer \\b \\t \\n \\f \\r \\" \\'  "
-" string    \\\\ \\ttt \\bbb \aaa "
+" abc \n xyz "
+" abc \\n xyz "
+""
             """,
-
-            """" hello lexer \b \t \n \f \r \" \'  "," string    \\ \ttt \bbb aa ",<EOF>""",
+            "",
             115
         ))
 

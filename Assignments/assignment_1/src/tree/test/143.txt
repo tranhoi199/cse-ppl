@@ -1,0 +1,10 @@
+// Test For while with break continue return statement
+
+procedure foo();
+var a: real;
+begin
+    for i := 1 to 10 do begin
+        for j := i downto 1 do
+            if (i + j) mod 2 = 1 then break;
+    end
+end

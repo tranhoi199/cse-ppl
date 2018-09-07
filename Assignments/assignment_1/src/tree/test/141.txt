@@ -1,0 +1,6 @@
+// Test and then or else
+
+procedure foo();
+begin
+    a := 1 and then  2      or      else (5 + 6) ;
+end
