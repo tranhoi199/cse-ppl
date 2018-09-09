@@ -6,6 +6,7 @@ let text = '';
 for (let i = 1; i < 101; i++) {
     text += `
     def test_${i}(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 """,

@@ -3,8 +3,8 @@ from TestUtils import TestLexer
 
 class LexerSuite(unittest.TestCase):
 
-
-    def test_valid_lowercase_keywords(self):
+    def test_1(self):
+        """ Test Valid Lowercase Keywords """
         self.assertTrue(TestLexer.test(
             """
 function procedure
@@ -21,15 +21,15 @@ or else
 and         then
 or          else
 div mod not and or
-            """,
+""",
 
             "function,procedure,begin,end,true,false,if,then,else,for,while,with,do,to,downto,return,break,continue,integer,string,real,boolean,array,var,of,and then,or else,div,mod,not,and,or,<EOF>",
             101
         ))
+        
 
-
-
-    def test_valid_keywords(self):
+    def test_2(self):
+        """ Test Valid Keywords """
         self.assertTrue(TestLexer.test(
             """
 FuNctiOn prOceDure
@@ -44,28 +44,70 @@ VAR Of
 anD Then
 or eLse
 dIV mOd NOT and OR
-            """,
+""",
 
             "FuNctiOn,prOceDure,Begin,END,True,FalSE,IF,thEn,ELSE,fOR,While,with,DO,To,downTo,RETURN,break,COntiNue,integer,string,REAL,BOOLean,ARRAY,VAR,Of,anD Then,or eLse,dIV,mOd,NOT,and,OR,<EOF>",
             102
         ))
+        
 
-
-
-    def test_specific_characters(self):
+    def test_3(self):
+        """ Test Specific Characters """
         self.assertTrue(TestLexer.test(
             """
 + - * / := <= >= <> = < >
 ( ) { } [ ] ; , : , ..
-            """,
+""",
 
             "+,-,*,/,:=,<=,>=,<>,=,<,>,(,),[,],;,,,:,,,..,<EOF>",
             103
         ))
+        
 
+    def test_4(self):
+        """ Test Inline Comments """
+        self.assertTrue(TestLexer.test(
+            """
+// This is a line comment
+""",
 
+            "<EOF>",
+            104
+        ))
+        
 
-    def test_comments(self):
+    def test_5(self):
+        """ Test Block Comments 1 """
+        self.assertTrue(TestLexer.test(
+            """
+(* Comment with multiple lines
+    Hello comments
+*)
+""",
+
+            "<EOF>",
+            105
+        ))
+        
+
+    def test_6(self):
+        """ Test Block Comments 2 """
+        self.assertTrue(TestLexer.test(
+            """
+{ This is a block comment }
+
+{
+    Comment multiple lines
+}
+""",
+
+            "<EOF>",
+            106
+        ))
+        
+
+    def test_7(self):
+        """ Test Mix Comments """
         self.assertTrue(TestLexer.test(
             """
 (* This is a block comment *)
@@ -92,56 +134,53 @@ comment
 
 comment }
 *)
-            """,
+""",
 
             "<EOF>",
-            104
+            107
         ))
+        
 
-
-
-
-    def test_integer_literal(self):
+    def test_8(self):
+        """ Test Integer Literal """
         self.assertTrue(TestLexer.test(
             """
 0 1 2 3 4 123 123456789
-            """,
+""",
 
             "0,1,2,3,4,123,123456789,<EOF>",
-            105
+            108
         ))
+        
 
-
-
-    def test_real_literal(self):
+    def test_9(self):
+        """ Test Real Literal """
         self.assertTrue(TestLexer.test(
             """
 1.2 1. .1 1e2 1.2E-2 1.2e-2 .1E2 9.0 12e8 0.33E-3 128e-42
 12.     .05     12.05 1e-5      1.5e-6  0.0005e3   2e21
-            """,
+""",
 
             "1.2,1.,.1,1e2,1.2E-2,1.2e-2,.1E2,9.0,12e8,0.33E-3,128e-42,12.,.05,12.05,1e-5,1.5e-6,0.0005e3,2e21,<EOF>",
-            106
+            109
         ))
+        
 
-
-
-    def test_string_literal(self):
+    def test_10(self):
+        """ Test String Literal """
         self.assertTrue(TestLexer.test(
             """
 ""      "A"     
 "Mulitiple Characters"
 """,
 
-            "",
-            107
+            "<EOF>",
+            110
         ))
+        
 
-
-
-
-
-    def test_identifiers(self):
+    def test_11(self):
+        """ Test Identifiers """
         self.assertTrue(TestLexer.test(
             """
 a abc a123 a_ a_bc a_bc123 a_123 a_123bc a_bc_123
@@ -150,28 +189,27 @@ __ ____ ____123____
 abc ABC aBC Abc _ABC __ABc __123ABc
 
 h98f394__VWT_b5_VT_YGU87udhf__T_
-            """,
+""",
 
             "a,abc,a123,a_,a_bc,a_bc123,a_123,a_123bc,a_bc_123,_,_abc,_123,_abc123,_abc_123,_123_abc,__,____,____123____,abc,ABC,aBC,Abc,_ABC,__ABc,__123ABc,h98f394__VWT_b5_VT_YGU87udhf__T_,<EOF>",
-            108
+            111
         ))
+        
 
-
-
-
-    def test_invalid_identifier(self):
+    def test_12(self):
+        """ Test Invalid Identifiers """
         self.assertTrue(TestLexer.test(
-            """123abc 123_abc 00000123_123abc""",
+            """
+123abc 123_abc 00000123_123abc
+""",
 
             "123,abc,123,_abc,0,0,0,0,0,123,_123abc,<EOF>",
-            109
+            112
         ))
+        
 
-
-
-
-    def test_invalid_comments(self):
-        """Test Invalid Comment"""
+    def test_13(self):
+        """ Test Invalid Comments """
         self.assertTrue(TestLexer.test(
             """
 // inline comment but
@@ -179,110 +217,135 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 ( block comment missing *
 { comment without close
 (* comment not correct close )
-            """,
+""",
 
             "is,multiple,lines,(,block,comment,missing,*,{,comment,without,close,(,*,comment,not,correct,close,),<EOF>",
-            110
+            113
         ))
+        
 
-
-
-
-    def test_invalid_real(self):
+    def test_14(self):
+        """ Test Invalid Real Literal """
         self.assertTrue(TestLexer.test(
-            """e-12 e12 . 1e 12e 12.05e .05e ee e01""",
+            """
+e-12 e12 . 1e 12e 12.05e .05e ee e01
+""",
 
             "e,-,12,e12,.,1,e,12,e,12.05,e,.05,e,ee,e01,<EOF>",
-            111
+            114
         ))
+        
 
-
-
-    def test_array(self):
+    def test_15(self):
+        """ Test Array Declare """
         self.assertTrue(TestLexer.test(
-            "array [1 .. 3] of integer",
+            """
+array [1 .. 3] of integer
+""",
 
             "array,[,1,..,3,],of,integer,<EOF>",
-            112
+            115
         ))
+        
 
-
-
-    def test_unclose_string_no_endline(self):
+    def test_16(self):
+        """ Test Unclose String without endline """
         self.assertTrue(TestLexer.test(
             """  " hello lexer """,
 
             "Unclosed String:  hello lexer ",
-            113
-        ))
-
-
-
-    def test_unclose_string_with_endline(self):
-        self.assertTrue(TestLexer.test(
-            """  " hello lexer 
-            """,
-
-            "Unclosed String:  hello lexer ",
-            114
-        ))
-
-
-    
-    def test_escape_string(self):
-        self.assertTrue(TestLexer.test(
-            """ 
-" abc \n xyz "
-" abc \\n xyz "
-""
-            """,
-            "",
-            115
-        ))
-
-
-
-    def test_illegal_escape(self):
-        self.assertTrue(TestLexer.test(
-            """ " hello lexer \t "     asdf  """,
-
-            "Illegal Escape In String:  hello lexer 	 ",
             116
         ))
+        
 
+    def test_17(self):
+        """ Test Unclose String with endline """
+        self.assertTrue(TestLexer.test(
+            """
+" hello lexer 
 
+""",
 
-    def test_escape_string_literal(self):
+            "Unclosed String:  hello lexer ",
+            117
+        ))
+        
+
+    def test_18(self):
+        """ Test Escape String """
+        self.assertTrue(TestLexer.test(
+            """
+" abc \n xyz "
+" abc \\n xyz "
+""",
+
+            "<EOF>",
+            118
+        ))
+        
+
+    def test_19(self):
+        """ Test Illegal Escape """
+        self.assertTrue(TestLexer.test(
+            """
+" hello lexer \t "     asdf 
+""",
+
+            "<EOF>",
+            119
+        ))
+        
+
+    def test_20(self):
+        """ Test Illegal Escape """
         self.assertTrue(TestLexer.test(
             """
 "Backspace  \b"
-            """,
-            "Illegal Escape In String: Backspace  ",
-            117
+""",
+
+            "<EOF>",
+            120
         ))
+        
+
+    def test_21(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 "Formfeed   \f"
-            """,
-            "Illegal Escape In String: Formfeed   ",
-            118
+""",
+
+            "<EOF>",
+            121
         ))
+        
+
+    def test_22(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 "Return     \r"
-            """,
-            """Illegal Escape In String: Return     
 """,
-            119
+
+            "<EOF>",
+            122
         ))
+        
+
+    def test_23(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 "Newline    \n"
-            """,
-            """Illegal Escape In String: Newline    
 """,
-            120
+
+            "<EOF>",
+            123
         ))
+        
+
+    def test_24(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 "Newline
@@ -291,23 +354,846 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
             """Illegal Escape In String: Newline
     multiple lines
 """,
-            121
+
+            "<EOF>",
+            124
         ))
+        
+
+    def test_25(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 "Tab        \t"
-            """,
-            "Illegal Escape In String: Tab        	",
-            122
+""",
+
+            "<EOF>",
+            125
         ))
+        
+
+    def test_26(self):
+        """ Test  """
         self.assertTrue(TestLexer.test(
             """
 "Backslash  \\ "
-            """,
-            "Illegal Escape In String: Backslash  \ ",
-            123
+""",
+
+            "<EOF>",
+            126
         ))
+        
 
+    def test_27(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
 
+            "<EOF>",
+            127
+        ))
+        
 
+    def test_28(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
 
+            "<EOF>",
+            128
+        ))
+        
+
+    def test_29(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            129
+        ))
+        
+
+    def test_30(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            130
+        ))
+        
+
+    def test_31(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            131
+        ))
+        
+
+    def test_32(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            132
+        ))
+        
+
+    def test_33(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            133
+        ))
+        
+
+    def test_34(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            134
+        ))
+        
+
+    def test_35(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            135
+        ))
+        
+
+    def test_36(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            136
+        ))
+        
+
+    def test_37(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            137
+        ))
+        
+
+    def test_38(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            138
+        ))
+        
+
+    def test_39(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            139
+        ))
+        
+
+    def test_40(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            140
+        ))
+        
+
+    def test_41(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            141
+        ))
+        
+
+    def test_42(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            142
+        ))
+        
+
+    def test_43(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            143
+        ))
+        
+
+    def test_44(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            144
+        ))
+        
+
+    def test_45(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            145
+        ))
+        
+
+    def test_46(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            146
+        ))
+        
+
+    def test_47(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            147
+        ))
+        
+
+    def test_48(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            148
+        ))
+        
+
+    def test_49(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            149
+        ))
+        
+
+    def test_50(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            150
+        ))
+        
+
+    def test_51(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            151
+        ))
+        
+
+    def test_52(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            152
+        ))
+        
+
+    def test_53(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            153
+        ))
+        
+
+    def test_54(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            154
+        ))
+        
+
+    def test_55(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            155
+        ))
+        
+
+    def test_56(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            156
+        ))
+        
+
+    def test_57(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            157
+        ))
+        
+
+    def test_58(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            158
+        ))
+        
+
+    def test_59(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            159
+        ))
+        
+
+    def test_60(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            160
+        ))
+        
+
+    def test_61(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            161
+        ))
+        
+
+    def test_62(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            162
+        ))
+        
+
+    def test_63(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            163
+        ))
+        
+
+    def test_64(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            164
+        ))
+        
+
+    def test_65(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            165
+        ))
+        
+
+    def test_66(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            166
+        ))
+        
+
+    def test_67(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            167
+        ))
+        
+
+    def test_68(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            168
+        ))
+        
+
+    def test_69(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            169
+        ))
+        
+
+    def test_70(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            170
+        ))
+        
+
+    def test_71(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            171
+        ))
+        
+
+    def test_72(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            172
+        ))
+        
+
+    def test_73(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            173
+        ))
+        
+
+    def test_74(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            174
+        ))
+        
+
+    def test_75(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            175
+        ))
+        
+
+    def test_76(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            176
+        ))
+        
+
+    def test_77(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            177
+        ))
+        
+
+    def test_78(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            178
+        ))
+        
+
+    def test_79(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            179
+        ))
+        
+
+    def test_80(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            180
+        ))
+        
+
+    def test_81(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            181
+        ))
+        
+
+    def test_82(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            182
+        ))
+        
+
+    def test_83(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            183
+        ))
+        
+
+    def test_84(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            184
+        ))
+        
+
+    def test_85(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            185
+        ))
+        
+
+    def test_86(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            186
+        ))
+        
+
+    def test_87(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            187
+        ))
+        
+
+    def test_88(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            188
+        ))
+        
+
+    def test_89(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            189
+        ))
+        
+
+    def test_90(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            190
+        ))
+        
+
+    def test_91(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            191
+        ))
+        
+
+    def test_92(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            192
+        ))
+        
+
+    def test_93(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            193
+        ))
+        
+
+    def test_94(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            194
+        ))
+        
+
+    def test_95(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            195
+        ))
+        
+
+    def test_96(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            196
+        ))
+        
+
+    def test_97(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            197
+        ))
+        
+
+    def test_98(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            198
+        ))
+        
+
+    def test_99(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            199
+        ))
+        
+
+    def test_100(self):
+        """ Test  """
+        self.assertTrue(TestLexer.test(
+            """
+""",
+
+            "<EOF>",
+            200
+        ))
+        
