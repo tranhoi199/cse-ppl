@@ -1,0 +1,1 @@
+Var a, B, c: array [5 .. 1000] of Boolean ;

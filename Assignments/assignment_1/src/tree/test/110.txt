@@ -1,0 +1,18 @@
+procedure foo(
+    x: integer;
+    y, z: real;
+    g, h: string;
+    arr_nodes: Array[0 .. 1000] of real
+);
+
+var 
+    a, b, c: real;
+    p: boolean;
+    q: string;
+    i, j: integer;
+    dd: array[0..1000005] of boolean;
+
+begin
+
+
+end

@@ -1,0 +1,15 @@
+// Test If Statement
+
+procedure foo();
+var a: real;
+begin
+    if a = 1 then begin
+        if b > 3 then c := 5;
+        else d := 1;
+
+        if e < 4 then ok();
+    end else begin
+        if h > 5 then nty(); else lyo();
+        g := 5;
+    end
+end

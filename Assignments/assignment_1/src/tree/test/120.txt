@@ -1,0 +1,10 @@
+// Test Precedence, Assoc - not * / div mod + - and or (  )
+
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    a := not - F * G div 5 + (I or L and N + Y or Q * not -P) and 6 * 5 + O div not (5 mod T) ;
+end

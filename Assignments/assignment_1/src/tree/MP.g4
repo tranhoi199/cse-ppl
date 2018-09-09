@@ -2,16 +2,11 @@
 
 grammar MP;
 
-@lexer::header {
-from lexererr import *
-}
-
 options {
-	language=Python3;
+	language=Java;
 }
 
-
-/** 
+/**
  * 2 Program Structure
  */
 program: (var_declare | func_declare | proc_declare)* EOF ;
@@ -292,21 +287,17 @@ WS : [ \t\r\n\f]+ -> skip ;
 
 UNCLOSE_STRING: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"'] )*
 	{
-		raise UncloseString(str(self.text)[1:])
 	}
 	;
 
 ILLEGAL_ESCAPE: '"' ('\\' ~[btnfr"'\\] | ~'\\')* '"'
 	{
-		y = str(self.text)
-		raise IllegalEscape(y[1:len(y)-1])
 	}
 	;
 
 
 ERROR_CHAR: .
 	{
-		raise ErrorToken(self.text)
 	}
 	;
 

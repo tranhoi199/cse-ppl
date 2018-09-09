@@ -3,15 +3,10 @@
 .antlr4
 __pycache__/
 
-*/*/test/solutions/
-*/*/test/testcases/
-
-*/*/*/test/solutions/
-*/*/*/test/testcases/
-
-*/*/*/*/test/solutions/
-*/*/*/*/test/testcases/
-
+solutions/
+testcases/
+target/
+.vscode/
 
 # Python
 # Byte-compiled / optimized / DLL files

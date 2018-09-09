@@ -1,0 +1,10 @@
+// Test Precedence, Assoc "- not" with "( + -)"
+
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    a := -5 - 6 + not 5 - 9 - not -(3 + not -5);
+end

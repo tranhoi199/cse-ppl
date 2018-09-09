@@ -1,0 +1,8 @@
+procedure foo();
+
+var 
+    a: real;
+
+begin
+    foo(2)[3+x] := a[b[f+y[2]]] + 3;
+end

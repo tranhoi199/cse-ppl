@@ -1,0 +1,7 @@
+// Test While statement
+
+procedure foo();
+var a: real;
+begin
+    While (i < 1) do i := i+1;
+end
