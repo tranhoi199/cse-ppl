@@ -3,9 +3,10 @@ const path = require('path');
 
 let text = '';
 
-for (let i = 1; i < 101; i++) {
+for (let i = 41; i < 101; i++) {
         text += `
     def test_${i}(self):
+        """ Test  """
         input = """
 
 """

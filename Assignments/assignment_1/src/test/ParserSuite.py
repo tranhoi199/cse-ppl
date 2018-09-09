@@ -117,7 +117,7 @@ var
     p: boolean;
     q: string;
     i, j: integer;
-    dd: array[0..1000005] of boolean;
+    dd: array[0 .. 1000005] of boolean;
 
 begin
 
@@ -561,7 +561,7 @@ var a: real;
 begin
     with 
         a: integer;
-        b, c: array [0..15] of Boolean;
+        b, c: array [0 .. 15] of Boolean;
         x, y, z: real;
     do begin
         a := x := y := 3;
@@ -648,470 +648,613 @@ end
         
 
     def test_41(self):
+        """ Test Missing ; """
         input = """
-
+var a: integer
 """
-        expect = "successful"
+        expect = "Error on line 3 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 241))
         
 
     def test_42(self):
+        """ Test Missing ; """
         input = """
-
-"""
-        expect = "successful"
+var a: integer"""
+        expect = "Error on line 2 col 14: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 242))
         
 
     def test_43(self):
+        """ Test Error : """
         input = """
-
+var a:: integer;
 """
-        expect = "successful"
+        expect = "Error on line 2 col 6: :"
         self.assertTrue(TestParser.test(input, expect, 243))
         
 
     def test_44(self):
+        """ Test Error Type """
         input = """
-
+var a: int
 """
-        expect = "successful"
+        expect = "Error on line 2 col 7: int"
         self.assertTrue(TestParser.test(input, expect, 244))
         
 
     def test_45(self):
+        """ Test Missing type """
         input = """
-
+var a:
 """
-        expect = "successful"
+        expect = "Error on line 3 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 245))
         
 
     def test_46(self):
+        """ Test Missing type """
         input = """
-
+var a
 """
-        expect = "successful"
+        expect = "Error on line 3 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 246))
         
 
     def test_47(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+var a: boolean integer
 """
-        expect = "successful"
+        expect = "Error on line 2 col 15: integer"
         self.assertTrue(TestParser.test(input, expect, 247))
         
 
     def test_48(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+a : integer
 """
-        expect = "successful"
+        expect = "Error on line 2 col 0: a"
         self.assertTrue(TestParser.test(input, expect, 248))
         
 
     def test_49(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+var real: integer;
 """
-        expect = "successful"
+        expect = "Error on line 2 col 4: real"
         self.assertTrue(TestParser.test(input, expect, 249))
         
 
     def test_50(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+var a integer;
 """
-        expect = "successful"
+        expect = "Error on line 2 col 6: integer"
         self.assertTrue(TestParser.test(input, expect, 250))
         
 
     def test_51(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+var a, b, : boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 2 col 10: :"
         self.assertTrue(TestParser.test(input, expect, 251))
         
 
     def test_52(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+var a, b, c: boolean;
+x: real
 """
-        expect = "successful"
+        expect = "Error on line 4 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 252))
         
 
     def test_53(self):
+        """ Test Wrong Syntax Var Declare """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real
 """
-        expect = "successful"
+        expect = "Error on line 4 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 253))
         
 
     def test_54(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] of bool;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 26: bool"
         self.assertTrue(TestParser.test(input, expect, 254))
         
 
     def test_55(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] of boolean
 """
-        expect = "successful"
+        expect = "Error on line 5 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 255))
         
 
     def test_56(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] boolean;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 23: boolean"
         self.assertTrue(TestParser.test(input, expect, 256))
         
 
     def test_57(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] of ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 26: ;"
         self.assertTrue(TestParser.test(input, expect, 257))
         
 
     def test_58(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5 of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 22: of"
         self.assertTrue(TestParser.test(input, expect, 258))
         
 
     def test_59(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 ..] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 19: ]"
         self.assertTrue(TestParser.test(input, expect, 259))
         
 
     def test_60(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 16: ]"
         self.assertTrue(TestParser.test(input, expect, 260))
         
 
     def test_61(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0  5] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 18: 5"
         self.assertTrue(TestParser.test(input, expect, 261))
         
 
     def test_62(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 ... 5] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 19: ."
         self.assertTrue(TestParser.test(input, expect, 262))
         
 
     def test_63(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[.. 5] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: .."
         self.assertTrue(TestParser.test(input, expect, 263))
         
 
     def test_64(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: ]"
         self.assertTrue(TestParser.test(input, expect, 264))
         
 
     def test_65(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array of boolean
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: of"
         self.assertTrue(TestParser.test(input, expect, 265))
         
 
     def test_66(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: ;"
         self.assertTrue(TestParser.test(input, expect, 266))
         
 
     def test_67(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 23: boolean"
         self.assertTrue(TestParser.test(input, expect, 267))
         
 
     def test_68(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 23: ;"
         self.assertTrue(TestParser.test(input, expect, 268))
         
 
     def test_69(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] with boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 23: with"
         self.assertTrue(TestParser.test(input, expect, 269))
         
 
     def test_70(self):
+        """ Test Array Declare Error """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0 .. 5] in boolean;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 23: in"
         self.assertTrue(TestParser.test(input, expect, 270))
         
 
     def test_71(self):
+        """ Test Array Declare Error  """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array(0 .. 5) of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 14: ("
         self.assertTrue(TestParser.test(input, expect, 271))
         
 
     def test_72(self):
+        """ Test Array Declare Error  """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: arr[0 .. 5] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 9: arr"
         self.assertTrue(TestParser.test(input, expect, 272))
         
 
     def test_73(self):
+        """ Test Array Declare Error  """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array [0 .. 5] of true ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 27: true"
         self.assertTrue(TestParser.test(input, expect, 273))
         
 
     def test_74(self):
+        """ Test Array Declare without space dotdot """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array [0 ..5] of boolean ;
 """
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 274))
         
 
     def test_75(self):
+        """ Test Array Declare without space dotdot """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0.. 5] of boolean ;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: 0."
         self.assertTrue(TestParser.test(input, expect, 275))
         
 
     def test_76(self):
+        """ Test Array Declare without space dotdot """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[0..5] of boolean;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: 0."
         self.assertTrue(TestParser.test(input, expect, 276))
         
 
     def test_77(self):
+        """ Test Negative index Array Declare """
         input = """
-
+var a, b, c: boolean;
+x, y, z: real ;
+g, h, i: array[-5 .. 5] of boolean;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 15: -"
         self.assertTrue(TestParser.test(input, expect, 277))
         
 
     def test_78(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo()
 """
-        expect = "successful"
+        expect = "Error on line 3 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 278))
         
 
     def test_79(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo ;
 """
-        expect = "successful"
+        expect = "Error on line 2 col 14: ;"
         self.assertTrue(TestParser.test(input, expect, 279))
         
 
     def test_80(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo( ;
 """
-        expect = "successful"
+        expect = "Error on line 2 col 15: ;"
         self.assertTrue(TestParser.test(input, expect, 280))
         
 
     def test_81(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo() ;
 """
-        expect = "successful"
+        expect = "Error on line 3 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 281))
         
 
     def test_82(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure 123()
 """
-        expect = "successful"
+        expect = "Error on line 2 col 10: 123"
         self.assertTrue(TestParser.test(input, expect, 282))
         
 
     def test_83(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure true()
 """
-        expect = "successful"
+        expect = "Error on line 2 col 10: true"
         self.assertTrue(TestParser.test(input, expect, 283))
         
 
     def test_84(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedue foo();
 """
-        expect = "successful"
+        expect = "Error on line 2 col 0: procedue"
         self.assertTrue(TestParser.test(input, expect, 284))
         
 
     def test_85(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+begin
+end;
 """
-        expect = "successful"
+        expect = "Error on line 4 col 3: ;"
         self.assertTrue(TestParser.test(input, expect, 285))
         
 
     def test_86(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+begin
 """
-        expect = "successful"
+        expect = "Error on line 4 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 286))
         
 
     def test_87(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+var ;
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 3 col 4: ;"
         self.assertTrue(TestParser.test(input, expect, 287))
         
 
     def test_88(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+var a;
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 3 col 5: ;"
         self.assertTrue(TestParser.test(input, expect, 288))
         
 
     def test_89(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+var
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 4 col 0: begin"
         self.assertTrue(TestParser.test(input, expect, 289))
         
 
     def test_90(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+var a: integer;
+end
 """
-        expect = "successful"
+        expect = "Error on line 4 col 0: end"
         self.assertTrue(TestParser.test(input, expect, 290))
         
 
     def test_91(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+var a: integer;
+begin
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 7 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 291))
         
 
     def test_92(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo();
+var a: integer;
+begin
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 7 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 292))
         
 
     def test_93(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo(a: real;);
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 2 col 22: )"
         self.assertTrue(TestParser.test(input, expect, 293))
         
 
     def test_94(self):
+        """ Test Wrong Syntax Procedure Declare """
         input = """
-
+procedure foo(a: real; b, c, d: boolean;);
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 2 col 40: )"
         self.assertTrue(TestParser.test(input, expect, 294))
         
 
     def test_95(self):
+        """ Test Wrong Syntax Function Declare """
         input = """
-
+function foo();
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 2 col 14: ;"
         self.assertTrue(TestParser.test(input, expect, 295))
         
 
     def test_96(self):
+        """ Test Wrong Syntax Function Declare """
         input = """
-
+function foo: real;
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 2 col 12: :"
         self.assertTrue(TestParser.test(input, expect, 296))
         
 
     def test_97(self):
+        """ Test Wrong Syntax Function Declare """
         input = """
-
+function foo(): float;
+begin
+end
 """
-        expect = "successful"
+        expect = "Error on line 2 col 16: float"
         self.assertTrue(TestParser.test(input, expect, 297))
         
 
     def test_98(self):
+        """ Test  """
         input = """
-
+procedure foo();
+begin
+    a = 1;
+end
 """
-        expect = "successful"
+        expect = "Error on line 4 col 9: ;"
         self.assertTrue(TestParser.test(input, expect, 298))
         
 
     def test_99(self):
+        """ Test  """
         input = """
 
 """
@@ -1120,6 +1263,7 @@ end
         
 
     def test_100(self):
+        """ Test  """
         input = """
 
 """

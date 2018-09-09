@@ -42,7 +42,9 @@ stmt
 	;
 
 // Assignment
-assign_stmt: assign SEMI;
+assign_stmt: assign_lhs SEMI;
+
+assign_lhs: exp ASSIGN assign ;
 
 assign: <assoc=right> assign ASSIGN assign | exp ;
 
@@ -102,7 +104,7 @@ exp
 	| <assoc=right> (NOT | SUB) exp
 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
 	| exp ( ADD | SUB | OR ) exp
-	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
+	| exp ( EQ | NEQ | GT | LT | GTE | LTE ) exp
 	| exp ( op_and_then | op_or_else ) exp
 	;
 
@@ -144,8 +146,8 @@ op_or_else: OR ELSE ;
 literal
 	: INTEGER_LITERAL
 	| REAL_LITERAL
-	| BOOLEAN_LITERAL
 	| STRING_LITERAL
+	| boolean_literal
 	;
 
 
@@ -248,7 +250,7 @@ DOT: '.';
 
 
 // Domain Values
-BOOLEAN_LITERAL: TRUE | FALSE ;
+boolean_literal: TRUE | FALSE ;
 
 STRING_LITERAL: '"' STR_CHAR* '"';
 
