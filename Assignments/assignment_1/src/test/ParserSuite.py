@@ -5,6 +5,7 @@ class ParserSuite(unittest.TestCase):
 
 
     def test_1(self):
+        """ Test Var Declare 1 line 1 var """
         input = """
 var a: integer;
 """
@@ -13,6 +14,7 @@ var a: integer;
         
 
     def test_2(self):
+        """ Test Var Declare 1 line n var """
         input = """
 var a, b, c: integer;
 """
@@ -21,6 +23,7 @@ var a, b, c: integer;
         
 
     def test_3(self):
+        """ Test Var Declare n line """
         input = """
 var a, b, c: integer;
 var x, y: real;
@@ -31,6 +34,7 @@ var z: string;
         
 
     def test_4(self):
+        """ Test Var Declare array """
         input = """
 var a: array[1 .. 3] of integer;
 """
@@ -39,6 +43,7 @@ var a: array[1 .. 3] of integer;
         
 
     def test_5(self):
+        """ Test Var Declare """
         input = """
 Var a, B, c: array [5 .. 1000] of Boolean ;
 """

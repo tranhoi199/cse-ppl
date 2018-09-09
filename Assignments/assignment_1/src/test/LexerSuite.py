@@ -22,8 +22,7 @@ and         then
 or          else
 div mod not and or
 """,
-
-            "function,procedure,begin,end,true,false,if,then,else,for,while,with,do,to,downto,return,break,continue,integer,string,real,boolean,array,var,of,and then,or else,div,mod,not,and,or,<EOF>",
+            "function,procedure,begin,end,true,false,if,then,else,for,while,with,do,to,downto,return,break,continue,integer,string,real,boolean,array,var,of,and,then,or,else,and,then,or,else,div,mod,not,and,or,<EOF>",
             101
         ))
         
@@ -43,10 +42,11 @@ ARRAY
 VAR Of
 anD Then
 or eLse
+AND             THeN   OR   elSE
 dIV mOd NOT and OR
 """,
 
-            "FuNctiOn,prOceDure,Begin,END,True,FalSE,IF,thEn,ELSE,fOR,While,with,DO,To,downTo,RETURN,break,COntiNue,integer,string,REAL,BOOLean,ARRAY,VAR,Of,anD Then,or eLse,dIV,mOd,NOT,and,OR,<EOF>",
+            "FuNctiOn,prOceDure,Begin,END,True,FalSE,IF,thEn,ELSE,fOR,While,with,DO,To,downTo,RETURN,break,COntiNue,integer,string,REAL,BOOLean,ARRAY,VAR,Of,anD,Then,or,eLse,AND,THeN,OR,elSE,dIV,mOd,NOT,and,OR,<EOF>",
             102
         ))
         
@@ -174,7 +174,7 @@ comment }
 "Mulitiple Characters"
 """,
 
-            "<EOF>",
+            '"","A","Mulitiple Characters",<EOF>',
             110
         ))
         
@@ -266,7 +266,9 @@ array [1 .. 3] of integer
 
 """,
 
-            "Unclosed String:  hello lexer ",
+            """Unclosed String:  hello lexer 
+
+""",
             117
         ))
         
@@ -279,7 +281,8 @@ array [1 .. 3] of integer
 " abc \\n xyz "
 """,
 
-            "<EOF>",
+            '''" abc 
+ xyz "," abc \n xyz ",<EOF>''',
             118
         ))
         
@@ -291,7 +294,7 @@ array [1 .. 3] of integer
 " hello lexer \t "     asdf 
 """,
 
-            "<EOF>",
+            '" hello lexer 	 ",asdf,<EOF>',
             119
         ))
         
@@ -303,7 +306,7 @@ array [1 .. 3] of integer
 "Backspace  \b"
 """,
 
-            "<EOF>",
+            '"Backspace  ",<EOF>',
             120
         ))
         
@@ -315,7 +318,7 @@ array [1 .. 3] of integer
 "Formfeed   \f"
 """,
 
-            "<EOF>",
+            '"Formfeed   ",<EOF>',
             121
         ))
         
@@ -327,7 +330,8 @@ array [1 .. 3] of integer
 "Return     \r"
 """,
 
-            "<EOF>",
+            '''"Return     
+",<EOF>''',
             122
         ))
         
@@ -339,7 +343,8 @@ array [1 .. 3] of integer
 "Newline    \n"
 """,
 
-            "<EOF>",
+            '''"Newline    
+",<EOF>''',
             123
         ))
         
@@ -351,11 +356,10 @@ array [1 .. 3] of integer
 "Newline
     multiple lines
 "           """,
-            """Illegal Escape In String: Newline
-    multiple lines
-""",
 
-            "<EOF>",
+            '''"Newline
+    multiple lines
+",<EOF>''',
             124
         ))
         
@@ -367,7 +371,7 @@ array [1 .. 3] of integer
 "Tab        \t"
 """,
 
-            "<EOF>",
+            '"Tab        	",<EOF>',
             125
         ))
         
@@ -379,7 +383,7 @@ array [1 .. 3] of integer
 "Backslash  \\ "
 """,
 
-            "<EOF>",
+            "Illegal Escape In String: Backslash  \ ",
             126
         ))
         

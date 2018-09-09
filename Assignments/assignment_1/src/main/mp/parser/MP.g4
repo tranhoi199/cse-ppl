@@ -250,7 +250,7 @@ DOT: '.';
 // Domain Values
 BOOLEAN_LITERAL: TRUE | FALSE ;
 
-STRING_LITERAL: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"'] )* '"';
+STRING_LITERAL: '"' STR_CHAR* '"';
 
 
 REAL_LITERAL
@@ -290,19 +290,26 @@ WS : [ \t\r\n\f]+ -> skip ;
 
 
 
-UNCLOSE_STRING: '"' ( '\\' [btnfr"'\\] | ~[\b\t\f\r\n\\"'] )*
-	{
-		raise UncloseString(str(self.text)[1:])
-	}
-	;
-
-ILLEGAL_ESCAPE: '"' ('\\' ~[btnfr"'\\] | ~'\\')* '"'
+UNCLOSE_STRING: '"' STR_CHAR*
 	{
 		y = str(self.text)
-		raise IllegalEscape(y[1:len(y)-1])
+		raise UncloseString(y[1:])
 	}
 	;
 
+ILLEGAL_ESCAPE: '"' STR_CHAR* ESC_ILLEGAL
+	{
+		y = str(self.text)
+		raise IllegalEscape(y[1:])
+	}
+	;
+
+
+fragment STR_CHAR: ESC_SEQ | ~["\\] ;
+
+fragment ESC_SEQ: '\\' [btnfr"'\\] ;
+
+fragment ESC_ILLEGAL: '\\' ~[btnfr"'\\] | ~'\\' ;
 
 ERROR_CHAR: .
 	{
