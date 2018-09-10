@@ -104,7 +104,7 @@ exp
 	| <assoc=right> (NOT | SUB) exp
 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
 	| exp ( ADD | SUB | OR ) exp
-	| exp ( EQ | NEQ | GT | LT | GTE | LTE ) exp
+	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
 	| exp ( op_and_then | op_or_else ) exp
 	;
 
@@ -252,7 +252,12 @@ DOT: '.';
 // Domain Values
 boolean_literal: TRUE | FALSE ;
 
-STRING_LITERAL: '"' STR_CHAR* '"';
+STRING_LITERAL: '"' STR_CHAR* '"' 
+	{
+		y = str(self.text)
+		self.text = y[1:len(y)-1]
+	}
+	;
 
 
 REAL_LITERAL
@@ -263,7 +268,8 @@ REAL_LITERAL
 
 
 // Integer should be after Real
-INTEGER_LITERAL : [1-9][0-9]* | '0';
+// INTEGER_LITERAL : [1-9][0-9]* | '0';
+INTEGER_LITERAL : DIGIT+ ;
 
 
 fragment EXPONENT: [eE] SIGN? DIGIT+ ;

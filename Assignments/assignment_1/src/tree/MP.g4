@@ -248,7 +248,10 @@ DOT: '.';
 // Domain Values
 boolean_literal: TRUE | FALSE ;
 
-STRING_LITERAL: '"' STR_CHAR* '"';
+STRING_LITERAL: '"' STR_CHAR* '"' 
+	{
+	}
+	;
 
 
 REAL_LITERAL
@@ -259,7 +262,8 @@ REAL_LITERAL
 
 
 // Integer should be after Real
-INTEGER_LITERAL : [1-9][0-9]* | '0';
+// INTEGER_LITERAL : [1-9][0-9]* | '0';
+INTEGER_LITERAL : DIGIT+ ;
 
 
 fragment EXPONENT: [eE] SIGN? DIGIT+ ;

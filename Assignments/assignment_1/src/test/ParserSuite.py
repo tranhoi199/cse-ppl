@@ -52,6 +52,7 @@ Var a, B, c: array [5 .. 1000] of Boolean ;
         
 
     def test_6(self):
+        """ Test Var Declare """
         input = """
 Var a, B, c: InTeGer;
     x, Y, Z: Boolean ;
@@ -62,6 +63,7 @@ Var a, B, c: InTeGer;
         
 
     def test_7(self):
+        """ Test Procedure Function Declare """
         input = """
 procedure foo();
 var a: real;
@@ -74,6 +76,7 @@ end
         
 
     def test_8(self):
+        """ Test Procedure Function Declare """
         input = """
 procedure foo(x: integer);
 var a, b, c: real;
@@ -86,6 +89,7 @@ end
         
 
     def test_9(self):
+        """ Test Procedure Function Declare """
         input = """
 procedure foo(x: integer; y, z: real; g, h: string);
 var 
@@ -104,6 +108,7 @@ end
         
 
     def test_10(self):
+        """ Test Procedure Function Declare """
         input = """
 procedure foo(
     x: integer;
@@ -129,6 +134,7 @@ end
         
 
     def test_11(self):
+        """ Test Assign Statment """
         input = """
 procedure foo();
 
@@ -144,6 +150,7 @@ end
         
 
     def test_12(self):
+        """ Test Assign Statment """
         input = """
 procedure foo();
 
@@ -159,6 +166,7 @@ end
         
 
     def test_13(self):
+        """ Test Assign Statment """
         input = """
 procedure foo();
 
@@ -174,6 +182,7 @@ end
         
 
     def test_14(self):
+        """ Test Assign Statment """
         input = """
 procedure foo();
 
@@ -189,6 +198,7 @@ end
         
 
     def test_15(self):
+        """ Test Assign Statment """
         input = """
 procedure foo();
 
@@ -204,9 +214,8 @@ end
         
 
     def test_16(self):
+        """ Test Associative """
         input = """
-// Test Assoc + -
-
 procedure foo();
 
 var 
@@ -221,9 +230,8 @@ end
         
 
     def test_17(self):
+        """ Test Associative """
         input = """
-// Test Assoc + - or
-
 procedure foo();
 
 var 
@@ -238,9 +246,8 @@ end
         
 
     def test_18(self):
+        """ Test Associative """
         input = """
-// Test Assoc / * div mod and
-
 procedure foo();
 
 var 
@@ -255,9 +262,8 @@ end
         
 
     def test_19(self):
+        """ Test Precedence """
         input = """
-// Test Precedence, Assoc "- not" with "( + -)"
-
 procedure foo();
 
 var 
@@ -272,9 +278,8 @@ end
         
 
     def test_20(self):
+        """ Test Precedence """
         input = """
-// Test Precedence, Assoc - not * / div mod + - and or (  )
-
 procedure foo();
 
 var 
@@ -289,9 +294,8 @@ end
         
 
     def test_21(self):
+        """ Test Associative """
         input = """
-// Test Assoc = <> < <= > >=
-
 procedure foo();
 
 var 
@@ -306,9 +310,8 @@ end
         
 
     def test_22(self):
+        """ Test Associative """
         input = """
-// Test Assoc = <> < <= > >=
-
 procedure foo();
 
 var 
@@ -323,9 +326,8 @@ end
         
 
     def test_23(self):
+        """ Test Associative """
         input = """
-// Test Assoc and then, or else
-
 procedure foo();
 
 var 
@@ -340,9 +342,8 @@ end
         
 
     def test_24(self):
+        """ Test Associative """
         input = """
-// Test Assoc and then, or else
-
 procedure foo();
 
 var 
@@ -357,9 +358,8 @@ end
         
 
     def test_25(self):
+        """ Test True False Keywords """
         input = """
-// Test TRUE FALSE 
-
 procedure foo();
 
 var 
@@ -374,9 +374,8 @@ end
         
 
     def test_26(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -388,9 +387,8 @@ end
         
 
     def test_27(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -403,9 +401,8 @@ end
         
 
     def test_28(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -418,9 +415,8 @@ end
         
 
     def test_29(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -435,9 +431,8 @@ end
         
 
     def test_30(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -449,9 +444,8 @@ end
         
 
     def test_31(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -469,9 +463,8 @@ end
         
 
     def test_32(self):
+        """ Test If Statement """
         input = """
-// Test If Statement
-
 procedure foo();
 var a: real;
 begin
@@ -491,9 +484,8 @@ end
         
 
     def test_33(self):
+        """ Test While Statment """
         input = """
-// Test While statement
-
 procedure foo();
 var a: real;
 begin
@@ -505,9 +497,8 @@ end
         
 
     def test_34(self):
+        """ Test While Statement """
         input = """
-// Test while statement
-
 procedure foo();
 var a: real;
 begin
@@ -522,9 +513,8 @@ end
         
 
     def test_35(self):
+        """ Test For Statment """
         input = """
-// Test For while with break continue return statement
-
 procedure foo();
 var a: real;
 begin
@@ -539,9 +529,8 @@ end
         
 
     def test_36(self):
+        """ Test With Statment """
         input = """
-// Test For while with break continue return statement
-
 procedure foo();
 var a: real;
 begin
@@ -553,9 +542,8 @@ end
         
 
     def test_37(self):
+        """ Test With Statment """
         input = """
-// Test For while with break continue return statement
-
 procedure foo();
 var a: real;
 begin
@@ -573,9 +561,8 @@ end
         
 
     def test_38(self):
+        """ Test Call Statment """
         input = """
-// Test call statement
-
 procedure foo();
 var a: real;
 begin
@@ -590,9 +577,8 @@ end
         
 
     def test_39(self):
+        """ Test Complex Code """
         input = """
-// Test complex code
-
 var a, b, c: real;
 
 var x, y, z: Boolean;
@@ -631,9 +617,8 @@ end
         
 
     def test_40(self):
+        """ Test Success Code Statment """
         input = """
-// Test For while with break continue return statement
-
 procedure foo();
 var a: real;
 begin
@@ -1242,7 +1227,7 @@ end
         
 
     def test_98(self):
-        """ Test  """
+        """ Test Error If Stmt """
         input = """
 procedure foo();
 begin
@@ -1254,19 +1239,1027 @@ end
         
 
     def test_99(self):
-        """ Test  """
+        """ Test Error If Stmt """
         input = """
-
+procedure foo();
+begin
+    if a = 1:
+        print('OK');
+end
 """
-        expect = "successful"
+        expect = "Error on line 4 col 12: :"
         self.assertTrue(TestParser.test(input, expect, 299))
         
 
     def test_100(self):
-        """ Test  """
+        """ Test Error If Stmt """
         input = """
+procedure foo();
+begin
+    if a = 1 {
+        print('OK');
+    }
+end
+"""
+        expect = "Error on line 7 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 300))
+    
+    def test_101(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1
+        print('OK');
+end
+"""
+        expect = "Error on line 5 col 8: print"
+        self.assertTrue(TestParser.test(input, expect, 301))
+        
 
+    def test_102(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 print('OK');
+end
+"""
+        expect = "Error on line 4 col 13: print"
+        self.assertTrue(TestParser.test(input, expect, 302))
+        
+
+    def test_103(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 then b := 2; else
+end
+"""
+        expect = "Error on line 5 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 303))
+        
+
+    def test_104(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 then b := 2 else begin
+end
+"""
+        expect = "Error on line 4 col 25: else"
+        self.assertTrue(TestParser.test(input, expect, 304))
+        
+
+    def test_105(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 then b := 2 else begin
+        b:=2
+end
+"""
+        expect = "Error on line 4 col 25: else"
+        self.assertTrue(TestParser.test(input, expect, 305))
+        
+
+    def test_106(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 then b := 2
+end
+"""
+        expect = "Error on line 5 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 306))
+        
+
+    def test_107(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 then b := 2; else c := 3
+end
+"""
+        expect = "Error on line 5 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 307))
+        
+
+    def test_108(self):
+        """ Test Error If Stmt """
+        input = """
+procedure foo();
+begin
+    if a = 1 then b := 2; else begin
+        c := 4
+    end;
+end
+"""
+        expect = "Error on line 6 col 4: end"
+        self.assertTrue(TestParser.test(input, expect, 308))
+        
+
+    def test_109(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i = 1 to 10 do ok();
+end
+"""
+        expect = "Error on line 4 col 10: ="
+        self.assertTrue(TestParser.test(input, expect, 309))
+        
+
+    def test_110(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 to 10: ok();
+end
+"""
+        expect = "Error on line 4 col 20: :"
+        self.assertTrue(TestParser.test(input, expect, 310))
+        
+
+    def test_111(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 .. 10 do ok();
+end
+"""
+        expect = "Error on line 4 col 15: .."
+        self.assertTrue(TestParser.test(input, expect, 311))
+        
+
+    def test_112(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for (int i = 1; i < 10; i++) ok();
+end
+"""
+        expect = "Error on line 4 col 8: ("
+        self.assertTrue(TestParser.test(input, expect, 312))
+        
+
+    def test_113(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 down 10 do ok();
+end
+"""
+        expect = "Error on line 4 col 15: down"
+        self.assertTrue(TestParser.test(input, expect, 313))
+        
+
+    def test_114(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 to 10+5-4*e+x do ok();
+end
 """
         expect = "successful"
-        self.assertTrue(TestParser.test(input, expect, 300))
+        self.assertTrue(TestParser.test(input, expect, 314))
         
+
+    def test_115(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := f(g(h[5*t(9,1)])) to 10+5-4*e+x do ok();
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 315))
+        
+
+    def test_116(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 to do ok();
+end
+"""
+        expect = "Error on line 4 col 18: do"
+        self.assertTrue(TestParser.test(input, expect, 316))
+        
+
+    def test_117(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := to 10 do ok();
+end
+"""
+        expect = "Error on line 4 col 13: to"
+        self.assertTrue(TestParser.test(input, expect, 317))
+        
+
+    def test_118(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 to 10 do begin
+        
+    end;
+end
+"""
+        expect = "Error on line 6 col 7: ;"
+        self.assertTrue(TestParser.test(input, expect, 318))
+        
+
+    def test_119(self):
+        """ Test Error For Stmt """
+        input = """
+procedure foo();
+begin
+    for i := 1 to 10 do begin
+        ok()
+    end
+end
+"""
+        expect = "Error on line 6 col 4: end"
+        self.assertTrue(TestParser.test(input, expect, 319))
+        
+
+    def test_120(self):
+        """ Test Error While Stmt """
+        input = """
+procedure foo();
+begin
+    while i do ok();
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 320))
+        
+
+    def test_121(self):
+        """ Test Error While Stmt """
+        input = """
+procedure foo();
+begin
+    while i do ok()
+end
+"""
+        expect = "Error on line 5 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 321))
+        
+
+    def test_122(self):
+        """ Test Error While Stmt """
+        input = """
+procedure foo();
+begin
+    while i do ok
+end
+"""
+        expect = "Error on line 5 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 322))
+        
+
+    def test_123(self):
+        """ Test Error While Stmt """
+        input = """
+procedure foo();
+begin
+    while i do begin
+        ok()
+    end
+end
+"""
+        expect = "Error on line 6 col 4: end"
+        self.assertTrue(TestParser.test(input, expect, 323))
+        
+
+    def test_124(self):
+        """ Test Error While Stmt """
+        input = """
+procedure foo();
+begin
+    while 1<2<3<4<5 do ok();
+end
+"""
+        expect = "Error on line 4 col 13: <"
+        self.assertTrue(TestParser.test(input, expect, 324))
+        
+
+    def test_125(self):
+        """ Test Error While Stmt """
+        input = """
+procedure foo();
+begin
+    loop i<4 do ok();
+end
+"""
+        expect = "Error on line 4 col 9: i"
+        self.assertTrue(TestParser.test(input, expect, 325))
+        
+
+    def test_126(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a do ok();
+end
+"""
+        expect = "Error on line 4 col 11: do"
+        self.assertTrue(TestParser.test(input, expect, 326))
+        
+
+    def test_127(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with do ok();
+end
+"""
+        expect = "Error on line 4 col 9: do"
+        self.assertTrue(TestParser.test(input, expect, 327))
+        
+
+    def test_128(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a: string do ok();
+end
+"""
+        expect = "Error on line 4 col 19: do"
+        self.assertTrue(TestParser.test(input, expect, 328))
+        
+
+    def test_129(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a:string; do ok();
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 329))
+        
+
+    def test_130(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a,b,c,d:string do ok();
+end
+"""
+        expect = "Error on line 4 col 24: do"
+        self.assertTrue(TestParser.test(input, expect, 330))
+        
+
+    def test_131(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a,b,c,d:string; f:integer do ok();
+end
+"""
+        expect = "Error on line 4 col 35: do"
+        self.assertTrue(TestParser.test(input, expect, 331))
+        
+
+    def test_132(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a,b,c,d:string; f,:integer; do ok();
+end
+"""
+        expect = "Error on line 4 col 27: :"
+        self.assertTrue(TestParser.test(input, expect, 332))
+        
+
+    def test_133(self):
+        """ Test Error With Stmt """
+        input = """
+procedure foo();
+begin
+    with a,b,c,d:string; // f:integer do ok();
+end
+"""
+        expect = "Error on line 5 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 333))
+        
+
+    def test_134(self):
+        """ Test Error on Statement """
+        input = """
+procedure foo();
+var a: real;
+begin
+    for i := 1 to 10 do begin
+        for j := i downto 1 do
+            if (i + j) mod 2 = 1 then continue break;
+    end
+end
+"""
+        expect = "Error on line 7 col 47: break"
+        self.assertTrue(TestParser.test(input, expect, 334))
+        
+
+    def test_135(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================
+end
+"""
+        expect = "Error on line 28 col 5: *"
+        self.assertTrue(TestParser.test(input, expect, 335))
+        
+
+    def test_136(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================
+end
+"""
+        expect = "Error on line 28 col 5: *"
+        self.assertTrue(TestParser.test(input, expect, 336))
+        
+
+    def test_137(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================*)
+end
+"""
+        expect = "Error on line 15 col 4: end"
+        self.assertTrue(TestParser.test(input, expect, 337))
+        
+
+    def test_138(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================*)
+end
+"""
+        expect = "Error on line 8 col 0: begin"
+        self.assertTrue(TestParser.test(input, expect, 338))
+        
+
+    def test_139(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+    (*
+        =======================================
+        Comment here
+        =======================================*)
+end
+"""
+        expect = "Error on line 31 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 339))
+        
+
+    def test_140(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================
+        {{{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}
+        *)
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 340))
+        
+
+    def test_141(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        ======================================={{}}}}}}
+        {{{{{{{{{{{{{{{}}}}}}}}}}}}}}}
+end
+"""
+        expect = "Error on line 28 col 5: *"
+        self.assertTrue(TestParser.test(input, expect, 341))
+        
+
+    def test_142(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================*)
+        {}{
+end
+"""
+        expect = "Error on line 32 col 10: {"
+        self.assertTrue(TestParser.test(input, expect, 342))
+        
+
+    def test_143(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================*))
+end
+"""
+        expect = "Error on line 31 col 49: )"
+        self.assertTrue(TestParser.test(input, expect, 343))
+        
+
+    def test_144(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        ======================================= *)
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 344))
+        
+
+    def test_145(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        ======================================= *)
+end
+"""
+        expect = "Error on line 20 col 0: var"
+        self.assertTrue(TestParser.test(input, expect, 345))
+        
+
+    def test_146(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        ======================================= *)
+end
+"""
+        expect = "Error on line 19 col 4: return"
+        self.assertTrue(TestParser.test(input, expect, 346))
+        
+
+    def test_147(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+function hgt(): Boolean;
+    (*
+        =======================================
+        Comment here
+        =======================================
+        begin
+    *)
+end
+"""
+        expect = "Error on line 32 col 0: end"
+        self.assertTrue(TestParser.test(input, expect, 347))
+        
+
+    def test_148(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+end
+
+var q, w : integer;
+
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================
+    *)
+end
+"""
+        expect = "Error on line 26 col 0: begin"
+        self.assertTrue(TestParser.test(input, expect, 348))
+        
+
+    def test_149(self):
+        """ Test Random Error Code """
+        input = """
+var a, b, c: real;
+
+var x, y, z: Boolean;
+    g, h, y: Integer;
+
+function nty(): Real;
+var x, y, z: Integer;
+begin
+    readLine();
+    // This is readLine()
+
+    fs := readStdin();
+    
+    with i: integer; do begin
+        for i := 4 downto -5 do h := 6;
+        if i > 6 then return 0;
+    end
+
+    return 1;
+
+var q, w : integer;
+
+function hgt(): Boolean;
+var a: string;
+begin 
+    (*
+        =======================================
+        Comment here
+        =======================================
+    *)
+end
+"""
+        expect = "Error on line 22 col 0: var"
+        self.assertTrue(TestParser.test(input, expect, 349))

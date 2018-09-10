@@ -174,7 +174,7 @@ comment }
 "Mulitiple Characters"
 """,
 
-            '"","A","Mulitiple Characters",<EOF>',
+            ',A,Mulitiple Characters,<EOF>',
             110
         ))
         
@@ -203,7 +203,7 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 123abc 123_abc 00000123_123abc
 """,
 
-            "123,abc,123,_abc,0,0,0,0,0,123,_123abc,<EOF>",
+            "123,abc,123,_abc,00000123,_123abc,<EOF>",
             112
         ))
         
@@ -281,8 +281,7 @@ array [1 .. 3] of integer
 " abc \\n xyz "
 """,
 
-            '''" abc 
- xyz "," abc \n xyz ",<EOF>''',
+            ''' abc \n xyz , abc \\n xyz ,<EOF>''',
             118
         ))
         
@@ -294,7 +293,7 @@ array [1 .. 3] of integer
 " hello lexer \t "     asdf 
 """,
 
-            '" hello lexer 	 ",asdf,<EOF>',
+            ' hello lexer \t ,asdf,<EOF>',
             119
         ))
         
@@ -306,7 +305,7 @@ array [1 .. 3] of integer
 "Backspace  \b"
 """,
 
-            '"Backspace  ",<EOF>',
+            'Backspace  \b,<EOF>',
             120
         ))
         
@@ -318,7 +317,7 @@ array [1 .. 3] of integer
 "Formfeed   \f"
 """,
 
-            '"Formfeed   ",<EOF>',
+            'Formfeed   \f,<EOF>',
             121
         ))
         
@@ -330,8 +329,7 @@ array [1 .. 3] of integer
 "Return     \r"
 """,
 
-            '''"Return     
-",<EOF>''',
+            '''''',
             122
         ))
         
@@ -343,8 +341,7 @@ array [1 .. 3] of integer
 "Newline    \n"
 """,
 
-            '''"Newline    
-",<EOF>''',
+            '''Newline    \n,<EOF>''',
             123
         ))
         
@@ -357,9 +354,9 @@ array [1 .. 3] of integer
     multiple lines
 "           """,
 
-            '''"Newline
+            '''Newline
     multiple lines
-",<EOF>''',
+,<EOF>''',
             124
         ))
         
@@ -371,7 +368,7 @@ array [1 .. 3] of integer
 "Tab        \t"
 """,
 
-            '"Tab        	",<EOF>',
+            'Tab        \t,<EOF>',
             125
         ))
         
@@ -383,7 +380,7 @@ array [1 .. 3] of integer
 "Backslash  \\ "
 """,
 
-            "Illegal Escape In String: Backslash  \ ",
+            "Illegal Escape In String: Backslash  \\ ",
             126
         ))
         
@@ -392,9 +389,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+Illegal: "\a"
 """,
 
-            "<EOF>",
+            '''Illegal,:,,<EOF>''',
             127
         ))
         
@@ -403,9 +401,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+" Hi Hi \c \d "
 """,
 
-            "<EOF>",
+            "Illegal Escape In String:  Hi Hi \c",
             128
         ))
         
@@ -414,9 +413,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+" Hi Hi \m\n\c\s\d\\f "
 """,
 
-            "<EOF>",
+            "Illegal Escape In String:  Hi Hi \m",
             129
         ))
         
@@ -425,9 +425,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+    " asdf ` asdf"
 """,
 
-            "<EOF>",
+            " asdf ` asdf,<EOF>",
             130
         ))
         
@@ -436,9 +437,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+    " asdf ' asdf "
 """,
 
-            "<EOF>",
+            " asdf ' asdf ,<EOF>",
             131
         ))
         
@@ -447,9 +449,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+    " asdf \' asdf "
 """,
 
-            "<EOF>",
+            " asdf ' asdf ,<EOF>",
             132
         ))
         
@@ -458,9 +461,10 @@ array [1 .. 3] of integer
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+    " asdf \" asdf "
 """,
 
-            "<EOF>",
+            "",
             133
         ))
         
