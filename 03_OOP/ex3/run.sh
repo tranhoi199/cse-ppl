@@ -1,1 +1,1 @@
-python3 "./run.py"
+python3 "./$1.py"
