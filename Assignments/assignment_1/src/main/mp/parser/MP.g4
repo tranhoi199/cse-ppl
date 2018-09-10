@@ -44,7 +44,7 @@ stmt
 // Assignment
 assign_stmt: assign_lhs SEMI;
 
-assign_lhs: exp ASSIGN assign ;
+assign_lhs: (ID | index_exp) ASSIGN assign ;
 
 assign: <assoc=right> assign ASSIGN assign | exp ;
 
@@ -100,7 +100,6 @@ exp_str: exp;
 
 exp
 	: operands
-	| exp LSB exp RSB
 	| <assoc=right> (NOT | SUB) exp
 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
 	| exp ( ADD | SUB | OR ) exp
@@ -112,11 +111,15 @@ operands
 	: literal
 	| ID
 	| call_exp
+	| index_exp
 	| LP exp RP
 	;
 
 call_exp: ID LP exps_list? RP;
 
+index_exp: prefix_index_exp LSB exp RSB ;
+
+prefix_index_exp: ID | call_exp ;
 
 /**
  * Utilities

@@ -1234,7 +1234,7 @@ begin
     a = 1;
 end
 """
-        expect = "Error on line 4 col 9: ;"
+        expect = "Error on line 4 col 6: ="
         self.assertTrue(TestParser.test(input, expect, 298))
         
 
@@ -1721,7 +1721,7 @@ begin
         =======================================
 end
 """
-        expect = "Error on line 28 col 5: *"
+        expect = "Error on line 28 col 4: ("
         self.assertTrue(TestParser.test(input, expect, 335))
         
 
@@ -1760,7 +1760,7 @@ begin
         =======================================
 end
 """
-        expect = "Error on line 28 col 5: *"
+        expect = "Error on line 28 col 4: ("
         self.assertTrue(TestParser.test(input, expect, 336))
         
 
@@ -1953,7 +1953,7 @@ begin
         {{{{{{{{{{{{{{{}}}}}}}}}}}}}}}
 end
 """
-        expect = "Error on line 28 col 5: *"
+        expect = "Error on line 28 col 4: ("
         self.assertTrue(TestParser.test(input, expect, 341))
         
 
@@ -2263,3 +2263,21 @@ end
 """
         expect = "Error on line 22 col 0: var"
         self.assertTrue(TestParser.test(input, expect, 349))
+
+    def test_150(self):
+        """ Test Complex Code """
+        input = """
+procedure foo();
+begin
+    a := "hello foo() \n.This is test"; // comment here
+    { this is also comment
+        if a = 1 then goto(4) 
+        }
+    for i:=1 to 10 do begin {
+        if True then True()
+    }
+    end
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 350))
