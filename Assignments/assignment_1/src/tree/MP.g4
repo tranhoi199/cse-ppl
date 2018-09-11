@@ -2,6 +2,8 @@
 
 grammar MP;
 
+
+
 options {
 	language=Java;
 }
@@ -40,7 +42,7 @@ stmt
 // Assignment
 assign_stmt: assign_lhs SEMI;
 
-assign_lhs: exp ASSIGN assign ;
+assign_lhs: (ID | index_exp) ASSIGN assign ;
 
 assign: <assoc=right> assign ASSIGN assign | exp ;
 
@@ -96,11 +98,10 @@ exp_str: exp;
 
 exp
 	: operands
-	| exp LSB exp RSB
 	| <assoc=right> (NOT | SUB) exp
 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
 	| exp ( ADD | SUB | OR ) exp
-	| exp ( EQ | NEQ | GT | LT | GTE | LTE ) exp
+	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
 	| exp ( op_and_then | op_or_else ) exp
 	;
 
@@ -108,11 +109,15 @@ operands
 	: literal
 	| ID
 	| call_exp
+	| index_exp
 	| LP exp RP
 	;
 
 call_exp: ID LP exps_list? RP;
 
+index_exp: prefix_index_exp LSB exp RSB ;
+
+prefix_index_exp: ID | call_exp ;
 
 /**
  * Utilities
@@ -249,8 +254,7 @@ DOT: '.';
 boolean_literal: TRUE | FALSE ;
 
 STRING_LITERAL: '"' STR_CHAR* '"' 
-	{
-	}
+	
 	;
 
 
@@ -293,13 +297,11 @@ WS : [ \t\r\n\f]+ -> skip ;
 
 
 UNCLOSE_STRING: '"' STR_CHAR*
-	{
-	}
+	
 	;
 
 ILLEGAL_ESCAPE: '"' STR_CHAR* ESC_ILLEGAL
-	{
-	}
+	
 	;
 
 
@@ -310,8 +312,7 @@ fragment ESC_SEQ: '\\' [btnfr"'\\] ;
 fragment ESC_ILLEGAL: '\\' ~[btnfr"'\\] | ~'\\' ;
 
 ERROR_CHAR: .
-	{
-	}
+	
 	;
 
 
