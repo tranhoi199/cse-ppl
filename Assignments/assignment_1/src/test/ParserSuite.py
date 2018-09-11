@@ -2281,3 +2281,306 @@ end
 """
         expect = "successful"
         self.assertTrue(TestParser.test(input, expect, 350))
+
+    def test_151(self):
+        """ Test Function in Function """
+        input = """
+procedure foo();
+begin
+    function foo():real;
+    begin
+    end
+end
+"""
+        expect = "Error on line 4 col 4: function"
+        self.assertTrue(TestParser.test(input, expect, 351))
+
+    
+    def test_152(self):
+        """ Test Compound Stmt in Compound Stmt """
+        input = """
+procedure foo();
+begin
+    begin
+        begin
+            ok();
+        end
+    end
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 352))
+        
+
+    def test_153(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := b[3] := foo(3)[5] := 5;
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 353))
+        
+
+    def test_154(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := b[3] := foo(3) := 5;
+end
+"""
+        expect = "Error on line 4 col 24: :="
+        self.assertTrue(TestParser.test(input, expect, 354))
+        
+
+    def test_155(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := b+5 := 5;
+end
+"""
+        expect = "Error on line 4 col 13: :="
+        self.assertTrue(TestParser.test(input, expect, 355))
+        
+
+    def test_156(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := (b+5*6)[d] := 5;
+end
+"""
+        expect = "Error on line 4 col 16: ["
+        self.assertTrue(TestParser.test(input, expect, 356))
+        
+
+    def test_157(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := a[d][t] := 5;
+end
+"""
+        expect = "Error on line 4 col 13: ["
+        self.assertTrue(TestParser.test(input, expect, 357))
+        
+
+    def test_158(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := a[d := 5;
+end
+"""
+        expect = "Error on line 4 col 13: :="
+        self.assertTrue(TestParser.test(input, expect, 358))
+        
+
+    def test_159(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := a[d=4] := 5;
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 359))
+        
+
+    def test_160(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := a[d<4] := 5;
+end
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 360))
+        
+
+    def test_161(self):
+        """ Test Assignment Stmt """
+        input = """
+procedure foo();
+begin
+    a := a[d:=3] := 5;
+end
+"""
+        expect = "Error on line 4 col 12: :="
+        self.assertTrue(TestParser.test(input, expect, 361))
+        
+
+    def test_162(self):
+        """ Test  """
+        input = """
+procedure foo();
+begin
+    a := a[d < y(5 > 3) + 3 * n(12)] := 5[3] := 3[2] := b;
+end
+"""
+        expect = "Error on line 4 col 41: ["
+        self.assertTrue(TestParser.test(input, expect, 362))
+        
+
+    def test_163(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 363))
+        
+
+    def test_164(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 364))
+        
+
+    def test_165(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 365))
+        
+
+    def test_166(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 366))
+        
+
+    def test_167(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 367))
+        
+
+    def test_168(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 368))
+        
+
+    def test_169(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 369))
+        
+
+    def test_170(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 370))
+        
+
+    def test_171(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 371))
+        
+
+    def test_172(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 372))
+        
+
+    def test_173(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 373))
+        
+
+    def test_174(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 374))
+        
+
+    def test_175(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 375))
+        
+
+    def test_176(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 376))
+        
+
+    def test_177(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 377))
+        
+
+    def test_178(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 378))
+        
+
+    def test_179(self):
+        """ Test  """
+        input = """
+
+"""
+        expect = "successful"
+        self.assertTrue(TestParser.test(input, expect, 379))
+        
