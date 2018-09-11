@@ -1,6 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
+const dist = path.join(__dirname, './dist');
+
+if (!fs.existsSync(dist)) {
+    fs.mkdirSync(dist)
+}
+
 let text = '';
 
 for (let i = 1; i < 101; i++) {
@@ -18,4 +24,4 @@ for (let i = 1; i < 101; i++) {
 `
 }
 
-fs.writeFileSync(path.join(__dirname, './build/lexer_script.py'), text, 'utf8');
+fs.writeFileSync(path.join(dist, './gen_lexer.py'), text, 'utf8');

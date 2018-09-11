@@ -1,9 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 
+const dist = path.join(__dirname, './dist');
+
+if (!fs.existsSync(dist)) {
+    fs.mkdirSync(dist)
+}
+
 let text = '';
 
-for (let i = 1; i < 150; i++) {
+for (let i = 1; i < 151; i++) {
         text += `
     def test_${i}(self):
         """ Test  """
@@ -16,4 +22,4 @@ for (let i = 1; i < 150; i++) {
 `
 }
 
-fs.writeFileSync(path.join(__dirname, './build/parser_script.py'), text, 'utf8');
+fs.writeFileSync(path.join(dist, './gen_parser.py'), text, 'utf8');
