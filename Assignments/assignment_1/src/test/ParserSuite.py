@@ -396,7 +396,7 @@ begin
         ok();
 end
 """
-        expect = "successful"
+        expect = "Error on line 5 col 18: ="
         self.assertTrue(TestParser.test(input, expect, 227))
         
 

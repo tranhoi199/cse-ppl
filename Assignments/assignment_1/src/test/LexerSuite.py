@@ -329,7 +329,7 @@ array [1 .. 3] of integer
 "Return     \r"
 """,
 
-            '''''',
+            '''Return     \r,<EOF>''',
             122
         ))
         
@@ -461,10 +461,10 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
-    " asdf \" asdf "
+    " abc \" xyz " ghi
 """,
 
-            "",
+            " abc ,xyz,Unclosed String:  ghi\n",
             133
         ))
         
@@ -473,9 +473,11 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"abc" 123 __123 "abc xyz"
+" abc\m "
 """,
 
-            "<EOF>",
+            "abc,123,__123,abc xyz,Illegal Escape In String:  abc\m",
             134
         ))
         

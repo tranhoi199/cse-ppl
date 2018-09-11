@@ -96,14 +96,24 @@ exp_real: exp;
 
 exp_str: exp;
 
-exp
-	: operands
-	| <assoc=right> (NOT | SUB) exp
-	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
-	| exp ( ADD | SUB | OR ) exp
-	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
-	| exp ( op_and_then | op_or_else ) exp
-	;
+exp: exp ( op_and_then | op_or_else ) exp1 | exp1;
+
+exp1: exp2 ( EQ | NEQ | GT | LT | GTE | LTE ) exp2 | exp2 ;
+
+exp2: exp2 ( ADD | SUB | OR ) exp3 | exp3;
+
+exp3: exp3 ( DIV | MUL | MOD | DIV_INT | AND ) exp4 | exp4;
+
+exp4: (NOT | SUB) exp4 | operands ;
+
+// exp
+// 	: operands
+// 	| <assoc=right> (NOT | SUB) exp
+// 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
+// 	| exp ( ADD | SUB | OR ) exp
+// 	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
+// 	| exp ( op_and_then | op_or_else ) exp
+// 	;
 
 operands
 	: literal
