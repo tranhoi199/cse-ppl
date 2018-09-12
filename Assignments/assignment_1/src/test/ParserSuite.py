@@ -988,7 +988,7 @@ var a, b, c: boolean;
 x, y, z: real ;
 g, h, i: array[0.. 5] of boolean ;
 """
-        expect = r"Error on line 4 col 15: 0."
+        expect = r"Error on line 4 col 17: ."
         self.assertTrue(TestParser.test(input, expect, 275))
         
 
@@ -999,7 +999,7 @@ var a, b, c: boolean;
 x, y, z: real ;
 g, h, i: array[0..5] of boolean;
 """
-        expect = r"Error on line 4 col 15: 0."
+        expect = r"Error on line 4 col 17: .5"
         self.assertTrue(TestParser.test(input, expect, 276))
         
 
@@ -1010,7 +1010,7 @@ var a, b, c: boolean;
 x, y, z: real ;
 g, h, i: array[-5 .. 5] of boolean;
 """
-        expect = r"Error on line 4 col 15: -"
+        expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 277))
         
 
@@ -2585,7 +2585,7 @@ end
     def test_173(self):
         """ Test  """
         input = r"""
-
+var a: array[1-2 .. 5+4 ] of integer;
 """
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 373))
@@ -2607,40 +2607,3 @@ end
 """
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 375))
-        
-
-    def test_176(self):
-        """ Test  """
-        input = r"""
-
-"""
-        expect = r"successful"
-        self.assertTrue(TestParser.test(input, expect, 376))
-        
-
-    def test_177(self):
-        """ Test  """
-        input = r"""
-
-"""
-        expect = r"successful"
-        self.assertTrue(TestParser.test(input, expect, 377))
-        
-
-    def test_178(self):
-        """ Test  """
-        input = r"""
-
-"""
-        expect = r"successful"
-        self.assertTrue(TestParser.test(input, expect, 378))
-        
-
-    def test_179(self):
-        """ Test  """
-        input = r"""
-
-"""
-        expect = r"successful"
-        self.assertTrue(TestParser.test(input, expect, 379))
-        

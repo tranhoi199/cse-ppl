@@ -155,7 +155,7 @@ method_types: PROCEDURE | FUNCTION ;
 
 data_types: primitive_types | compound_types;
 
-compound_types: ARRAY LSB INTEGER_LITERAL DOTDOT INTEGER_LITERAL RSB OF primitive_types ;
+compound_types: ARRAY LSB exp DOTDOT exp RSB OF primitive_types ;
 
 primitive_types: INTEGER | REAL | STRING | BOOLEAN;
 

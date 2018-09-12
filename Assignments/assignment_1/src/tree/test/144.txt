@@ -1,4 +1,1 @@
-procedure foo();
-begin
-    foo(--5+--5);
-end
+var a: array[1-2 .. 5+4 ] of integer;
