@@ -329,7 +329,8 @@ array [1 .. 3] of integer
 "Return     \r"
 """,
 
-            '''Return     \r,<EOF>''',
+            '''Return     
+,<EOF>''',
             122
         ))
         
@@ -425,7 +426,7 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
-    " asdf ` asdf"
+" asdf ` asdf"
 """,
 
             " asdf ` asdf,<EOF>",
@@ -437,10 +438,10 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
-    " asdf ' asdf "
+" abc ' xyz "
 """,
 
-            " asdf ' asdf ,<EOF>",
+            "Illegal Escape In String:  abc '",
             131
         ))
         
@@ -449,10 +450,10 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
-    " asdf \' asdf "
+" abc \' xyz "
 """,
 
-            " asdf ' asdf ,<EOF>",
+            " abc ' xyz ,<EOF>",
             132
         ))
         
@@ -461,7 +462,7 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
-    " abc \" xyz " ghi
+" abc \" xyz " ghi
 """,
 
             " abc ,xyz,Unclosed String:  ghi\n",
@@ -483,78 +484,88 @@ Illegal: "\a"
         
 
     def test_35(self):
-        """ Test  """
+        """ Test Error Token """
         self.assertTrue(TestLexer.test(
             """
+!== != & ^ % $ # ... \
 """,
 
-            "<EOF>",
+            "Error Token !",
             135
         ))
         
 
     def test_36(self):
-        """ Test  """
+        """ Test Error Token """
         self.assertTrue(TestLexer.test(
             """
+if a != b then
 """,
 
-            "<EOF>",
+            "if,a,Error Token !",
             136
         ))
         
 
     def test_37(self):
-        """ Test  """
+        """ Test Error Token """
         self.assertTrue(TestLexer.test(
             """
+a := a & 1
 """,
 
-            "<EOF>",
+            "a,:=,a,Error Token &",
             137
         ))
         
 
     def test_38(self):
-        """ Test  """
+        """ Test Error Token """
         self.assertTrue(TestLexer.test(
             """
+xyz
+$a = 5
 """,
 
-            "<EOF>",
+            "xyz,Error Token $",
             138
         ))
         
 
     def test_39(self):
-        """ Test  """
+        """ Test Error Token """
         self.assertTrue(TestLexer.test(
             """
+#define for 1
 """,
 
-            "<EOF>",
+            "Error Token #",
             139
         ))
         
 
     def test_40(self):
-        """ Test  """
+        """ Test Number leading 0 """
         self.assertTrue(TestLexer.test(
             """
+1234 0000001234 0000043123
 """,
 
-            "<EOF>",
+            "1234,0000001234,0000043123,<EOF>",
             140
         ))
         
 
     def test_41(self):
-        """ Test  """
+        """ Test Real Leading 0 """
         self.assertTrue(TestLexer.test(
             """
+00001.1111000000
+0e-4
+000000001e-40000
 """,
 
-            "<EOF>",
+            "00001.1111000000,0e-4,000000001e-40000,<EOF>",
             141
         ))
         
@@ -563,9 +574,11 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"abc - xyz"
+"abc \ xyz"
 """,
 
-            "<EOF>",
+            "abc - xyz,Illegal Escape In String: abc \ ",
             142
         ))
         
@@ -574,9 +587,11 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"abc - xyz"
+"abc \yyz"
 """,
 
-            "<EOF>",
+            "abc - xyz,Illegal Escape In String: abc \y",
             143
         ))
         
@@ -585,9 +600,10 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"abc \\ xyz"
 """,
 
-            "<EOF>",
+            "Illegal Escape In String: abc \ ",
             144
         ))
         
@@ -596,9 +612,11 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"\\"
 """,
 
-            "<EOF>",
+            '''Unclosed String: \"
+''',
             145
         ))
         
@@ -607,9 +625,10 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"\\ "
 """,
 
-            "<EOF>",
+            "Illegal Escape In String: \ ",
             146
         ))
         
@@ -618,9 +637,10 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"\"
 """,
 
-            "<EOF>",
+            ",<EOF>",
             147
         ))
         
@@ -629,9 +649,11 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+"\""
 """,
 
-            "<EOF>",
+            """,Unclosed String: 
+""",
             148
         ))
         
@@ -640,9 +662,13 @@ Illegal: "\a"
         """ Test  """
         self.assertTrue(TestLexer.test(
             """
+s = "string           
+"a = 4
+g = 9
 """,
 
-            "<EOF>",
+            '''s,=,string           
+,a,=,4,g,=,9,<EOF>''',
             149
         ))
         

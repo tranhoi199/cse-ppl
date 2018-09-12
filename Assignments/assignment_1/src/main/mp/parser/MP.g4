@@ -41,12 +41,19 @@ stmt
 	| call_stmt
 	;
 
+
 // Assignment
-assign_stmt: assign_lhs SEMI;
+// a :=  b[3] :=  c()[5] := 5
+// a := (b[3] := (c()[5] := 5))
+// lhs := (lhs := (lhs := exp))
+assign_stmt: assign_body SEMI;
 
-assign_lhs: (ID | index_exp) ASSIGN assign ;
+assign_body: assign_lhs ASSIGN assign_tail ;
 
-assign: <assoc=right> assign ASSIGN assign | exp ;
+assign_lhs: ID | index_exp ;
+
+assign_tail: assign_lhs ASSIGN assign_tail | exp ;
+
 
 // Flow
 if_stmt: IF exp_bool THEN stmt (ELSE stmt)?;
@@ -97,6 +104,8 @@ exp_int: exp;
 exp_real: exp;
 
 exp_str: exp;
+
+
 
 exp: exp ( op_and_then | op_or_else ) exp1 | exp1;
 
@@ -318,6 +327,7 @@ UNCLOSE_STRING: '"' STR_CHAR*
 	}
 	;
 
+
 ILLEGAL_ESCAPE: '"' STR_CHAR* ESC_ILLEGAL
 	{
 		y = str(self.text)
@@ -326,7 +336,7 @@ ILLEGAL_ESCAPE: '"' STR_CHAR* ESC_ILLEGAL
 	;
 
 
-fragment STR_CHAR: ESC_SEQ | ~["\\] ;
+fragment STR_CHAR: ~['"\\] | ESC_SEQ ;
 
 fragment ESC_SEQ: '\\' [btnfr"'\\] ;
 
