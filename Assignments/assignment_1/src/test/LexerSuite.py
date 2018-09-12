@@ -878,12 +878,21 @@ end
         
 
     def test_61(self):
-        """ Test  """
+        """ Test Real Number """
         self.assertTrue(TestLexer.test(
             r"""
+12.
+12.e05
+12.e-05
+12.05e05
+12.05e-05
+12.05
+.05
+.05e05
+.05e-05
 """,
 
-            "<EOF>",
+            r"12.,12.e05,12.e-05,12.05e05,12.05e-05,12.05,.05,.05e05,.05e-05,<EOF>",
             161
         ))
         

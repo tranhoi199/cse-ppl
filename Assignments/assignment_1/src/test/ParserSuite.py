@@ -2553,7 +2553,7 @@ end
         input = r"""
 procedure f();
 begin
-    a := -------------5;
+    a := -------------5.e4;
 end
 """
         expect = r"successful"
@@ -2561,18 +2561,22 @@ end
         
 
     def test_171(self):
-        """ Test  """
+        """ Test Comment Line in Block """
         input = r"""
-
+{
+    // Line Comment
+    (* Block Comment *)
+}
 """
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 371))
         
 
     def test_172(self):
-        """ Test  """
+        """ Test Comment Block in Line """
         input = r"""
-
+// Line Comment { Block Comment }
+// Line Comment (* Block Comment *)
 """
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 372))
