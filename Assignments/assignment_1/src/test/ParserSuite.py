@@ -845,7 +845,7 @@ var a, b, c: boolean;
 x, y, z: real ;
 g, h, i: array[0 ... 5] of boolean ;
 """
-        expect = r"Error on line 4 col 19: ."
+        expect = r"."
         self.assertTrue(TestParser.test(input, expect, 262))
         
 
@@ -988,7 +988,7 @@ var a, b, c: boolean;
 x, y, z: real ;
 g, h, i: array[0.. 5] of boolean ;
 """
-        expect = r"Error on line 4 col 17: ."
+        expect = r"."
         self.assertTrue(TestParser.test(input, expect, 275))
         
 
@@ -1721,7 +1721,7 @@ begin
         =======================================
 end
 """
-        expect = r"Error on line 28 col 4: ("
+        expect = r"Error on line 28 col 5: *"
         self.assertTrue(TestParser.test(input, expect, 335))
         
 
@@ -1760,7 +1760,7 @@ begin
         =======================================
 end
 """
-        expect = r"Error on line 28 col 4: ("
+        expect = r"Error on line 28 col 5: *"
         self.assertTrue(TestParser.test(input, expect, 336))
         
 
@@ -1953,7 +1953,7 @@ begin
         {{{{{{{{{{{{{{{}}}}}}}}}}}}}}}
 end
 """
-        expect = r"Error on line 28 col 4: ("
+        expect = r"Error on line 28 col 5: *"
         self.assertTrue(TestParser.test(input, expect, 341))
         
 
@@ -1990,10 +1990,10 @@ begin
         =======================================
         Comment here
         =======================================*)
-        {}{
+        {{{{}}{{}}}{}
 end
 """
-        expect = r"Error on line 32 col 10: {"
+        expect = r"}"
         self.assertTrue(TestParser.test(input, expect, 342))
         
 
@@ -2356,7 +2356,7 @@ begin
     a := (b+5*6)[d] := 5;
 end
 """
-        expect = r"Error on line 4 col 16: ["
+        expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 356))
         
 
@@ -2368,7 +2368,7 @@ begin
     a := a[d][t] := 5;
 end
 """
-        expect = r"Error on line 4 col 13: ["
+        expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 357))
         
 
@@ -2428,7 +2428,7 @@ begin
     a := a[d < y(5 > 3) + 3 * n(12)] := 5[3] := 3[2] := b;
 end
 """
-        expect = r"Error on line 4 col 41: ["
+        expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 362))
         
 
@@ -2583,7 +2583,7 @@ end
         
 
     def test_173(self):
-        """ Test  """
+        """ Test Supscript Array is expression """
         input = r"""
 var a: array[1-2 .. 5+4 ] of integer;
 """
@@ -2592,18 +2592,24 @@ var a: array[1-2 .. 5+4 ] of integer;
         
 
     def test_174(self):
-        """ Test  """
+        """ Test Index Expression with or else """
         input = r"""
-
+procedure foo();
+begin
+    a := (1 + 2 * 3 - 4 / 5 and 6 or then 7)[(1+2+3)-(4+5*6/abc and then (123))] := a[(((-5)))] := (((-5)))[a] := 0;
+end
 """
-        expect = r"successful"
+        expect = r"Error on line 4 col 37: then"
         self.assertTrue(TestParser.test(input, expect, 374))
         
 
     def test_175(self):
-        """ Test  """
+        """ Test Index Expression """
         input = r"""
-
+procedure foo();
+begin
+    a := (1 + 2 * 3 - 4 / 5 and 6 or else 7)[(1+2+3)-(4+5*6/abc and then (123))] := a[(((-5)))] := (((-5)))[a] := 0;
+end
 """
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 375))

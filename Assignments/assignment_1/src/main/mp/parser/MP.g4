@@ -105,7 +105,14 @@ exp_real: exp;
 
 exp_str: exp;
 
-
+// exp
+// 	: operands
+// 	| <assoc=right> (NOT | SUB) exp
+// 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
+// 	| exp ( ADD | SUB | OR ) exp
+// 	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
+// 	| exp ( op_and_then | op_or_else ) exp
+// 	;
 
 exp: exp ( op_and_then | op_or_else ) exp1 | exp1;
 
@@ -117,28 +124,22 @@ exp3: exp3 ( DIV | MUL | MOD | DIV_INT | AND ) exp4 | exp4;
 
 exp4: (NOT | SUB) exp4 | operands ;
 
-// exp
-// 	: operands
-// 	| <assoc=right> (NOT | SUB) exp
-// 	| exp ( DIV | MUL | MOD | DIV_INT | AND ) exp
-// 	| exp ( ADD | SUB | OR ) exp
-// 	| operands ( EQ | NEQ | GT | LT | GTE | LTE ) operands
-// 	| exp ( op_and_then | op_or_else ) exp
-// 	;
 
 operands
 	: literal
 	| ID
 	| call_exp
-	| index_exp
 	| LP exp RP
+	| operands postfix_array_exp
 	;
+
+postfix_array_exp: LSB exp RSB ;
+
+primary_exp: literal | ID ;
 
 call_exp: ID LP exps_list? RP;
 
-index_exp: prefix_index_exp LSB exp RSB ;
-
-prefix_index_exp: ID | call_exp ;
+index_exp: operands postfix_array_exp ;
 
 /**
  * Utilities
@@ -256,8 +257,8 @@ GT : '>' ;
 
 LP: '('; // Left Parenthesis
 RP: ')'; // Right Parenthesis
-LCB: '{'; // Left Curly Bracket
-RCB: '}'; // Right Curly Bracket
+fragment LCB: '{'; // Left Curly Bracket
+fragment RCB: '}'; // Right Curly Bracket
 LSB: '['; // Left Square Bracket
 RSB: ']'; // Right Square Bracket
 
@@ -265,7 +266,7 @@ SEMI: ';'; // Semicolon
 COMMA: ','; // Comma
 COLON: ':'; // Colon
 DOTDOT: '..'; // Dot Dot should be before Dot
-DOT: '.';
+fragment DOT: '.';
 
 
 

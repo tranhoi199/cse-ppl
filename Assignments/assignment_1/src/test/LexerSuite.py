@@ -219,7 +219,7 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 (* comment not correct close )
 """,
 
-            "is,multiple,lines,(,block,comment,missing,*,{,comment,without,close,(,*,comment,not,correct,close,),<EOF>",
+            "is,multiple,lines,(,block,comment,missing,*,Error Token {",
             113
         ))
         
@@ -231,7 +231,7 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
 e-12 e12 . 1e 12e 12.05e .05e ee e01
 """,
 
-            "e,-,12,e12,.,1,e,12,e,12.05,e,.05,e,ee,e01,<EOF>",
+            "e,-,12,e12,Error Token .",
             114
         ))
         
