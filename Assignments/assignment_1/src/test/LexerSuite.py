@@ -265,8 +265,7 @@ array [1 .. 3] of integer
 " abcxyz
 """,
 
-            r"""Unclosed String:  abcxyz
-""",
+            r"""Unclosed String:  abcxyz""",
             117
         ))
         
@@ -352,8 +351,7 @@ array [1 .. 3] of integer
     multiple lines
 "           """,
 
-            r'''Unclosed String: Newline
-''',
+            r'''Unclosed String: Newline''',
             124
         ))
         
@@ -635,8 +633,7 @@ $a = 5
 "\"
 """,
 
-            r"""Unclosed String: \"
-""",
+            r"""Unclosed String: \"""",
             147
         ))
         
@@ -662,8 +659,7 @@ s = "string
 g = 9
 """,
 
-            r'''s,=,Unclosed String: string           
-''',
+            r'''s,=,Unclosed String: string           ''',
             149
         ))
         
@@ -746,8 +742,7 @@ s = "abc                   ;
 a = "xyz"
 """,
 
-            r"""s,=,Unclosed String: abc                   ;
-""",
+            r"""s,=,Unclosed String: abc                   ;""",
             153
         ))
         
@@ -846,8 +841,7 @@ begin
 end
 """,
 
-            r"""procedure,foo,(,),;,begin,s,=,asdfghjklwertyuio  xcvbnm,dfghjkl;567,t,=, dfghjk\n\t\rsdfghjkl\bsdfghjklfgh    ,y,=,Unclosed String: dfghjkl 
-""",
+            r"""procedure,foo,(,),;,begin,s,=,asdfghjklwertyuio  xcvbnm,dfghjkl;567,t,=, dfghjk\n\t\rsdfghjkl\bsdfghjklfgh    ,y,=,Unclosed String: dfghjkl """,
             159
         ))
         
@@ -871,8 +865,7 @@ begin
 end
 """,
 
-            r"""procedure,foo,(,),;,begin,s,=,asdfghjklwertyuio  xcvbnm,dfghjkl;567,t,=, dfghjk\n\t\rsdfghjkl\bsdfghjklfgh    ,y,=,Unclosed String: dfghjkl 
-""",
+            r"""procedure,foo,(,),;,begin,s,=,asdfghjklwertyuio  xcvbnm,dfghjkl;567,t,=, dfghjk\n\t\rsdfghjkl\bsdfghjklfgh    ,y,=,Unclosed String: dfghjkl """,
             160
         ))
         

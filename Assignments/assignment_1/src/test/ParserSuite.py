@@ -2568,7 +2568,7 @@ end
     (* Block Comment *)
 }
 """
-        expect = r"successful"
+        expect = r"Error on line 6 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 371))
         
 
@@ -2578,7 +2578,7 @@ end
 // Line Comment { Block Comment }
 // Line Comment (* Block Comment *)
 """
-        expect = r"successful"
+        expect = r"Error on line 4 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 372))
         
 
@@ -2613,3 +2613,9 @@ end
 """
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 375))
+
+    def test_176(self):
+        """ Test Empty Program """
+        input = r""""""
+        expect = r"Error on line 1 col 0: <EOF>"
+        self.assertTrue(TestParser.test(input, expect, 376))

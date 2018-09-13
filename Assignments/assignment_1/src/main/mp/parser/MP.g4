@@ -14,7 +14,7 @@ options {
 /** 
  * 2 Program Structure
  */
-program: (var_declare | func_declare | proc_declare)* EOF ;
+program: (var_declare | func_declare | proc_declare)+ EOF ;
 
 // 2.1 Variable declaration
 var_declare: VAR (ids_list_with_type SEMI)+;

@@ -6,4 +6,4 @@ echo "Testing Lexer..."
 python3 run.py test LexerSuite
 
 echo "Testing Parser..."
-# python3 run.py test ParserSuite
+python3 run.py test ParserSuite
