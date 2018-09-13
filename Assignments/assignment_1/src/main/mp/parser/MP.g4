@@ -328,7 +328,7 @@ WS : [ \t\r\n\f]+ -> skip ;
 UNCLOSE_STRING: '"' STR_CHAR* ( [\r\n] | EOF )
 	{
 		y = str(self.text)
-		raise UncloseString(y[1:])
+		raise UncloseString(y[1:].replace('\n', ''))
 	}
 	;
 

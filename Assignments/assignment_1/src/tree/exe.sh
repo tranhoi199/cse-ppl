@@ -11,6 +11,7 @@ alias grun='java org.antlr.v4.gui.TestRig'
 
 export ANTLR_LIB="/usr/local/lib/antlr-4.7.1-complete.jar"
 
+export CLASSPATH=".:/usr/local/lib/antlr-4.2.2-complete.jar:$CLASSPATH"
 
 
 echo "Generating ANTLR to Java Code"
