@@ -10,24 +10,35 @@ if (!fs.existsSync(dist)) {
 
 let text = '';
 
+function fakeAZ() {
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    return possible.charAt(Math.floor(Math.random() * possible.length));
+}
+
+function fakeValid() {
+    let txt = `function procedure begin end true false if then else for while with do to downto return break continue integer string real boolean array var of and then or else div mod not and or + - * / := <= >= <> = < > ( ) [ ] ; , : , .. + - * / := <= >= <> = < > ( ) [ ] ; , : , ..`
+    const possible = txt.split('\n').join(' ').split(' ');
+    return possible[(Math.floor(Math.random() * possible.length))];
+}
+
+const fake = () => fakeAZ() + crypto.randomBytes(2).toString('hex');
+
 for (let i = 72; i < 101; i++) {
-    let name = 'd' + crypto.randomBytes(5).toString('hex');
-    let func = 'e' + crypto.randomBytes(5).toString('hex');
-    let arg1 = 'g' + crypto.randomBytes(5).toString('hex');
-    let arg2 = 'p' + crypto.randomBytes(5).toString('hex');
+    let gen = fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fake() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid()+ ' '
+        + fake() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' '
+        + fakeValid() + ' ' + fakeValid() + ' ' + fake() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid() + ' ' + fakeValid();
     text += `
-    def test_${i}(self):
-        """ Test Automatic Generated Code """
+    def test_${i}_auto_gen(self):
+        """ Test Automatically Generated Code """
         self.assertTrue(TestLexer.test(
             r"""
-procedure ${name}();
-begin
-    ${func}(${arg1}, ${arg2}) ;
-end
+// ${fakeValid()},${fakeValid()},${fakeValid()} ${fake()} ${fakeValid()} ${fakeValid()},${fakeValid()},${fakeValid()}
+${gen}
+(* ${fakeValid()} ${fakeValid()} ${fake()},${fakeValid()},${fake()} ${fakeValid()} ${fake()},${fakeValid()},${fakeValid()}*)
 """,
 
-            r"procedure,${name},(,),;,begin,${func},(,${arg1},,,${arg2},),;,end,<EOF>",
-            ${100+i}
+            r"${gen.split(' ').join(',')},<EOF>",
+            ${100 + i}
         ))
 
 `

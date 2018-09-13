@@ -12,6 +12,6 @@ let text = fs.readFileSync(path.join(__dirname, '../test/LexerSuite.py'));
 
 text = String(text).replace(/test_.*\(/g, (num) => {
     return 'test_' + crypto.randomBytes(15).toString('hex') + '(';
-})
+}).replace(/""" Test.*"""/g, '""" Test ... """')
 
-fs.writeFileSync(path.join(dist, './uglify_lexer.py'), text, 'utf8');
+fs.writeFileSync(path.join(dist, './LexerSuite.py'), text, 'utf8');

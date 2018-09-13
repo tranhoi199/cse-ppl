@@ -3,8 +3,8 @@ from TestUtils import TestLexer
 
 class LexerSuite(unittest.TestCase):
 
-    def test_1_valid_lowercase_keywords(self):
-        """ Test Valid Lowercase Keywords """
+    def test_49a6bba6f1e0c173fb9cad1e3855c9(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 function procedure
@@ -27,8 +27,8 @@ div mod not and or
         ))
         
 
-    def test_2_valid_keywords(self):
-        """ Test Valid Keywords """
+    def test_c553d49d933ead4e71a79b92773316(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 FuNctiOn prOceDure
@@ -51,8 +51,8 @@ dIV mOd NOT and OR
         ))
         
 
-    def test_3_valid_specific_characters(self):
-        """ Test Specific Characters """
+    def test_b4dba1517d6c4f0143608bede5f2fb(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 + - * / := <= >= <> = < >
@@ -64,8 +64,8 @@ dIV mOd NOT and OR
         ))
         
 
-    def test_4_inline_comment(self):
-        """ Test Inline Comment """
+    def test_7dea43c6c0b227003292919cc734be(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // This is a line comment
@@ -76,8 +76,8 @@ dIV mOd NOT and OR
         ))
         
 
-    def test_5_block_comment(self):
-        """ Test Block Comment """
+    def test_b9db27504a9e420d1496f06fbdee65(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 (* Comment with multiple lines
@@ -90,8 +90,8 @@ dIV mOd NOT and OR
         ))
         
 
-    def test_6_block_comment(self):
-        """ Test Block Comment """
+    def test_ea172537796ea8cb0b7becf390c567(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 { This is a block comment }
@@ -106,8 +106,8 @@ dIV mOd NOT and OR
         ))
         
 
-    def test_7_mix_comment(self):
-        """ Test Mix Comment """
+    def test_461f8b5da3700a7ff22f4c76f6091f(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 (* This is a block comment *)
@@ -141,8 +141,8 @@ comment }
         ))
         
 
-    def test_8_int_lit(self):
-        """ Test Integer Literal """
+    def test_bc679ad5078e83f28f919abf7ec878(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 0 1 2 3 4 123 123456789
@@ -153,8 +153,8 @@ comment }
         ))
         
 
-    def test_9_real_lit(self):
-        """ Test Real Literal """
+    def test_8d6721602cf24db31081463d7cdfe9(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 1.2 1. .1 1e2 1.2E-2 1.2e-2 .1E2 9.0 12e8 0.33E-3 128e-42
@@ -166,8 +166,8 @@ comment }
         ))
         
 
-    def test_10_string_lit(self):
-        """ Test String Literal """
+    def test_1d764260bc0090324e2f6a530e1713(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 ""      "A"     
@@ -179,8 +179,8 @@ comment }
         ))
         
 
-    def test_11_id(self):
-        """ Test Identifiers """
+    def test_e77df159d160929155992e00e3845e(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 a abc a123 a_ a_bc a_bc123 a_123 a_123bc a_bc_123
@@ -196,8 +196,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         ))
         
 
-    def test_12_invalid_id(self):
-        """ Test Invalid Identifiers """
+    def test_bc2395beaee02745fcf191e2c21a41(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 123abc 123_abc 00000123_123abc
@@ -208,8 +208,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         ))
         
 
-    def test_13_invalid_comment(self):
-        """ Test Invalid Comments """
+    def test_37c654ef25cd342d2dba31f0057fae(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // inline comment but
@@ -224,8 +224,8 @@ h98f394__VWT_b5_VT_YGU87udhf__T_
         ))
         
 
-    def test_14_invalid_real(self):
-        """ Test Invalid Real Literal """
+    def test_527c1ebb86e3bf802050ed3e612974(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 e-12 e12 . 1e 12e 12.05e .05e ee e01
@@ -236,8 +236,8 @@ e-12 e12 . 1e 12e 12.05e .05e ee e01
         ))
         
 
-    def test_15_arr_decl(self):
-        """ Test Array Declare """
+    def test_3230057206b6fcae766b44c4d1df4a(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 array [1 .. 3] of integer
@@ -248,8 +248,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_16_unclose_without_endline(self):
-        """ Test Unclose String without endline """
+    def test_d48dc96c19f58ec8a449ec0055cf03(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""  " hello lexer """,
 
@@ -258,8 +258,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_17_unclose_with_endline(self):
-        """ Test Unclose String with endline """
+    def test_6b0f20776c6d30afa47828939e521f(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " abcxyz
@@ -271,8 +271,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_18_escape(self):
-        """ Test Escape String """
+    def test_613d13c1924eb65ea8034ef248c504(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " abc \n xyz "
@@ -284,8 +284,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_19_escape(self):
-        """ Test Escape String """
+    def test_527bf1519dcefd20822b831595a42d(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " hello lexer \t "     asdf 
@@ -296,8 +296,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_20_escape(self):
-        """ Test Escape String """
+    def test_1767e450bb89d2ad52af6a45518752(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Backspace  \b"
@@ -308,8 +308,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_21_escape(self):
-        """ Test Escape String """
+    def test_32f79fbb0aac0ac7a7d1bf715deeba(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Formfeed   \f"
@@ -320,8 +320,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_22_escape(self):
-        """ Test Escape """
+    def test_41005177ada9555838cde1fcac23f4(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Return     \r"
@@ -332,8 +332,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_23_escape(self):
-        """ Test Escape """
+    def test_6b134dc48e0f63b5b13ab9bf5fafd1(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Newline    \n"
@@ -344,8 +344,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_24_unclose_multi_lines(self):
-        """ Test Unclosed String """
+    def test_da139ef4f3f969acf236907809fad3(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Newline
@@ -358,8 +358,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_25_escape(self):
-        """ Test Escape """
+    def test_3ea2f970c7e5b2326fd7a8847d178c(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Tab        \t"
@@ -370,8 +370,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_26_escape(self):
-        """ Test Escape """
+    def test_0a124dae7214a711f30595d629a800(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "Backslash  \\ "
@@ -382,8 +382,8 @@ array [1 .. 3] of integer
         ))
         
 
-    def test_27_illegal(self):
-        """ Test Illegal Escape """
+    def test_897910ae1d00a840bfa357cc2384e0(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 Illegal: "\a"
@@ -394,8 +394,8 @@ Illegal: "\a"
         ))
         
 
-    def test_28_illegal(self):
-        """ Test Illegal Escape """
+    def test_78789cf0b3d0e391d981431ba53cbe(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " Hi Hi \c \d "
@@ -406,8 +406,8 @@ Illegal: "\a"
         ))
         
 
-    def test_29_illegal(self):
-        """ Test Illegal Escape """
+    def test_92a7c87a7983f239fdf0a1c2afcdc3(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " Hi Hi \m\n\c\s\d\\f "
@@ -418,8 +418,8 @@ Illegal: "\a"
         ))
         
 
-    def test_30_nevermind(self):
-        """ Test Nevermind :) """
+    def test_9a29b34df71b9f709103d86ee3f96e(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " asdf ` asdf"
@@ -430,8 +430,8 @@ Illegal: "\a"
         ))
         
 
-    def test_31_err_str(self):
-        """ Test Error String """
+    def test_3677618709e840b09c0620556f3228(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " abc ' xyz "
@@ -442,8 +442,8 @@ Illegal: "\a"
         ))
         
 
-    def test_32_escape_singlequote(self):
-        """ Test Escape """
+    def test_9293bb68e3657a12a3cf39539dcac4(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " abc \' xyz "
@@ -454,8 +454,8 @@ Illegal: "\a"
         ))
         
 
-    def test_33_escape_doublequote(self):
-        """ Test Escape String """
+    def test_cd3d71d7929936786e3362dbf22d7d(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 " abc \" xyz " ghi
@@ -466,8 +466,8 @@ Illegal: "\a"
         ))
         
 
-    def test_34_illegal(self):
-        """ Test Error String """
+    def test_b0fd40c93ad7ba2df005d579f80da4(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "abc" 123 __123 "abc xyz"
@@ -479,8 +479,8 @@ Illegal: "\a"
         ))
         
 
-    def test_35_err_tok(self):
-        """ Test Error Token """
+    def test_42d8493155a5c5ceafaff35b454e70(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 !== != & ^ % $ # ... \
@@ -491,8 +491,8 @@ Illegal: "\a"
         ))
         
 
-    def test_36_err_tok(self):
-        """ Test Error Token """
+    def test_19fbd05785c67ec0c64892e59779aa(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 if a != b then
@@ -503,8 +503,8 @@ if a != b then
         ))
         
 
-    def test_37_err_tok(self):
-        """ Test Error Token """
+    def test_af12c14d100e441728cb7ca160102d(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 a := a & 1
@@ -515,8 +515,8 @@ a := a & 1
         ))
         
 
-    def test_38_err_tok(self):
-        """ Test Error Token """
+    def test_28122acc7e4ae203a3ecee5f4bb6a7(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 xyz
@@ -528,8 +528,8 @@ $a = 5
         ))
         
 
-    def test_39_err_tok(self):
-        """ Test Error Token """
+    def test_03f51bf8b3c7713100a6d090d86478(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 #define for 1
@@ -540,8 +540,8 @@ $a = 5
         ))
         
 
-    def test_40_num_leading_0(self):
-        """ Test Number leading 0 """
+    def test_403414d8b72cf5bb1459914e71d68e(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 1234 0000001234 0000043123
@@ -552,8 +552,8 @@ $a = 5
         ))
         
 
-    def test_41_num_leading_0(self):
-        """ Test Real Leading 0 """
+    def test_3a1d1d16915a4d99fbcddcbbe60395(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 00001.1111000000
@@ -566,8 +566,8 @@ $a = 5
         ))
         
 
-    def test_42_illegal(self):
-        """ Test Error String """
+    def test_9f269a8587fa9b65ee10b1e1ce3ece(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "abc - xyz"
@@ -579,8 +579,8 @@ $a = 5
         ))
         
 
-    def test_43_illegal(self):
-        """ Test Error String """
+    def test_a79241d66bde35be9e7128d9af5e43(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "abc - xyz"
@@ -592,8 +592,8 @@ $a = 5
         ))
         
 
-    def test_44_escape_backsplash_spacing(self):
-        """ Test Escape """
+    def test_d7df5589344b504e5b90d815fa1f30(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "abc \\ xyz"
@@ -604,8 +604,8 @@ $a = 5
         ))
         
 
-    def test_45_escape_backsplash_trim(self):
-        """ Test Escape """
+    def test_f349013e5803c638801a333373c3b8(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\\"
@@ -616,8 +616,8 @@ $a = 5
         ))
         
 
-    def test_46_escape_backsplash_tail_spacing(self):
-        """ Test Escape """
+    def test_107831a65cf7df72195c5717e391d3(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\\ "
@@ -628,8 +628,8 @@ $a = 5
         ))
         
 
-    def test_47_unclose_use_escape(self):
-        """ Test Unclosed String """
+    def test_278a55d3bcfc3d719eea0fe06d822c(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\"
@@ -641,8 +641,8 @@ $a = 5
         ))
         
 
-    def test_48_escape(self):
-        """ Test Escape String """
+    def test_baf9a6d2ec1a654a1bd5b8cb8f2dda(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\""
@@ -653,8 +653,8 @@ $a = 5
         ))
         
 
-    def test_49_unclose_with_invalid_close(self):
-        """ Test Unclosed String """
+    def test_d29dce00b2e0d7209765bd840e5b4c(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 s = "string           
@@ -668,8 +668,8 @@ g = 9
         ))
         
 
-    def test_50_complex(self):
-        """ Test Complex Function """
+    def test_cf44cb23ccb4ff5837f1beb4140be0(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 var a, b, c: real;
@@ -710,8 +710,8 @@ end
         ))
         
 
-    def test_51_complex(self):
-        """ Test Complex Function """
+    def test_a672e3851f51fe92a7dc507ef5fb2d(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -727,8 +727,8 @@ end
         ))
         
 
-    def test_52_unclose_eof(self):
-        """ Test Unclosed String """
+    def test_0b52555fca9ad7731252ffe7f70c35(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 s = "abc""",
@@ -738,8 +738,8 @@ s = "abc""",
         ))
         
 
-    def test_53_unclose_newline(self):
-        """ Test Unclosed """
+    def test_1dbf836f49fd388786aaef56955425(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 s = "abc                   ;
@@ -752,8 +752,8 @@ a = "xyz"
         ))
         
 
-    def test_54_complex(self):
-        """ Test Complex Function """
+    def test_36ca319e7609ce8b217d573ab8d160(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -767,8 +767,8 @@ end
         ))
         
 
-    def test_55_complex(self):
-        """ Test Complex Function """
+    def test_702ce91ba98fbdf0c8a7ad55c803ad(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -782,8 +782,8 @@ end
         ))
         
 
-    def test_56_complex(self):
-        """ Test Complex Function """
+    def test_56262386013f5a7bd668e351f42d55(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -797,8 +797,8 @@ end
         ))
         
 
-    def test_57_complex(self):
-        """ Test Complex Function """
+    def test_d0a78ea8dac294ffd4a8d4f689710b(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -816,8 +816,8 @@ end
         ))
         
 
-    def test_58_complex(self):
-        """ Test Complex Function """
+    def test_34d5ae2e890484deed0f973fe78462(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -831,8 +831,8 @@ end
         ))
         
 
-    def test_59_complex(self):
-        """ Test Complex Function """
+    def test_8d5f439a5d7f6ecc8e0d39dd9cc969(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -852,8 +852,8 @@ end
         ))
         
 
-    def test_60_complex(self):
-        """ Test Complex Function """
+    def test_824f7de04f5c38932d29911416f411(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 procedure foo();
@@ -877,8 +877,8 @@ end
         ))
         
 
-    def test_61_real_lit(self):
-        """ Test Real Number """
+    def test_75321f87b8a45b3d14f6752218a3b7(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 12.
@@ -897,8 +897,8 @@ end
         ))
         
 
-    def test_62_er_tok(self):
-        """ Test /* """
+    def test_38b3c0971c8603b2937f0d8b930ab4(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 /*123*/
@@ -909,8 +909,8 @@ end
         ))
         
 
-    def test_63_err_tok(self):
-        """ Test Error Token """
+    def test_8ffc160277a2a96638e8b4b65fe7ab(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 \\ // / \
@@ -921,8 +921,8 @@ end
         ))
         
 
-    def test_64_err_tok(self):
-        """ Test Error Token @ """
+    def test_309a186bfe08dd395983b7352fd633(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 @1
@@ -933,8 +933,8 @@ end
         ))
         
 
-    def test_65_err_tok(self):
-        """ Test String @ """
+    def test_5ff12e78c9c77bda08f5e0287b5601(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "@1"
@@ -945,8 +945,8 @@ end
         ))
         
 
-    def test_66_escape(self):
-        """ Test ' " """
+    def test_b4ac58c6400768a840078908ae9927(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\"\"\" \' \' "
@@ -957,8 +957,8 @@ end
         ))
         
 
-    def test_67_err_tok(self):
-        """ Test Error Token """
+    def test_a9badd3ae391a22f275d6b869c7f29(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 %%%%%%
@@ -969,8 +969,8 @@ end
         ))
         
 
-    def test_68_escape(self):
-        """ Test \t """
+    def test_951354b5debc465c010d2507d0959b(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\t\t\t\t\t\t\t\t"
@@ -981,8 +981,8 @@ end
         ))
         
 
-    def test_69_escape(self):
-        """ Test \n  """
+    def test_82bdf7fc5c8811c418be7669e76c20(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 "\n\n\n\n\n\n\n\n\n"
@@ -993,8 +993,8 @@ end
         ))
         
 
-    def test_70_escape(self):
-        """ Test \r """
+    def test_d247113fef6d1646385d9591c84b77(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 \r\r\r\r\r\r\r\r\r\
@@ -1005,8 +1005,8 @@ end
         ))
         
 
-    def test_71_err_tok(self):
-        """ Test Error Token """
+    def test_4e06e7209f2174fddfda086441ce3c(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 \.\x\\
@@ -1017,8 +1017,8 @@ end
         ))
 
 
-    def test_72_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_7ee59003d6534ad716b9d03a07e706(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // [,<>,( k6301 with begin,],true
@@ -1031,8 +1031,8 @@ end
         ))
 
 
-    def test_73_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_2e271d9a962b5c896725dcc29e8dbb(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // :=,+,> Wcb78 ; false,else,>=
@@ -1045,8 +1045,8 @@ and real ] p5c22 ) array break w1ca2 array mod while , var div to + D989c := - f
         ))
 
 
-    def test_74_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_e2bcac64b054fdd448df08a595d0bf(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // (,true,[ acb40 mod for,),with
@@ -1059,8 +1059,8 @@ and real ] p5c22 ) array break w1ca2 array mod while , var div to + D989c := - f
         ))
 
 
-    def test_75_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_6ba33a916d87390916e7a65da7f750(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // or,(,procedure d7bab true and,,,>=
@@ -1073,8 +1073,8 @@ do >= div nae0b ) else := W12e2 ( for / > if false <= <= pdb8e := + := <> .. to 
         ))
 
 
-    def test_76_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_8702ca9870bd6d3c69fc97d79aa736(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // string,array,break Vbb79 break <>,(,<>
@@ -1087,8 +1087,8 @@ do >= div nae0b ) else := W12e2 ( for / > if false <= <= pdb8e := + := <> .. to 
         ))
 
 
-    def test_77_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_dfbcfd7af59a3a6bf11985be3fa057(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // /,<=,>= af9f4 , ,,and,mod
@@ -1101,8 +1101,8 @@ do >= div nae0b ) else := W12e2 ( for / > if false <= <= pdb8e := + := <> .. to 
         ))
 
 
-    def test_78_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_4462c21284b2ebbd13e0e76cc88b34(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // and,:=,false C34d9 = else,<,..
@@ -1115,8 +1115,8 @@ do var [ oa6ec - - .. vc463 var <= , var end ) - [ nedb5 var * - <= * * then
         ))
 
 
-    def test_79_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_469abb4bea0ba4b3ab546873185ba4(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // ),-,return Rb4ac true >=,,,not
@@ -1129,8 +1129,8 @@ procedure , with Wd12f boolean >= [ b308a array ) ) or * for , >= n5d7e , , or <
         ))
 
 
-    def test_80_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_9a60a91e62611b3cfeff9bf5799aa0(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // >=,<=,for of8ae * :=,then,>=
@@ -1143,8 +1143,8 @@ procedure , with Wd12f boolean >= [ b308a array ) ) or * for , >= n5d7e , , or <
         ))
 
 
-    def test_81_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_1777c3138a229184c43ac4a5f38e5f(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // or,,,>= Y3137 := :,/,then
@@ -1157,8 +1157,8 @@ procedure , with Wd12f boolean >= [ b308a array ) ) or * for , >= n5d7e , , or <
         ))
 
 
-    def test_82_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_177e9cfb7958b69dbe3473b47a685a(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // downto,-,= kf07d string :,real,string
@@ -1171,8 +1171,8 @@ procedure , with Wd12f boolean >= [ b308a array ) ) or * for , >= n5d7e , , or <
         ))
 
 
-    def test_83_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_e6ed0cf657b6b0830b51c1a9181fe5(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // and,<=,return v415f ( div,and,or
@@ -1185,8 +1185,8 @@ procedure , with Wd12f boolean >= [ b308a array ) ) or * for , >= n5d7e , , or <
         ))
 
 
-    def test_84_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_b94615faaf77d02abf04b09a030a58(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // then,return,< e0352 : ,,of,>=
@@ -1199,8 +1199,8 @@ return > array Qbfb5 , function var M274c if <= ; function or <= to = x4045 proc
         ))
 
 
-    def test_85_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_9fa99d7cb7babd94fb01f6d34f3731(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // ],],* ae0bc not mod,return,,
@@ -1213,8 +1213,8 @@ function < + Qefbe and ; of o366c false array else < > and downto for J4981 : <>
         ))
 
 
-    def test_86_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_6a36c0eb158b3b7e359b114120cf7d(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // <>,while,] jb8be true for,,,<=
@@ -1227,8 +1227,8 @@ else and * x68ae .. continue end c1976 to boolean := or function , * , Y0db2 and
         ))
 
 
-    def test_87_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_0eb6580b301febdeecf306ff7a350e(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // :,..,<= fef8b / div,=,continue
@@ -1241,8 +1241,8 @@ return ) then lb1e7 true mod , Ve4b7 , := true do begin or >= >= v8b5e := for <>
         ))
 
 
-    def test_88_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_2010ecd19c6138b6a0af9c9551a0b8(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // <=,var,> B2bb9 else real,boolean,return
@@ -1255,8 +1255,8 @@ and false then edaa6 integer , break P278e if <> [ * / function while div d74f0 
         ))
 
 
-    def test_89_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_5669012f246cddad2cd4b7305e0d9f(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // begin,),] lc648 ; not,(,/
@@ -1269,8 +1269,8 @@ and false then edaa6 integer , break P278e if <> [ * / function while div d74f0 
         ))
 
 
-    def test_90_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_91e1e3786d21302313d0e9946e58ed(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // (,while,: H050f end return,+,[
@@ -1283,8 +1283,8 @@ and false then edaa6 integer , break P278e if <> [ * / function while div d74f0 
         ))
 
 
-    def test_91_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_e74e6aebb6d40f15f24f7511d914eb(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // var,+,, M6af4 , with,=,-
@@ -1297,8 +1297,8 @@ to >= ( Q51ca : ] to Ie94f for , integer ; , for return if Bbfd7 + real <> if do
         ))
 
 
-    def test_92_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_df14106034e79a2238a11d1cc65afd(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // <>,>,:= z77c3 ] else,with,or
@@ -1311,8 +1311,8 @@ begin real for s229b else ; continue lf8f5 not := <= end <= , mod continue Df28f
         ))
 
 
-    def test_93_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_a112ba5d134ec3505996f1cf460f9d(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // real,),: E75c5 / if,and,array
@@ -1325,8 +1325,8 @@ begin real for s229b else ; continue lf8f5 not := <= end <= , mod continue Df28f
         ))
 
 
-    def test_94_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_4e1b5f7d197d7051dbd8a208b9c685(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // for,[,( t59e3 := function,real,while
@@ -1339,8 +1339,8 @@ begin real for s229b else ; continue lf8f5 not := <= end <= , mod continue Df28f
         ))
 
 
-    def test_95_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_a58b5508a0b3da82bb93c2df56d682(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // break,+,] e8fe2 of ..,:=,if
@@ -1353,8 +1353,8 @@ begin real for s229b else ; continue lf8f5 not := <= end <= , mod continue Df28f
         ))
 
 
-    def test_96_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_2d9d3f1ef05b4622fc4f470bdab8e6(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // or,not,- Zbe2a ; <=,of,)
@@ -1367,8 +1367,8 @@ or * of fa09c ) ; < Ha69c <= mod real mod ) end else >= fa290 <> array end conti
         ))
 
 
-    def test_97_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_c6ddd0af0bb887c53a602bc723fb37(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // div,:,/ R0b5a end <>,,,>
@@ -1381,8 +1381,8 @@ or array ] l2cb2 and >= - ie67b ] or break then string ] and [ Y4895 false , con
         ))
 
 
-    def test_98_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_67e09dcf1f9e80fdb02c6c5670ce1e(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // or,*,; i8959 or *,<,downto
@@ -1395,8 +1395,8 @@ or array ] l2cb2 and >= - ie67b ] or break then string ] and [ Y4895 false , con
         ))
 
 
-    def test_99_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_e5c8fd2c0cf4c6d9e8a6dea381f1db(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // of,string,.. A7535 break >=,div,for
@@ -1409,8 +1409,8 @@ mod false then M46f3 = / , e934f + := boolean := < real + var d94de : ; with bre
         ))
 
 
-    def test_100_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_fff5127d8fec7c6f493ce4a0abed68(self):
+        """ Test ... """
         self.assertTrue(TestLexer.test(
             r"""
 // :=,while,var U1c82 and for,>,)

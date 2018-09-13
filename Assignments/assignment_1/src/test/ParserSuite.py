@@ -4,7 +4,7 @@ from TestUtils import TestParser
 class ParserSuite(unittest.TestCase):
 
 
-    def test_1(self):
+    def test_1_var_decl(self):
         """ Test Var Declare 1 line 1 var """
         input = r"""
 var a: integer;
@@ -13,7 +13,7 @@ var a: integer;
         self.assertTrue(TestParser.test(input, expect, 201))
         
 
-    def test_2(self):
+    def test_2_var_decl(self):
         """ Test Var Declare 1 line n var """
         input = r"""
 var a, b, c: integer;
@@ -22,7 +22,7 @@ var a, b, c: integer;
         self.assertTrue(TestParser.test(input, expect, 202))
         
 
-    def test_3(self):
+    def test_3_var_decl(self):
         """ Test Var Declare n line """
         input = r"""
 var a, b, c: integer;
@@ -33,7 +33,7 @@ var z: string;
         self.assertTrue(TestParser.test(input, expect, 203))
         
 
-    def test_4(self):
+    def test_4_var_decl(self):
         """ Test Var Declare array """
         input = r"""
 var a: array[1 .. 3] of integer;
@@ -42,7 +42,7 @@ var a: array[1 .. 3] of integer;
         self.assertTrue(TestParser.test(input, expect, 204))
         
 
-    def test_5(self):
+    def test_5_var_decl(self):
         """ Test Var Declare """
         input = r"""
 Var a, B, c: array [5 .. 1000] of Boolean ;
@@ -51,7 +51,7 @@ Var a, B, c: array [5 .. 1000] of Boolean ;
         self.assertTrue(TestParser.test(input, expect, 205))
         
 
-    def test_6(self):
+    def test_6_var_decl(self):
         """ Test Var Declare """
         input = r"""
 Var a, B, c: InTeGer;
@@ -62,7 +62,7 @@ Var a, B, c: InTeGer;
         self.assertTrue(TestParser.test(input, expect, 206))
         
 
-    def test_7(self):
+    def test_7_proc_func_decl(self):
         """ Test Procedure Function Declare """
         input = r"""
 procedure foo();
@@ -75,7 +75,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 207))
         
 
-    def test_8(self):
+    def test_8_proc_func_decl(self):
         """ Test Procedure Function Declare """
         input = r"""
 procedure foo(x: integer);
@@ -88,7 +88,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 208))
         
 
-    def test_9(self):
+    def test_9_proc_func_decl(self):
         """ Test Procedure Function Declare """
         input = r"""
 procedure foo(x: integer; y, z: real; g, h: string);
@@ -107,7 +107,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 209))
         
 
-    def test_10(self):
+    def test_10_proc_func_decl(self):
         """ Test Procedure Function Declare """
         input = r"""
 procedure foo(
@@ -133,7 +133,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 210))
         
 
-    def test_11(self):
+    def test_11_assign(self):
         """ Test Assign Statment """
         input = r"""
 procedure foo();
@@ -149,7 +149,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 211))
         
 
-    def test_12(self):
+    def test_12_assign(self):
         """ Test Assign Statment """
         input = r"""
 procedure foo();
@@ -165,7 +165,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 212))
         
 
-    def test_13(self):
+    def test_13_assign(self):
         """ Test Assign Statment """
         input = r"""
 procedure foo();
@@ -181,7 +181,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 213))
         
 
-    def test_14(self):
+    def test_14_assign(self):
         """ Test Assign Statment """
         input = r"""
 procedure foo();
@@ -197,7 +197,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 214))
         
 
-    def test_15(self):
+    def test_15_assign(self):
         """ Test Assign Statment """
         input = r"""
 procedure foo();
@@ -213,7 +213,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 215))
         
 
-    def test_16(self):
+    def test_16_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -229,7 +229,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 216))
         
 
-    def test_17(self):
+    def test_17_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -245,7 +245,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 217))
         
 
-    def test_18(self):
+    def test_18_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -261,7 +261,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 218))
         
 
-    def test_19(self):
+    def test_19_precedence(self):
         """ Test Precedence """
         input = r"""
 procedure foo();
@@ -277,7 +277,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 219))
         
 
-    def test_20(self):
+    def test_20_precedence(self):
         """ Test Precedence """
         input = r"""
 procedure foo();
@@ -293,7 +293,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 220))
         
 
-    def test_21(self):
+    def test_12_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -309,7 +309,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 221))
         
 
-    def test_22(self):
+    def test_22_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -325,7 +325,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 222))
         
 
-    def test_23(self):
+    def test_23_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -341,7 +341,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 223))
         
 
-    def test_24(self):
+    def test_24_assoc(self):
         """ Test Associative """
         input = r"""
 procedure foo();
@@ -357,7 +357,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 224))
         
 
-    def test_25(self):
+    def test_25_keyword(self):
         """ Test True False Keywords """
         input = r"""
 procedure foo();
@@ -373,7 +373,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 225))
         
 
-    def test_26(self):
+    def test_26_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -386,7 +386,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 226))
         
 
-    def test_27(self):
+    def test_27_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -400,7 +400,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 227))
         
 
-    def test_28(self):
+    def test_28_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -414,7 +414,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 228))
         
 
-    def test_29(self):
+    def test_29_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -430,7 +430,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 229))
         
 
-    def test_30(self):
+    def test_30_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -443,7 +443,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 230))
         
 
-    def test_31(self):
+    def test_31_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -462,7 +462,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 231))
         
 
-    def test_32(self):
+    def test_32_if(self):
         """ Test If Statement """
         input = r"""
 procedure foo();
@@ -483,7 +483,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 232))
         
 
-    def test_33(self):
+    def test_33_while(self):
         """ Test While Statment """
         input = r"""
 procedure foo();
@@ -496,7 +496,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 233))
         
 
-    def test_34(self):
+    def test_34_while(self):
         """ Test While Statement """
         input = r"""
 procedure foo();
@@ -512,7 +512,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 234))
         
 
-    def test_35(self):
+    def test_35_for(self):
         """ Test For Statment """
         input = r"""
 procedure foo();
@@ -528,7 +528,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 235))
         
 
-    def test_36(self):
+    def test_36_with(self):
         """ Test With Statment """
         input = r"""
 procedure foo();
@@ -541,7 +541,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 236))
         
 
-    def test_37(self):
+    def test_37_with(self):
         """ Test With Statment """
         input = r"""
 procedure foo();
@@ -560,7 +560,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 237))
         
 
-    def test_38(self):
+    def test_38_call(self):
         """ Test Call Statment """
         input = r"""
 procedure foo();
@@ -576,7 +576,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 238))
         
 
-    def test_39(self):
+    def test_39_complex(self):
         """ Test Complex Code """
         input = r"""
 var a, b, c: real;
@@ -616,7 +616,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 239))
         
 
-    def test_40(self):
+    def test_40_complex(self):
         """ Test Success Code Statment """
         input = r"""
 procedure foo();
@@ -632,7 +632,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 240))
         
 
-    def test_41(self):
+    def test_41_err_delc(self):
         """ Test Missing ; """
         input = r"""
 var a: integer
@@ -641,7 +641,7 @@ var a: integer
         self.assertTrue(TestParser.test(input, expect, 241))
         
 
-    def test_42(self):
+    def test_42_err_delc(self):
         """ Test Missing ; """
         input = r"""
 var a: integer"""
@@ -649,7 +649,7 @@ var a: integer"""
         self.assertTrue(TestParser.test(input, expect, 242))
         
 
-    def test_43(self):
+    def test_43_err_delc(self):
         """ Test Error : """
         input = r"""
 var a:: integer;
@@ -658,7 +658,7 @@ var a:: integer;
         self.assertTrue(TestParser.test(input, expect, 243))
         
 
-    def test_44(self):
+    def test_44_err_delc(self):
         """ Test Error Type """
         input = r"""
 var a: int
@@ -667,7 +667,7 @@ var a: int
         self.assertTrue(TestParser.test(input, expect, 244))
         
 
-    def test_45(self):
+    def test_45_err_delc(self):
         """ Test Missing type """
         input = r"""
 var a:
@@ -676,7 +676,7 @@ var a:
         self.assertTrue(TestParser.test(input, expect, 245))
         
 
-    def test_46(self):
+    def test_46_err_delc(self):
         """ Test Missing type """
         input = r"""
 var a
@@ -685,7 +685,7 @@ var a
         self.assertTrue(TestParser.test(input, expect, 246))
         
 
-    def test_47(self):
+    def test_47_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 var a: boolean integer
@@ -694,7 +694,7 @@ var a: boolean integer
         self.assertTrue(TestParser.test(input, expect, 247))
         
 
-    def test_48(self):
+    def test_48_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 a : integer
@@ -703,7 +703,7 @@ a : integer
         self.assertTrue(TestParser.test(input, expect, 248))
         
 
-    def test_49(self):
+    def test_49_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 var real: integer;
@@ -712,7 +712,7 @@ var real: integer;
         self.assertTrue(TestParser.test(input, expect, 249))
         
 
-    def test_50(self):
+    def test_50_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 var a integer;
@@ -721,7 +721,7 @@ var a integer;
         self.assertTrue(TestParser.test(input, expect, 250))
         
 
-    def test_51(self):
+    def test_51_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 var a, b, : boolean ;
@@ -730,7 +730,7 @@ var a, b, : boolean ;
         self.assertTrue(TestParser.test(input, expect, 251))
         
 
-    def test_52(self):
+    def test_52_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 var a, b, c: boolean;
@@ -740,7 +740,7 @@ x: real
         self.assertTrue(TestParser.test(input, expect, 252))
         
 
-    def test_53(self):
+    def test_53_err_delc(self):
         """ Test Wrong Syntax Var Declare """
         input = r"""
 var a, b, c: boolean;
@@ -750,7 +750,7 @@ x, y, z: real
         self.assertTrue(TestParser.test(input, expect, 253))
         
 
-    def test_54(self):
+    def test_54_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -761,7 +761,7 @@ g, h, i: array[0 .. 5] of bool;
         self.assertTrue(TestParser.test(input, expect, 254))
         
 
-    def test_55(self):
+    def test_55_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -772,7 +772,7 @@ g, h, i: array[0 .. 5] of boolean
         self.assertTrue(TestParser.test(input, expect, 255))
         
 
-    def test_56(self):
+    def test_56_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -783,7 +783,7 @@ g, h, i: array[0 .. 5] boolean;
         self.assertTrue(TestParser.test(input, expect, 256))
         
 
-    def test_57(self):
+    def test_57_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -794,7 +794,7 @@ g, h, i: array[0 .. 5] of ;
         self.assertTrue(TestParser.test(input, expect, 257))
         
 
-    def test_58(self):
+    def test_58_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -805,7 +805,7 @@ g, h, i: array[0 .. 5 of boolean ;
         self.assertTrue(TestParser.test(input, expect, 258))
         
 
-    def test_59(self):
+    def test_59_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -816,7 +816,7 @@ g, h, i: array[0 ..] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 259))
         
 
-    def test_60(self):
+    def test_60_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -827,7 +827,7 @@ g, h, i: array[0] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 260))
         
 
-    def test_61(self):
+    def test_61_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -838,7 +838,7 @@ g, h, i: array[0  5] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 261))
         
 
-    def test_62(self):
+    def test_62_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -849,7 +849,7 @@ g, h, i: array[0 ... 5] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 262))
         
 
-    def test_63(self):
+    def test_63_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -860,7 +860,7 @@ g, h, i: array[.. 5] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 263))
         
 
-    def test_64(self):
+    def test_64_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -871,7 +871,7 @@ g, h, i: array[] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 264))
         
 
-    def test_65(self):
+    def test_65_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -882,7 +882,7 @@ g, h, i: array of boolean
         self.assertTrue(TestParser.test(input, expect, 265))
         
 
-    def test_66(self):
+    def test_66_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -893,7 +893,7 @@ g, h, i: array ;
         self.assertTrue(TestParser.test(input, expect, 266))
         
 
-    def test_67(self):
+    def test_67_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -904,7 +904,7 @@ g, h, i: array[0 .. 5] boolean ;
         self.assertTrue(TestParser.test(input, expect, 267))
         
 
-    def test_68(self):
+    def test_68_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -915,7 +915,7 @@ g, h, i: array[0 .. 5] ;
         self.assertTrue(TestParser.test(input, expect, 268))
         
 
-    def test_69(self):
+    def test_69_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -926,7 +926,7 @@ g, h, i: array[0 .. 5] with boolean ;
         self.assertTrue(TestParser.test(input, expect, 269))
         
 
-    def test_70(self):
+    def test_70_err_delc(self):
         """ Test Array Declare Error """
         input = r"""
 var a, b, c: boolean;
@@ -937,7 +937,7 @@ g, h, i: array[0 .. 5] in boolean;
         self.assertTrue(TestParser.test(input, expect, 270))
         
 
-    def test_71(self):
+    def test_71_err_delc(self):
         """ Test Array Declare Error  """
         input = r"""
 var a, b, c: boolean;
@@ -948,7 +948,7 @@ g, h, i: array(0 .. 5) of boolean ;
         self.assertTrue(TestParser.test(input, expect, 271))
         
 
-    def test_72(self):
+    def test_72_err_delc(self):
         """ Test Array Declare Error  """
         input = r"""
 var a, b, c: boolean;
@@ -959,7 +959,7 @@ g, h, i: arr[0 .. 5] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 272))
         
 
-    def test_73(self):
+    def test_73_err_delc(self):
         """ Test Array Declare Error  """
         input = r"""
 var a, b, c: boolean;
@@ -970,7 +970,7 @@ g, h, i: array [0 .. 5] of true ;
         self.assertTrue(TestParser.test(input, expect, 273))
         
 
-    def test_74(self):
+    def test_74_err_delc(self):
         """ Test Array Declare without space dotdot """
         input = r"""
 var a, b, c: boolean;
@@ -981,7 +981,7 @@ g, h, i: array [0 ..5] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 274))
         
 
-    def test_75(self):
+    def test_75_err_delc(self):
         """ Test Array Declare without space dotdot """
         input = r"""
 var a, b, c: boolean;
@@ -992,7 +992,7 @@ g, h, i: array[0.. 5] of boolean ;
         self.assertTrue(TestParser.test(input, expect, 275))
         
 
-    def test_76(self):
+    def test_76_err_delc(self):
         """ Test Array Declare without space dotdot """
         input = r"""
 var a, b, c: boolean;
@@ -1003,7 +1003,7 @@ g, h, i: array[0..5] of boolean;
         self.assertTrue(TestParser.test(input, expect, 276))
         
 
-    def test_77(self):
+    def test_77_err_delc(self):
         """ Test Negative index Array Declare """
         input = r"""
 var a, b, c: boolean;
@@ -1014,7 +1014,7 @@ g, h, i: array[-5 .. 5] of boolean;
         self.assertTrue(TestParser.test(input, expect, 277))
         
 
-    def test_78(self):
+    def test_78_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo()
@@ -1023,7 +1023,7 @@ procedure foo()
         self.assertTrue(TestParser.test(input, expect, 278))
         
 
-    def test_79(self):
+    def test_79_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo ;
@@ -1032,7 +1032,7 @@ procedure foo ;
         self.assertTrue(TestParser.test(input, expect, 279))
         
 
-    def test_80(self):
+    def test_80_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo( ;
@@ -1041,7 +1041,7 @@ procedure foo( ;
         self.assertTrue(TestParser.test(input, expect, 280))
         
 
-    def test_81(self):
+    def test_81_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo() ;
@@ -1050,7 +1050,7 @@ procedure foo() ;
         self.assertTrue(TestParser.test(input, expect, 281))
         
 
-    def test_82(self):
+    def test_82_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure 123()
@@ -1059,7 +1059,7 @@ procedure 123()
         self.assertTrue(TestParser.test(input, expect, 282))
         
 
-    def test_83(self):
+    def test_83_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure true()
@@ -1068,7 +1068,7 @@ procedure true()
         self.assertTrue(TestParser.test(input, expect, 283))
         
 
-    def test_84(self):
+    def test_84_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedue foo();
@@ -1077,7 +1077,7 @@ procedue foo();
         self.assertTrue(TestParser.test(input, expect, 284))
         
 
-    def test_85(self):
+    def test_85_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1088,7 +1088,7 @@ end;
         self.assertTrue(TestParser.test(input, expect, 285))
         
 
-    def test_86(self):
+    def test_86_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1098,7 +1098,7 @@ begin
         self.assertTrue(TestParser.test(input, expect, 286))
         
 
-    def test_87(self):
+    def test_87_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1110,7 +1110,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 287))
         
 
-    def test_88(self):
+    def test_88_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1122,7 +1122,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 288))
         
 
-    def test_89(self):
+    def test_89_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1134,7 +1134,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 289))
         
 
-    def test_90(self):
+    def test_90_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1145,7 +1145,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 290))
         
 
-    def test_91(self):
+    def test_91_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1158,7 +1158,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 291))
         
 
-    def test_92(self):
+    def test_92_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo();
@@ -1171,7 +1171,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 292))
         
 
-    def test_93(self):
+    def test_93_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo(a: real;);
@@ -1182,7 +1182,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 293))
         
 
-    def test_94(self):
+    def test_94_err_delc(self):
         """ Test Wrong Syntax Procedure Declare """
         input = r"""
 procedure foo(a: real; b, c, d: boolean;);
@@ -1193,7 +1193,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 294))
         
 
-    def test_95(self):
+    def test_95_err_delc(self):
         """ Test Wrong Syntax Function Declare """
         input = r"""
 function foo();
@@ -1204,7 +1204,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 295))
         
 
-    def test_96(self):
+    def test_96_err_delc(self):
         """ Test Wrong Syntax Function Declare """
         input = r"""
 function foo: real;
@@ -1215,7 +1215,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 296))
         
 
-    def test_97(self):
+    def test_97_err_delc(self):
         """ Test Wrong Syntax Function Declare """
         input = r"""
 function foo(): float;
@@ -1226,7 +1226,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 297))
         
 
-    def test_98(self):
+    def test_98_err_delc(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1238,7 +1238,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 298))
         
 
-    def test_99(self):
+    def test_99_err_stmt(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1251,7 +1251,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 299))
         
 
-    def test_100(self):
+    def test_100_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1264,7 +1264,7 @@ end
         expect = r"Error on line 7 col 0: end"
         self.assertTrue(TestParser.test(input, expect, 300))
     
-    def test_101(self):
+    def test_101_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1277,7 +1277,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 301))
         
 
-    def test_102(self):
+    def test_102_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1289,7 +1289,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 302))
         
 
-    def test_103(self):
+    def test_103_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1301,7 +1301,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 303))
         
 
-    def test_104(self):
+    def test_104_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1313,7 +1313,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 304))
         
 
-    def test_105(self):
+    def test_105_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1326,7 +1326,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 305))
         
 
-    def test_106(self):
+    def test_106_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1338,7 +1338,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 306))
         
 
-    def test_107(self):
+    def test_107_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1350,7 +1350,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 307))
         
 
-    def test_108(self):
+    def test_108_err_if(self):
         """ Test Error If Stmt """
         input = r"""
 procedure foo();
@@ -1364,7 +1364,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 308))
         
 
-    def test_109(self):
+    def test_109_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1376,7 +1376,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 309))
         
 
-    def test_110(self):
+    def test_110_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1388,7 +1388,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 310))
         
 
-    def test_111(self):
+    def test_111_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1400,7 +1400,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 311))
         
 
-    def test_112(self):
+    def test_112_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1412,7 +1412,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 312))
         
 
-    def test_113(self):
+    def test_113_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1424,7 +1424,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 313))
         
 
-    def test_114(self):
+    def test_114_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1436,7 +1436,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 314))
         
 
-    def test_115(self):
+    def test_115_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1448,7 +1448,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 315))
         
 
-    def test_116(self):
+    def test_116_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1460,7 +1460,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 316))
         
 
-    def test_117(self):
+    def test_117_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1472,7 +1472,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 317))
         
 
-    def test_118(self):
+    def test_118_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1486,7 +1486,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 318))
         
 
-    def test_119(self):
+    def test_119_err_for(self):
         """ Test Error For Stmt """
         input = r"""
 procedure foo();
@@ -1500,7 +1500,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 319))
         
 
-    def test_120(self):
+    def test_120_err_while(self):
         """ Test Error While Stmt """
         input = r"""
 procedure foo();
@@ -1512,7 +1512,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 320))
         
 
-    def test_121(self):
+    def test_121_err_while(self):
         """ Test Error While Stmt """
         input = r"""
 procedure foo();
@@ -1524,7 +1524,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 321))
         
 
-    def test_122(self):
+    def test_122_err_while(self):
         """ Test Error While Stmt """
         input = r"""
 procedure foo();
@@ -1536,7 +1536,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 322))
         
 
-    def test_123(self):
+    def test_123_err_while(self):
         """ Test Error While Stmt """
         input = r"""
 procedure foo();
@@ -1550,7 +1550,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 323))
         
 
-    def test_124(self):
+    def test_124_err_while(self):
         """ Test Error While Stmt """
         input = r"""
 procedure foo();
@@ -1562,7 +1562,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 324))
         
 
-    def test_125(self):
+    def test_125_err_while(self):
         """ Test Error While Stmt """
         input = r"""
 procedure foo();
@@ -1574,7 +1574,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 325))
         
 
-    def test_126(self):
+    def test_126_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1586,7 +1586,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 326))
         
 
-    def test_127(self):
+    def test_127_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1598,7 +1598,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 327))
         
 
-    def test_128(self):
+    def test_128_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1610,7 +1610,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 328))
         
 
-    def test_129(self):
+    def test_129_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1622,7 +1622,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 329))
         
 
-    def test_130(self):
+    def test_130_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1634,7 +1634,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 330))
         
 
-    def test_131(self):
+    def test_131_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1646,7 +1646,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 331))
         
 
-    def test_132(self):
+    def test_132_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1658,7 +1658,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 332))
         
 
-    def test_133(self):
+    def test_133_err_with(self):
         """ Test Error With Stmt """
         input = r"""
 procedure foo();
@@ -1670,7 +1670,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 333))
         
 
-    def test_134(self):
+    def test_134_err_complex(self):
         """ Test Error on Statement """
         input = r"""
 procedure foo();
@@ -1686,7 +1686,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 334))
         
 
-    def test_135(self):
+    def test_135_err_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1725,7 +1725,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 335))
         
 
-    def test_136(self):
+    def test_136_err_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
