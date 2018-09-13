@@ -435,7 +435,7 @@ Illegal: "\a"
 " abc ' xyz "
 """,
 
-            "Illegal Escape In String:  abc '",
+            "Unclosed String:  abc ",
             131
         ))
         
@@ -1290,128 +1290,110 @@ to >= ( Q51ca : ] to Ie94f for , integer ; , for return if Bbfd7 + real <> if do
         ))
 
 
-    def test_92_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_92_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// <>,>,:= z77c3 ] else,with,or
-begin real for s229b else ; continue lf8f5 not := <= end <= , mod continue Df28f * := - mod , of ;
-(* , for zd0ec,end,T9167 = He16f,-,(*)
+            """
+    " abc \\ xyz "
 """,
 
-            r"begin,real,for,s229b,else,;,continue,lf8f5,not,:=,<=,end,<=,,,mod,continue,Df28f,*,:=,-,mod,,,of,;,<EOF>",
+            "Illegal Escape In String:  abc \ ",
             192
         ))
 
 
-    def test_93_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_93_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// real,),: E75c5 / if,and,array
-<> : ; Oadae ( < >= R76a7 [ procedure procedure false while else .. + T3117 while * <> / if <> mod
-(* ; do z8fe1,continue,F7d93 .. F69d9,,,<>*)
+            """
+    " abc "  xyz "
 """,
 
-            r"<>,:,;,Oadae,(,<,>=,R76a7,[,procedure,procedure,false,while,else,..,+,T3117,while,*,<>,/,if,<>,mod,<EOF>",
+            " abc ,xyz,Unclosed String: ",
             193
         ))
 
 
-    def test_94_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_94_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// for,[,( t59e3 := function,real,while
-( false end ebd2c / real <= n9afc begin <> for < to * if array Icd8e := ] ; + return = [
-(* , - N3453,+,caa7a <> Zf62a,+,]*)
+            """
+    " abc \r  xyz "
 """,
 
-            r"(,false,end,ebd2c,/,real,<=,n9afc,begin,<>,for,<,to,*,if,array,Icd8e,:=,],;,+,return,=,[,<EOF>",
+            "Unclosed String:  abc ",
             194
         ))
 
 
-    def test_95_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_95_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// break,+,] e8fe2 of ..,:=,if
-:= boolean then M7be9 function end > k3932 / := .. >= to while true downto Wcaa7 = := begin else else ( return
-(* ( function Nc1f8,*,T9f7a := Z1d53,<>,..*)
+            """
+    " abc \f  xyz "
 """,
 
-            r":=,boolean,then,M7be9,function,end,>,k3932,/,:=,..,>=,to,while,true,downto,Wcaa7,=,:=,begin,else,else,(,return,<EOF>",
+            "Unclosed String:  abc ",
             195
         ))
 
 
-    def test_96_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_96_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// or,not,- Zbe2a ; <=,of,)
-or * of fa09c ) ; < Ha69c <= mod real mod ) end else >= fa290 <> array end continue var not <
-(* of <= g6834,then,k6652 ) h3b64,=,do*)
+            """
+    " abc \n  xyz "
 """,
 
-            r"or,*,of,fa09c,),;,<,Ha69c,<=,mod,real,mod,),end,else,>=,fa290,<>,array,end,continue,var,not,<,<EOF>",
+            "Unclosed String:  abc ",
             196
         ))
 
 
-    def test_97_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_97_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// div,:,/ R0b5a end <>,,,>
-or array ] l2cb2 and >= - ie67b ] or break then string ] and [ Y4895 false , continue not real ) div
-(* procedure div ya03a,*,Gdc83 / B4f31,,,>=*)
+            """
+    " abc \t  xyz "
 """,
 
-            r"or,array,],l2cb2,and,>=,-,ie67b,],or,break,then,string,],and,[,Y4895,false,,,continue,not,real,),div,<EOF>",
+            "Unclosed String:  abc ",
             197
         ))
 
 
-    def test_98_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_98_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// or,*,; i8959 or *,<,downto
-* break do wa59d : do .. xabf4 boolean = and > else ; do .. Xcc01 do + .. - break function or
-(* or / pb4f1,<>,D7985 if Z564d,,,**)
+            """
+    " abc \b  xyz "
 """,
 
-            r"*,break,do,wa59d,:,do,..,xabf4,boolean,=,and,>,else,;,do,..,Xcc01,do,+,..,-,break,function,or,<EOF>",
+            "Unclosed String:  abc ",
             198
         ))
 
 
-    def test_99_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_99_illegal_char_in_string(self):
+        """ Test Illegal Character in String """
         self.assertTrue(TestLexer.test(
-            r"""
-// of,string,.. A7535 break >=,div,for
-mod false then M46f3 = / , e934f + := boolean := < real + var d94de : ; with break or + =
-(* procedure < w9efc,:,Y62a0 , wd3d0,/,<>*)
+            """
+    " abc \b  xyz "
 """,
 
-            r"mod,false,then,M46f3,=,/,,,e934f,+,:=,boolean,:=,<,real,+,var,d94de,:,;,with,break,or,+,=,<EOF>",
+            "Unclosed String:  abc ",
             199
         ))
 
 
-    def test_100_auto_gen(self):
-        """ Test Automatically Generated Code """
+    def test_100_uncomplete_comment(self):
+        """ Test Uncomplete Comment """
         self.assertTrue(TestLexer.test(
             r"""
-// :=,while,var U1c82 and for,>,)
-, string of wdb12 - false procedure C7cbd and * boolean >= .. / div and O328e := and return , ; , :=
-(* procedure .. Pbe60,..,S9332 not F30d6,boolean,begin*)
+(*=====================
+Comment here
+====================={{{{{{}}}}}}}}}}}
 """,
-
-            r",,string,of,wdb12,-,false,procedure,C7cbd,and,*,boolean,>=,..,/,div,and,O328e,:=,and,return,,,;,,,:=,<EOF>",
+            r"(,*,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,Comment,here,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,=,Error Token }",
             200
         ))
-

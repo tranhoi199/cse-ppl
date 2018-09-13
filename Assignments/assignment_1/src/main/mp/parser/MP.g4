@@ -278,7 +278,7 @@ boolean_literal: TRUE | FALSE ;
 STRING_LITERAL: '"' STR_CHAR* '"'
 	{
 		y = str(self.text)
-		self.text = y[1:len(y)-1]
+		self.text = y[1:-1]
 	}
 	;
 
@@ -325,10 +325,14 @@ WS : [ \t\r\n\f]+ -> skip ;
 
 
 
-UNCLOSE_STRING: '"' STR_CHAR* ( [\r\n] | EOF )
+UNCLOSE_STRING: '"' STR_CHAR* ( [\b\t\n\f\r"'\\] | EOF )
 	{
 		y = str(self.text)
-		raise UncloseString(y[1:].replace('\n', ''))
+		possible = ['\b', '\t', '\n', '\f', '\r', '"', "'", '\\']
+		if y[-1] in possible:
+			raise UncloseString(y[1:-1])
+		else:
+			raise UncloseString(y[1:])
 	}
 	;
 
@@ -341,7 +345,7 @@ ILLEGAL_ESCAPE: '"' STR_CHAR* ESC_ILLEGAL
 	;
 
 
-fragment STR_CHAR: ~[\\\r\n"'] | ESC_SEQ ;
+fragment STR_CHAR: ~[\b\t\n\f\r"'\\] | ESC_SEQ ;
 
 fragment ESC_SEQ: '\\' [btnfr"'\\] ;
 
