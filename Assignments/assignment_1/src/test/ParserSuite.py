@@ -999,7 +999,7 @@ var a, b, c: boolean;
 x, y, z: real ;
 g, h, i: array[0..5] of boolean;
 """
-        expect = r"Error on line 4 col 17: .5"
+        expect = r"Error on line 4 col 15: 0."
         self.assertTrue(TestParser.test(input, expect, 276))
         
 
@@ -2587,7 +2587,7 @@ end
         input = r"""
 var a: array[1-2 .. 5+4 ] of integer;
 """
-        expect = r"successful"
+        expect = r"Error on line 2 col 14: -"
         self.assertTrue(TestParser.test(input, expect, 373))
         
 
@@ -2619,3 +2619,11 @@ end
         input = r""""""
         expect = r"Error on line 1 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 376))
+
+    def test_177(self):
+        """ Test Array Subscript """
+        input = r"""
+var a : array[5 + (1 * 4/ 2) .. 14] of string;
+"""
+        expect = r"Error on line 2 col 16: +"
+        self.assertTrue(TestParser.test(input, expect, 377))

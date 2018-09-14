@@ -158,7 +158,7 @@ method_types: PROCEDURE | FUNCTION ;
 
 data_types: primitive_types | compound_types;
 
-compound_types: ARRAY LSB exp DOTDOT exp RSB OF primitive_types ;
+compound_types: ARRAY LSB number DOTDOT number RSB OF primitive_types ;
 
 primitive_types: INTEGER | REAL | STRING | BOOLEAN;
 
@@ -173,6 +173,7 @@ literal
 	| boolean_literal
 	;
 
+number: SUB? INTEGER_LITERAL ;
 
 /** Lexers Declaration */
 
