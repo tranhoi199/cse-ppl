@@ -1764,7 +1764,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 336))
         
 
-    def test_137(self):
+    def test_137_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1800,7 +1800,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 337))
         
 
-    def test_138(self):
+    def test_138_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1838,7 +1838,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 338))
         
 
-    def test_139(self):
+    def test_139_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1876,7 +1876,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 339))
         
 
-    def test_140(self):
+    def test_140_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1917,7 +1917,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 340))
         
 
-    def test_141(self):
+    def test_141_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1957,7 +1957,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 341))
         
 
-    def test_142(self):
+    def test_142_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -1997,7 +1997,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 342))
         
 
-    def test_143(self):
+    def test_143_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2036,7 +2036,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 343))
         
 
-    def test_144(self):
+    def test_144_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2074,7 +2074,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 344))
         
 
-    def test_145(self):
+    def test_145_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2110,7 +2110,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 345))
         
 
-    def test_146(self):
+    def test_146_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2148,7 +2148,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 346))
         
 
-    def test_147(self):
+    def test_147_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2187,7 +2187,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 347))
         
 
-    def test_148(self):
+    def test_148_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2226,7 +2226,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 348))
         
 
-    def test_149(self):
+    def test_149_complex(self):
         """ Test Random Error Code """
         input = r"""
 var a, b, c: real;
@@ -2264,7 +2264,7 @@ end
         expect = r"Error on line 22 col 0: var"
         self.assertTrue(TestParser.test(input, expect, 349))
 
-    def test_150(self):
+    def test_150_complex(self):
         """ Test Complex Code """
         input = r"""
 procedure foo();
@@ -2282,7 +2282,7 @@ end
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 350))
 
-    def test_151(self):
+    def test_151_func_in_func(self):
         """ Test Function in Function """
         input = r"""
 procedure foo();
@@ -2296,7 +2296,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 351))
 
     
-    def test_152(self):
+    def test_152_compound(self):
         """ Test Compound Stmt in Compound Stmt """
         input = r"""
 procedure foo();
@@ -2312,7 +2312,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 352))
         
 
-    def test_153(self):
+    def test_153_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2324,7 +2324,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 353))
         
 
-    def test_154(self):
+    def test_154_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2336,7 +2336,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 354))
         
 
-    def test_155(self):
+    def test_155_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2348,7 +2348,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 355))
         
 
-    def test_156(self):
+    def test_156_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2360,7 +2360,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 356))
         
 
-    def test_157(self):
+    def test_157_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2372,7 +2372,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 357))
         
 
-    def test_158(self):
+    def test_158_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2384,7 +2384,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 358))
         
 
-    def test_159(self):
+    def test_159_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2396,7 +2396,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 359))
         
 
-    def test_160(self):
+    def test_160_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2408,7 +2408,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 360))
         
 
-    def test_161(self):
+    def test_161_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2420,7 +2420,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 361))
         
 
-    def test_162(self):
+    def test_162_assign(self):
         """ Test Assignment Stmt """
         input = r"""
 procedure foo();
@@ -2432,7 +2432,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 362))
         
 
-    def test_163(self):
+    def test_163_call_proc(self):
         """ Test Break Func call """
         input = r"""
 procedure foo();
@@ -2445,7 +2445,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 363))
         
 
-    def test_164(self):
+    def test_164_stmt(self):
         """ Test Statements """
         input = r"""
 procedure foo();
@@ -2462,7 +2462,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 364))
         
 
-    def test_165(self):
+    def test_165_stmt(self):
         """ Test Return in Compound """
         input = r"""
 procedure foo();
@@ -2479,7 +2479,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 365))
         
 
-    def test_166(self):
+    def test_166_stmt(self):
         """ Test Return multiple times """
         input = r"""
 procedure foo();
@@ -2497,7 +2497,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 366))
         
 
-    def test_167(self):
+    def test_167_return_return(self):
         """ Test Return in Return """
         input = r"""
 procedure foo();
@@ -2514,7 +2514,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 367))
         
 
-    def test_168(self):
+    def test_168_stmt(self):
         """ Test  """
         input = r"""
 procedure foo();
@@ -2531,7 +2531,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 368))
         
 
-    def test_169(self):
+    def test_169_return_break(self):
         """ Test Return Break """
         input = r"""
 procedure foo();
@@ -2548,7 +2548,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 369))
         
 
-    def test_170(self):
+    def test_170_exp_real(self):
         """ Test  """
         input = r"""
 procedure f();
@@ -2560,7 +2560,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 370))
         
 
-    def test_171(self):
+    def test_171_comment(self):
         """ Test Comment Line in Block """
         input = r"""
 {
@@ -2572,7 +2572,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 371))
         
 
-    def test_172(self):
+    def test_172_comment(self):
         """ Test Comment Block in Line """
         input = r"""
 // Line Comment { Block Comment }
@@ -2582,7 +2582,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 372))
         
 
-    def test_173(self):
+    def test_173_arr_subscript(self):
         """ Test Supscript Array is expression """
         input = r"""
 var a: array[1-2 .. 5+4 ] of integer;
@@ -2591,7 +2591,7 @@ var a: array[1-2 .. 5+4 ] of integer;
         self.assertTrue(TestParser.test(input, expect, 373))
         
 
-    def test_174(self):
+    def test_174_idx_exp(self):
         """ Test Index Expression with or else """
         input = r"""
 procedure foo();
@@ -2603,7 +2603,7 @@ end
         self.assertTrue(TestParser.test(input, expect, 374))
         
 
-    def test_175(self):
+    def test_175_idx_exp(self):
         """ Test Index Expression """
         input = r"""
 procedure foo();
@@ -2614,16 +2614,39 @@ end
         expect = r"successful"
         self.assertTrue(TestParser.test(input, expect, 375))
 
-    def test_176(self):
+    def test_176_empty_prog(self):
         """ Test Empty Program """
         input = r""""""
         expect = r"Error on line 1 col 0: <EOF>"
         self.assertTrue(TestParser.test(input, expect, 376))
 
-    def test_177(self):
+    def test_177_arr_subscript(self):
         """ Test Array Subscript """
         input = r"""
 var a : array[5 + (1 * 4/ 2) .. 14] of string;
 """
         expect = r"Error on line 2 col 16: +"
         self.assertTrue(TestParser.test(input, expect, 377))
+    
+    def test_178_arr_subscript(self):
+        """ Test Array Subscript """
+        input = r"""
+var a : array[1      .. 14] of string;
+"""
+        expect = r"successful"
+        self.assertTrue(TestParser.test(input, expect, 378))
+
+    def test_179_if_else(self):
+        """ Test If Else Again """
+        input = r"""
+procedure abc ();
+var x , y : real ; 
+    begin
+        if x = y then
+            a:= 1000;
+        else;
+            b:= 999;
+    end
+"""
+        expect = r"Error on line 7 col 12: ;"
+        self.assertTrue(TestParser.test(input, expect, 379))
