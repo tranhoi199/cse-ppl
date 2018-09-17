@@ -9,11 +9,11 @@ from MPLexer import MPLexer
 from MPParser import MPParser
 from lexererr import *
 from ASTGeneration import ASTGeneration
-from StaticCheck import StaticChecker
+"""from StaticCheck import StaticChecker
 from StaticError import *
 from CodeGenerator import CodeGenerator
 import subprocess
-
+"""
 JASMIN_JAR = "./external/jasmin.jar"
 TEST_DIR = "./test/testcases/"
 SOL_DIR = "./test/solutions/"
@@ -120,7 +120,7 @@ class TestAST:
         asttree = ASTGeneration().visit(tree)
         dest.write(str(asttree))
         dest.close()
-
+"""
 class TestChecker:
     @staticmethod
     def test(input,expect,num):       
@@ -192,3 +192,5 @@ class TestCodeGen():
             raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
         finally:
             f.close()
+            
+            """
