@@ -1,3 +1,5 @@
+arr = [1, 2, 3, 4, 5, 6, 7, 8]
+
 sqr = (i ** 2 for i in arr) # return iterator
 print(list(sqr))
 '''
