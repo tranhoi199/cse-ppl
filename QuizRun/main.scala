@@ -1,7 +1,6 @@
 object Main extends App {
 
 
-    
 
     // def mem(x:Int,lst:List[Int]):Boolean = lst match {
     //     case List() => false
