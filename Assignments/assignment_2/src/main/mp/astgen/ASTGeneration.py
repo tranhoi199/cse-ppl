@@ -1,3 +1,15 @@
+#########################################################
+########### Code used for Pylint to link code ###########
+######    REMEMBER: Comment before submit code    #######
+#########################################################
+
+import sys
+sys.path.append('../../../../target/main/mp/parser')
+sys.path.append('../utils')
+
+#########################################################
+######    REMEMBER: Comment before submit code    #######
+#########################################################
 from MPVisitor import MPVisitor
 from MPParser import MPParser
 from AST import *
@@ -23,7 +35,7 @@ class ASTGeneration(MPVisitor):
 
     def visitBody(self,ctx:MPParser.BodyContext):
         return [],[self.visit(ctx.stmt())] if ctx.stmt() else []
-  
+
     def visitStmt(self,ctx:MPParser.StmtContext):
         return self.visit(ctx.funcall())
 
@@ -35,5 +47,8 @@ class ASTGeneration(MPVisitor):
 
     def visitMtype(self,ctx:MPParser.MtypeContext):
         return IntType()
-        
 
+
+#########################################################
+######    REMEMBER: Comment before submit code    #######
+#########################################################
