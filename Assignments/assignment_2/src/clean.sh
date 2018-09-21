@@ -6,3 +6,5 @@ rm -rf "./test/testcases/"
 
 mkdir "./test/solutions"
 mkdir "./test/testcases"
+
+echo "Clean successfully"
