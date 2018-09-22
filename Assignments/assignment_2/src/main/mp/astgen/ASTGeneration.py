@@ -60,7 +60,7 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#func_declare.
     def visitFunc_declare(self, ctx:MPParser.Func_declareContext):
         log('visitFunc_declare')
-        name = ctx.ID().getText()
+        name = Id(ctx.ID().getText())
         log1(name)
         param = self.visitParams_list(ctx.params_list()) if ctx.params_list() else []
         log1(param)
@@ -77,7 +77,7 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#proc_declare.
     def visitProc_declare(self, ctx:MPParser.Proc_declareContext):
         log('visitProc_declare')
-        name = ctx.ID().getText()
+        name = Id(ctx.ID().getText())
         log1(name)
         param = self.visitParams_list(ctx.params_list()) if ctx.params_list() else []
         log1(param)

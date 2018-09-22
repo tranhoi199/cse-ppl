@@ -23,6 +23,7 @@ begin
 end
 """
         expect = str(
+Program([FuncDecl(Id(foo),[VarDecl(Id(a),StringType),VarDecl(Id(b),FloatType)],VoidType(),[],[])])
         )
         self.assertTrue(TestAST.test(input, expect, 301))
 
