@@ -62,7 +62,7 @@ class ASTGeneration(MPVisitor):
         log('visitFunc_declare')
         name = ctx.ID().getText()
         log1(name)
-        param = self.visitParams_list(ctx.params_list())
+        param = self.visitParams_list(ctx.params_list()) if ctx.params_list() else []
         log1(param)
         returnType = self.visitData_types(ctx.data_types())
         log1(returnType)
@@ -79,7 +79,7 @@ class ASTGeneration(MPVisitor):
         log('visitProc_declare')
         name = ctx.ID().getText()
         log1(name)
-        param = self.visitParams_list(ctx.params_list())
+        param = self.visitParams_list(ctx.params_list()) if ctx.params_list() else []
         log1(param)
         local = self.visitVar_declare(ctx.var_declare()) if ctx.var_declare() else []
         log1(local)
@@ -374,7 +374,12 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#params_list.
     def visitParams_list(self, ctx:MPParser.Params_listContext):
         log('visitParams_list')
-        return self.visitChildren(ctx)
+        varDeclList = []
+        for x in ctx.ids_list_with_type():
+            varDeclList.extend(self.visitIds_list_with_type(x))
+        log1(varDeclList)
+        return [VarDecl(id, dataType) for (id, dataType) in varDeclList]
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#ids_list_with_type.
