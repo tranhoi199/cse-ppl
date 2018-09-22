@@ -290,7 +290,7 @@ class Id(LHS):
     def accept(self, v, param):
         return v.visitId(self, param)
 
-def ArrayCell(LHS):
+class ArrayCell(LHS):
     #arr:Expr
     #idx:Expr
     def __init__(self, arr, idx):

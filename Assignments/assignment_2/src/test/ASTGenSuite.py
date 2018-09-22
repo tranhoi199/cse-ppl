@@ -23,7 +23,7 @@ begin
 end
 
 """
-        expect = str(Program([FuncDecl(Id("main"),[],[],[])]))
+        expect = str()
         self.assertTrue(TestAST.test(input,expect,300))
 
 
