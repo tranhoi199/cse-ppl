@@ -263,7 +263,7 @@ class ASTGeneration(MPVisitor):
     def visitExp1(self, ctx:MPParser.Exp1Context):
         log('visitExp1')
         if ctx.getChildCount() == 1: # exp2
-            return self.visitExp2(ctx.exp2())
+            return self.visitExp2(ctx.exp2(0))
         left = self.visitExp2(ctx.exp2(0))
         right = self.visitExp2(ctx.exp2(1))
         op = ctx.getChild(1).getText()
@@ -339,8 +339,8 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#postfix_array_exp.
     def visitPostfix_array_exp(self, ctx:MPParser.Postfix_array_expContext):
         log('visitPostfix_array_exp')
-        # return self.visitExp(ctx.exp())
-        return self.visitChildren(ctx)
+        return self.visitExp(ctx.exp())
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#primary_exp.
@@ -458,7 +458,18 @@ class ASTGeneration(MPVisitor):
 
     # Visit a parse tree produced by MPParser#literal.
     def visitLiteral(self, ctx:MPParser.LiteralContext):
-        return self.visitChildren(ctx)
+        log('visitLiteral')
+        if ctx.INTEGER_LITERAL():
+            log1('INTEGER_LITERAL')
+            return IntLiteral(ctx.INTEGER_LITERAL().getText())
+        if ctx.REAL_LITERAL():
+            log1('REAL_LITERAL')
+            return FloatLiteral(ctx.REAL_LITERAL().getText())
+        if ctx.STRING_LITERAL():
+            log1('STRING_LITERAL')
+            return StringLiteral(ctx.STRING_LITERAL().getText())
+        return self.visitBoolean_literal(ctx.boolean_literal())
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#number.
@@ -473,7 +484,10 @@ class ASTGeneration(MPVisitor):
 
     # Visit a parse tree produced by MPParser#boolean_literal.
     def visitBoolean_literal(self, ctx:MPParser.Boolean_literalContext):
-        return self.visitChildren(ctx)
+        log1('visitBoolean_literal')
+        val = True if ctx.TRUE() else False
+        return BooleanLiteral(val)
+        # return self.visitChildren(ctx)
 
 
 #########################################################
