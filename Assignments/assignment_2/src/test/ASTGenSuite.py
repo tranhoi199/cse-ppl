@@ -27,7 +27,7 @@ var a: integer;
         input = r"""
 var a,b: string;
 """
-        expect = "Program([VarDecl(Id(a),StringType),VarDecl(Id(b),StringType)])"
+        expect = r"Program([VarDecl(Id(a),StringType),VarDecl(Id(b),StringType)])"
         self.assertTrue(TestAST.test(input, expect, 302))
 
     def test_3(self):
@@ -36,7 +36,7 @@ var x,y,z:integer;
     g: string; 
     h,t: real;
 """
-        expect = "Program([VarDecl(Id(x),IntType),VarDecl(Id(y),IntType),VarDecl(Id(z),IntType),VarDecl(Id(g),StringType),VarDecl(Id(h),FloatType),VarDecl(Id(t),FloatType)])"
+        expect = r"Program([VarDecl(Id(x),IntType),VarDecl(Id(y),IntType),VarDecl(Id(z),IntType),VarDecl(Id(g),StringType),VarDecl(Id(h),FloatType),VarDecl(Id(t),FloatType)])"
         self.assertTrue(TestAST.test(input, expect, 303))
 
     def test_4(self):
