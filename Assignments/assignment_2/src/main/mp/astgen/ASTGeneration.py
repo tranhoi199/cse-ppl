@@ -11,7 +11,7 @@ sys.path.append('../utils')
 ######    REMEMBER: Comment before submit code    #######
 #########################################################
 
-F_LOG = True
+F_LOG = False
 
 def log(*arg):
     if F_LOG: print('>>>>>', *arg)
@@ -380,7 +380,7 @@ class ASTGeneration(MPVisitor):
 
     # Visit a parse tree produced by MPParser#call_exp.
     def visitCall_exp(self, ctx:MPParser.Call_expContext):
-        method = ctx.ID().getText()
+        method = Id(ctx.ID().getText())
         log1(method)
         param = self.visit(ctx.exps_list()) if ctx.exps_list() else []
         log1(param)
@@ -462,8 +462,8 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#compound_types.
     def visitCompound_types(self, ctx:MPParser.Compound_typesContext):
         log('visitCompound_types')
-        lower = self.visit(ctx.number(0))
-        upper = self.visit(ctx.number(1))
+        lower = self.visitNumber(ctx.number(0))
+        upper = self.visitNumber(ctx.number(1))
         eleType = self.visit(ctx.primitive_types())
         log1(lower, upper, eleType)
         return ArrayType(lower, upper, eleType)
@@ -514,7 +514,7 @@ class ASTGeneration(MPVisitor):
         val = int(ctx.INTEGER_LITERAL().getText())
         if ctx.SUB(): val = -val
         log1(val)
-        return IntLiteral(val)
+        return val
         # return self.visitChildren(ctx)
 
 

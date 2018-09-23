@@ -986,28 +986,29 @@ Program([FuncDecl(Id(foo),[],VoidType(),[],[With([VarDecl(Id(i),FloatType)],[Cal
 
     def test_78(self):
         input = r"""
-
+var a: integer;
 """
         expect = str(
-
+Program([VarDecl(Id(a),ArrayType(IntLiteral(1),IntLiteral(2),IntType))])
         )
         self.assertTrue(TestAST.test(input, expect, 378))
 
     def test_79(self):
         input = r"""
-
+var a, b, c: array[1 .. 2] of integer;
 """
         expect = str(
-
+Program([VarDecl(Id(a),ArrayType(IntLiteral(1),IntLiteral(2),IntType)),VarDecl(Id(b),ArrayType(IntLiteral(1),IntLiteral(2),IntType)),VarDecl(Id(c),ArrayType(IntLiteral(1),IntLiteral(2),IntType))])
         )
         self.assertTrue(TestAST.test(input, expect, 379))
 
     def test_80(self):
         input = r"""
-
+var a: array[1 .. 2] of integer;
+    u, v: array[1 .. 2] of string;
 """
         expect = str(
-
+Program([VarDecl(Id(a),ArrayType(IntLiteral(1),IntLiteral(2),IntType)),VarDecl(Id(u),ArrayType(IntLiteral(1),IntLiteral(2),StringType)),VarDecl(Id(v),ArrayType(IntLiteral(1),IntLiteral(2),StringType))])
         )
         self.assertTrue(TestAST.test(input, expect, 380))
 
