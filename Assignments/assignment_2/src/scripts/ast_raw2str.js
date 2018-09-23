@@ -11,7 +11,7 @@ text = String(text)
 .replace(/(IntType|FloatType|BoolType|StringType|Break|Continue)([^(])/g, (match, p1, p2) => p1 + '()' + p2)
 .replace(/(Id|StringLiteral)(\()([^)'"]*)\)/g, (match, p1, p2, p3) => p1 + p2 + '"' + p3 + '")')
 .replace(/(BinaryOp|UnaryOp)(\()([^,'"]*),/g,  (match, p1, p2, p3) => p1 + p2 + '"' + p3 + '",')
-// .replace(/Return\(Some\((\s\d)\)\)/)
+.replace(/Return\(Some\((\s\d)\)\)/)
 // FuncDecl
 // For
 
