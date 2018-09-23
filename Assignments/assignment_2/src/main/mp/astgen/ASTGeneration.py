@@ -24,6 +24,7 @@ def log2(*arg):
 from MPVisitor import MPVisitor
 from MPParser import MPParser
 from AST import *
+# from AntiAST import *
 
 
 class ASTGeneration(MPVisitor):
