@@ -18,12 +18,20 @@ class ASTGenSuite(unittest.TestCase):
     
     def test_1(self):
         input = r"""
-procedure foo(a: string; b: Real);
+procedure foo();
 begin
+    with i: real;
+    do begin
+        ok();
+        a := 4;
+        return;
+        break;
+        continue;
+        return hoho;
+    end
 end
 """
         expect = str(
-Program([FuncDecl(Id(foo),[VarDecl(Id(a),StringType),VarDecl(Id(b),FloatType)],VoidType(),[],[])])
         )
         self.assertTrue(TestAST.test(input, expect, 301))
 

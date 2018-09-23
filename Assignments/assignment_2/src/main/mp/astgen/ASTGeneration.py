@@ -98,24 +98,44 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#assign_stmt.
     def visitAssign_stmt(self, ctx:MPParser.Assign_stmtContext):
         log('visitAssign_stmt')
-        # lhs = self.visit(ctx.assign_body())
-        # return Assign(lhs, exp)
-        return self.visitChildren(ctx)
+        return self.visitAssign_body(ctx.assign_body())
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#assign_body.
     def visitAssign_body(self, ctx:MPParser.Assign_bodyContext):
-        return self.visitChildren(ctx)
+        log('visitAssign_body')
+        lhs = self.visitAssign_lhs(ctx.assign_lhs())
+        exp, otherLHS = self.visitAssign_tail(ctx.assign_tail())
+        log1(lhs)
+        log1(exp)
+        log1(otherLHS)
+        lhsList = [lhs] + otherLHS
+        return [Assign(lhs, exp) for lhs in lhsList]
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#assign_lhs.
     def visitAssign_lhs(self, ctx:MPParser.Assign_lhsContext):
-        return self.visitChildren(ctx)
+        log('visitAssign_lhs')
+        if ctx.ID():
+            log1(ctx.ID().getText())
+            return Id(ctx.ID().getText())
+        else:
+            return self.visitIndex_exp(ctx.index_exp())
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#assign_tail.
     def visitAssign_tail(self, ctx:MPParser.Assign_tailContext):
-        return self.visitChildren(ctx)
+        log('visitAssign_tail')
+        if ctx.ASSIGN():
+            lhs = self.visitAssign_lhs(ctx.assign_lhs())
+            exp, otherLHS = self.visitAssign_tail(ctx.assign_tail())
+            return exp, [lhs] + otherLHS
+        exp = self.visitExp(ctx.exp())
+        return exp, []
+        # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#if_stmt.
@@ -125,8 +145,11 @@ class ASTGeneration(MPVisitor):
         log1(expr)
         thenStmt = self.visitStmt(ctx.stmt(0))
         log1(thenStmt)
+        if not isinstance(thenStmt, list): thenStmt = [thenStmt]
         if ctx.stmt(1):
-            return If(expr, thenStmt, elseStmt=self.visitStmt(ctx.stmt(1)))
+            elseStmt = self.visitStmt(ctx.stmt(1))
+            if not isinstance(elseStmt, list): elseStmt = [elseStmt]
+            return If(expr, thenStmt, elseStmt)
         return If(expr, thenStmt)
         # return self.visitChildren(ctx)
 
@@ -136,16 +159,17 @@ class ASTGeneration(MPVisitor):
         log('visitWhile_stmt')
         exp = self.visitExp_bool(ctx.exp_bool())
         log1(exp)
-        sl = self.visitStmt(ctx.stmt())
-        log1(sl)
-        return While(exp, sl)
+        stmtsList = self.visitStmt(ctx.stmt())
+        log1(stmtsList)
+        if not isinstance(stmtsList, list): stmtsList = [stmtsList]
+        return While(exp, stmtsList)
         # return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by MPParser#for_stmt.
     def visitFor_stmt(self, ctx:MPParser.For_stmtContext):
         log('visitFor_stmt')
-        id = ctx.ID().getText()
+        id = Id(ctx.ID().getText())
         log1(id)
         expr1 = self.visitExp(ctx.exp(0))
         log1(expr1)
@@ -155,6 +179,8 @@ class ASTGeneration(MPVisitor):
         log1(loop)
         up = False if ctx.DOWNTO() else True
         log1(up)
+
+        if not isinstance(loop, list): loop = [loop]
         return For(id, expr1, expr2, up, loop)
         # return self.visitChildren(ctx)
 
@@ -168,7 +194,9 @@ class ASTGeneration(MPVisitor):
         log1(varDeclList)
         stmt = self.visitStmt(ctx.stmt())
         log1(stmt)
-        return With(varDeclList, stmt)
+
+        if not isinstance(stmt, list): stmt = [stmt]
+        return With([VarDecl(id, dataType) for (id, dataType) in varDeclList], stmt)
         # return self.visitChildren(ctx)
 
 
@@ -411,7 +439,13 @@ class ASTGeneration(MPVisitor):
     # Visit a parse tree produced by MPParser#stmts_list.
     def visitStmts_list(self, ctx:MPParser.Stmts_listContext):
         log('visitStmts_list')
-        return [self.visit(x) for x in ctx.stmt()]
+        log1(ctx.getChildCount())
+        stmtsList = []
+        for i in ctx.stmt():
+            j = self.visitStmt(i)
+            if isinstance(j, list): stmtsList.extend(j if j else [])
+            else: stmtsList.append(j)
+        return stmtsList
         # return self.visitChildren(ctx)
 
 
@@ -461,10 +495,12 @@ class ASTGeneration(MPVisitor):
         log('visitLiteral')
         if ctx.INTEGER_LITERAL():
             log1('INTEGER_LITERAL')
-            return IntLiteral(ctx.INTEGER_LITERAL().getText())
+            log1(int(ctx.INTEGER_LITERAL().getText()))
+            return IntLiteral(int(ctx.INTEGER_LITERAL().getText()))
         if ctx.REAL_LITERAL():
             log1('REAL_LITERAL')
-            return FloatLiteral(ctx.REAL_LITERAL().getText())
+            log1(float(ctx.REAL_LITERAL().getText()))
+            return FloatLiteral(float(ctx.REAL_LITERAL().getText()))
         if ctx.STRING_LITERAL():
             log1('STRING_LITERAL')
             return StringLiteral(ctx.STRING_LITERAL().getText())
