@@ -111,8 +111,9 @@ class ASTGeneration(MPVisitor):
         log1(lhs)
         log1(exp)
         log1(otherLHS)
-        lhsList = [lhs] + otherLHS
-        return [Assign(lhs, exp) for lhs in lhsList]
+        lhsList = [lhs] + otherLHS + [exp]
+        return [Assign(lhsList[i], lhsList[i+1]) for i in range(len(lhsList)-1)][::-1]
+        # return [Assign(lhs, exp) for lhs in lhsList]
         # return self.visitChildren(ctx)
 
 

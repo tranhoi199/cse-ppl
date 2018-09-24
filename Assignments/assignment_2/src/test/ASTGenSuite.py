@@ -569,7 +569,7 @@ begin
     a := b := "ahihi! hic hic";
 end
 """
-        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'ahihi! hic hic')),Assign(Id(r'b'),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'b'),StringLiteral(r'ahihi! hic hic')),Assign(Id(r'a'),Id(r'b'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 354))
 
     def test_55_assign_lsh_arr(self):
@@ -599,7 +599,7 @@ begin
     a := b[4] := foo()[5] := "ahihi! hic hic";
 end
 """
-        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(Id(r'b'),IntLiteral(4)),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(5)),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(5)),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(Id(r'b'),IntLiteral(4)),ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(5))),Assign(Id(r'a'),ArrayCell(Id(r'b'),IntLiteral(4)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 357))
 
     def test_58_assign_complex(self):
@@ -619,7 +619,7 @@ begin
     a[1+2] := foo(bar(), "hi", 3.4, -6.5)[4 And then trUE + FalsE] := "ahihi! hic hic";
 end
 """
-        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(Id(r'a'),BinaryOp(r'+',IntLiteral(1),IntLiteral(2))),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(CallExpr(Id(r'foo'),[CallExpr(Id(r'bar'),[]),StringLiteral(r'hi'),FloatLiteral(3.4),UnaryOp(r'-',FloatLiteral(6.5))]),BinaryOp(r'andthen',IntLiteral(4),BinaryOp(r'+',BooleanLiteral(True),BooleanLiteral(False)))),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(CallExpr(Id(r'foo'),[CallExpr(Id(r'bar'),[]),StringLiteral(r'hi'),FloatLiteral(3.4),UnaryOp(r'-',FloatLiteral(6.5))]),BinaryOp(r'andthen',IntLiteral(4),BinaryOp(r'+',BooleanLiteral(True),BooleanLiteral(False)))),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(Id(r'a'),BinaryOp(r'+',IntLiteral(1),IntLiteral(2))),ArrayCell(CallExpr(Id(r'foo'),[CallExpr(Id(r'bar'),[]),StringLiteral(r'hi'),FloatLiteral(3.4),UnaryOp(r'-',FloatLiteral(6.5))]),BinaryOp(r'andthen',IntLiteral(4),BinaryOp(r'+',BooleanLiteral(True),BooleanLiteral(False)))))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 359))
 
     def test_60_assign_complex(self):
@@ -640,7 +640,7 @@ begin
     g := -1.2+4.6*6 mod 7+m-f*k>4+2*5-6 div abc - - - 4 or 3 and then nhyil or else True;
 end
 """
-        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BooleanLiteral(False)),Assign(Id(r'b'),BooleanLiteral(False)),Assign(Id(r'c'),BooleanLiteral(False)),Assign(Id(r'd'),BooleanLiteral(False)),Assign(Id(r'e'),BooleanLiteral(False)),Assign(Id(r'f'),BooleanLiteral(False)),Assign(Id(r'g'),BooleanLiteral(False)),Assign(Id(r'g'),BinaryOp(r'orelse',BinaryOp(r'andthen',BinaryOp(r'>',BinaryOp(r'-',BinaryOp(r'+',BinaryOp(r'+',UnaryOp(r'-',FloatLiteral(1.2)),BinaryOp(r'mod',BinaryOp(r'*',FloatLiteral(4.6),IntLiteral(6)),IntLiteral(7))),Id(r'm')),BinaryOp(r'*',Id(r'f'),Id(r'k'))),BinaryOp(r'or',BinaryOp(r'-',BinaryOp(r'-',BinaryOp(r'+',IntLiteral(4),BinaryOp(r'*',IntLiteral(2),IntLiteral(5))),BinaryOp(r'div',IntLiteral(6),Id(r'abc'))),UnaryOp(r'-',UnaryOp(r'-',IntLiteral(4)))),IntLiteral(3))),Id(r'nhyil')),BooleanLiteral(True)))],VoidType())]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'g'),BooleanLiteral(False)),Assign(Id(r'f'),Id(r'g')),Assign(Id(r'e'),Id(r'f')),Assign(Id(r'd'),Id(r'e')),Assign(Id(r'c'),Id(r'd')),Assign(Id(r'b'),Id(r'c')),Assign(Id(r'a'),Id(r'b')),Assign(Id(r'g'),BinaryOp(r'orelse',BinaryOp(r'andthen',BinaryOp(r'>',BinaryOp(r'-',BinaryOp(r'+',BinaryOp(r'+',UnaryOp(r'-',FloatLiteral(1.2)),BinaryOp(r'mod',BinaryOp(r'*',FloatLiteral(4.6),IntLiteral(6)),IntLiteral(7))),Id(r'm')),BinaryOp(r'*',Id(r'f'),Id(r'k'))),BinaryOp(r'or',BinaryOp(r'-',BinaryOp(r'-',BinaryOp(r'+',IntLiteral(4),BinaryOp(r'*',IntLiteral(2),IntLiteral(5))),BinaryOp(r'div',IntLiteral(6),Id(r'abc'))),UnaryOp(r'-',UnaryOp(r'-',IntLiteral(4)))),IntLiteral(3))),Id(r'nhyil')),BooleanLiteral(True)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 361))
 
     def test_62_forto(self):
@@ -984,7 +984,7 @@ begin
     end
 end
 """
-        expect =str(Program([FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),FloatType())],[With([VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),ArrayType(0,15,BoolType())),VarDecl(Id(r'c'),ArrayType(0,15,BoolType())),VarDecl(Id(r'x'),FloatType()),VarDecl(Id(r'y'),FloatType()),VarDecl(Id(r'z'),FloatType())],[Assign(Id(r'a'),IntLiteral(3)),Assign(Id(r'x'),IntLiteral(3)),Assign(Id(r'y'),IntLiteral(3))])],VoidType())]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),FloatType())],[With([VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),ArrayType(0,15,BoolType())),VarDecl(Id(r'c'),ArrayType(0,15,BoolType())),VarDecl(Id(r'x'),FloatType()),VarDecl(Id(r'y'),FloatType()),VarDecl(Id(r'z'),FloatType())],[Assign(Id(r'y'),IntLiteral(3)),Assign(Id(r'x'),Id(r'y')),Assign(Id(r'a'),Id(r'x'))])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 389))
 
     def test_90_random(self):
@@ -1073,7 +1073,7 @@ begin
     end else return oh();
 end
 """
-        expect =str(Program([FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),FloatType())],[With([VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),ArrayType(0,15,BoolType())),VarDecl(Id(r'c'),ArrayType(0,15,BoolType())),VarDecl(Id(r'x'),FloatType()),VarDecl(Id(r'y'),FloatType()),VarDecl(Id(r'z'),FloatType())],[Assign(Id(r'a'),IntLiteral(3)),Assign(Id(r'x'),IntLiteral(3)),Assign(Id(r'y'),IntLiteral(3))])],VoidType()),FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),FloatType())],[If(BinaryOp(r'=',Id(r'a'),IntLiteral(1)),[If(BinaryOp(r'>',Id(r'b'),IntLiteral(3)),[Assign(Id(r'c'),IntLiteral(5))],[Assign(Id(r'd'),IntLiteral(1))]),If(BinaryOp(r'<',Id(r'e'),IntLiteral(4)),[CallStmt(Id(r'ok'),[])],[])],[If(BinaryOp(r'>',Id(r'h'),IntLiteral(5)),[CallStmt(Id(r'nty'),[])],[CallStmt(Id(r'lyo'),[])]),Assign(Id(r'g'),IntLiteral(5))])],VoidType()),FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[Id(r'a')])],StringType()),VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),StringType()),VarDecl(Id(r'f'),FloatType()),VarDecl(Id(r'g'),FloatType()),VarDecl(Id(r't'),StringType()),VarDecl(Id(r'h'),StringType()),VarDecl(Id(r'p'),BoolType()),VarDecl(Id(r'q'),BoolType()),FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[]),Break(),Continue()],[Return(CallExpr(Id(r'oh'),[]))])],VoidType())]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),FloatType())],[With([VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),ArrayType(0,15,BoolType())),VarDecl(Id(r'c'),ArrayType(0,15,BoolType())),VarDecl(Id(r'x'),FloatType()),VarDecl(Id(r'y'),FloatType()),VarDecl(Id(r'z'),FloatType())],[Assign(Id(r'y'),IntLiteral(3)),Assign(Id(r'x'),Id(r'y')),Assign(Id(r'a'),Id(r'x'))])],VoidType()),FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),FloatType())],[If(BinaryOp(r'=',Id(r'a'),IntLiteral(1)),[If(BinaryOp(r'>',Id(r'b'),IntLiteral(3)),[Assign(Id(r'c'),IntLiteral(5))],[Assign(Id(r'd'),IntLiteral(1))]),If(BinaryOp(r'<',Id(r'e'),IntLiteral(4)),[CallStmt(Id(r'ok'),[])],[])],[If(BinaryOp(r'>',Id(r'h'),IntLiteral(5)),[CallStmt(Id(r'nty'),[])],[CallStmt(Id(r'lyo'),[])]),Assign(Id(r'g'),IntLiteral(5))])],VoidType()),FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[Id(r'a')])],StringType()),VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),StringType()),VarDecl(Id(r'f'),FloatType()),VarDecl(Id(r'g'),FloatType()),VarDecl(Id(r't'),StringType()),VarDecl(Id(r'h'),StringType()),VarDecl(Id(r'p'),BoolType()),VarDecl(Id(r'q'),BoolType()),FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[]),Break(),Continue()],[Return(CallExpr(Id(r'oh'),[]))])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 391))
 
     def test_92_random(self):
@@ -1412,6 +1412,219 @@ End
         expect =str(Program([VarDecl(Id(r'NewDir'),StringType()),VarDecl(Id(r'F'),StringType()),FuncDecl(Id(r'Main'),[],[],[Assign(Id(r'NewDir'),CallExpr(Id(r'FSearch'),[StringLiteral(r'C:\\\\Pascal Programming'),CallExpr(Id(r'GetEnv'),[StringLiteral(r'')])])),If(BinaryOp(r'=',Id(r'NewDir'),StringLiteral(r'')),[CallStmt(Id(r'CreateDir'),[StringLiteral(r'C:\\\\Pascal Programming')])],[]),CallStmt(Id(r'Assign'),[Id(r'F'),StringLiteral(r'C:\\\\Pascal Programming\\\\pascal-programming.txt')]),CallStmt(Id(r'ReWrite'),[Id(r'F')]),CallStmt(Id(r'Writeln'),[Id(r'F'),StringLiteral(r'http://pascal-programming.info/')]),CallStmt(Id(r'Close'),[Id(r'F')])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 400))
 
+
+
+    def test_101_leading0(self):
+        input = r"""
+procedure foo();
+begin
+    a := 00000012345;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),IntLiteral(12345))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 401))
+
+    def test_102_bignum(self):
+        input = r"""
+procedure foo();
+begin
+    a := 123456789123456789;
+    a := 123456789123456789123456789;
+    a := 123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789123456789123456789;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),IntLiteral(123456789123456789)),Assign(Id(r'a'),IntLiteral(123456789123456789123456789)),Assign(Id(r'a'),IntLiteral(123456789123456789123456789123456789)),Assign(Id(r'a'),IntLiteral(123456789123456789123456789123456789123456789)),Assign(Id(r'a'),IntLiteral(123456789123456789123456789123456789123456789123456789)),Assign(Id(r'a'),IntLiteral(123456789123456789123456789123456789123456789123456789123456789))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 402))
+
+    def test_103_floatingpoint(self):
+        input = r"""
+procedure foo();
+begin
+    a := 1.2 + 1. + .1 + 1e2 + 1.2E-2;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',FloatLiteral(1.2),FloatLiteral(1.0)),FloatLiteral(0.1)),FloatLiteral(100.0)),FloatLiteral(0.012)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 403))
+
+    def test_104_floatingpoint(self):
+        input = r"""
+procedure foo();
+begin
+    a := 1.2e-2 + .1E2 + 9.0 + 12e8;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',FloatLiteral(0.012),FloatLiteral(10.0)),FloatLiteral(9.0)),FloatLiteral(1200000000.0)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 404))
+
+    def test_105_floatingpoint(self):
+        input = r"""
+procedure foo();
+begin
+    a := 0.33E-3 + 128e-42 + 12.  +   .05; 
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',FloatLiteral(0.00033),FloatLiteral(1.28e-40)),FloatLiteral(12.0)),FloatLiteral(0.05)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 405))
+
+    def test_106_floatingpoint(self):
+        input = r"""
+procedure foo();
+begin
+    a := 12.05  + 1e-5  +    1.5e-6 +  0.0005e3 +  2e21;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',FloatLiteral(12.05),FloatLiteral(1e-05)),FloatLiteral(1.5e-06)),FloatLiteral(0.5)),FloatLiteral(2e+21)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 406))
+
+#     def test_107_nolimit(self):
+#         input = r"""
+# procedure foo();
+# begin
+#     a := 2e10;
+#     a := 3e100;
+#     a := 4e1000;
+#     a := 5e10000;
+#     a := 6e100000;
+# end
+# """
+#         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(inf))],VoidType())]))
+#         self.assertTrue(TestAST.test(input, expect, 407))
+
+    def test_108_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := 2e-10000000;
+    a := 3e-1000000;
+    a := 4e-100000;
+    a := 5e-10000;
+    a := 6e-1000;
+    a := 7e-100;
+    a := 8e-10;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(7e-100)),Assign(Id(r'a'),FloatLiteral(8e-10))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 408))
+
+    def test_109_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := 10000000000e-10000000000;
+    a := 20000000000e-1000000000;
+    a := 30000000000e-100000000;
+    a := 40000000000e-10000000;
+    a := 50000000000e-1000000;
+    a := 60000000000e-100000;
+    a := 70000000000e-10000;
+    a := 80000000000e-1000;
+    a := 90000000000e-100;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(9e-90))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 409))
+
+    def test_110_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := 1.000000000000001;
+    a := 2.00000000000001;
+    a := 3.0000000000001;
+    a := 4.000000000001;
+    a := 5.00000000001;
+    a := 6.0000000001;
+    a := 7.000000001;
+    a := 8.00000001;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(1.000000000000001)),Assign(Id(r'a'),FloatLiteral(2.00000000000001)),Assign(Id(r'a'),FloatLiteral(3.0000000000001)),Assign(Id(r'a'),FloatLiteral(4.000000000001)),Assign(Id(r'a'),FloatLiteral(5.00000000001)),Assign(Id(r'a'),FloatLiteral(6.0000000001)),Assign(Id(r'a'),FloatLiteral(7.000000001)),Assign(Id(r'a'),FloatLiteral(8.00000001))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 410))
+
+    def test_111_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := 0000001.0000000001;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(1.0000000001))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 411))
+
+    def test_112_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := 000000000000000000000000001.00000000001e-10000000000;
+    a := 000000000000000000000000002.00000000001e-1000000000;
+    a := 000000000000000000000000003.00000000001e-100000000;
+    a := 000000000000000000000000004.00000000001e-10000000;
+    a := 000000000000000000000000005.00000000001e-1000000;
+    a := 000000000000000000000000006.00000000001e-100000;
+    a := 000000000000000000000000007.00000000001e-10000;
+    a := 000000000000000000000000008.00000000001e-1000;
+    a := 000000000000000000000000009.00000000001e-100;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(9.00000000001e-100))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 412))
+
+#     def test_113_nolimit(self):
+#         input = r"""
+# procedure foo();
+# begin
+#     a := 000000000000000000000000004.00000000001e10000;
+#     a := 000000000000000000000000005.00000000001e1000;
+#     a := 000000000000000000000000006.00000000001e100;
+#     a := 000000000000000000000000007.00000000001e10;
+#     a := 000000000000000000000000008.00000000001e1;
+# end
+# """
+#         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(inf))],VoidType())]))
+#         self.assertTrue(TestAST.test(input, expect, 413))
+
+    def test_114_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := - - - - - - - - - - - - - "";
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',StringLiteral(r'')))))))))))))))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 414))
+
+    def test_115_nolimit(self):
+        input = r"""
+procedure foo();
+begin
+    a := "      abc         \n \t \b \\         ;;   cltq ";
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'      abc         \n \t \b \\         ;;   cltq '))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 415))
+
+    def test_116_op(self):
+        input = r"""
+procedure foo();
+begin
+    a := true or trUE Or falSE oR TRUE OR FalSE;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'OR',BinaryOp(r'oR',BinaryOp(r'Or',BinaryOp(r'or',BooleanLiteral(True),BooleanLiteral(True)),BooleanLiteral(False)),BooleanLiteral(True)),BooleanLiteral(False)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 416))
+
+    def test_117_op(self):
+        input = r"""
+procedure foo();
+begin
+    a := true And Then trUE or else falSE oR ELse TRUE AND THEN FalSE;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'andthen',BinaryOp(r'orelse',BinaryOp(r'orelse',BinaryOp(r'andthen',BooleanLiteral(True),BooleanLiteral(True)),BooleanLiteral(False)),BooleanLiteral(True)),BooleanLiteral(False)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 417))
 
 #########################################################
 ######    REMEMBER: Comment before submit code    #######

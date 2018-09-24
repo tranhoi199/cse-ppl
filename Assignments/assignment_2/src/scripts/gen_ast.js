@@ -9,15 +9,13 @@ if (!fs.existsSync(dist)) {
 
 let text = '';
 
-for (let i = 1; i < 101; i++) {
+for (let i = 101; i < 121; i++) {
     text += `
     def test_${i}(self):
-        input = """
+        input = r"""
 
 """
-        expect = str(
-
-        )
+        expect = str()
         self.assertTrue(TestAST.test(input, expect, ${300+i}))
 `
 }
