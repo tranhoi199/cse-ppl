@@ -1,6 +1,7 @@
 import unittest
 from TestUtils import TestAST
-from AST import *
+# from AST import *
+from AntiAST import *
 
 class ASTGenSuite(unittest.TestCase):
     def test_var_301(self):

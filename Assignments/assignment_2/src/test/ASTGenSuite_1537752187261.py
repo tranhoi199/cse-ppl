@@ -21,14 +21,14 @@ class ASTGenSuite(unittest.TestCase):
         input = r"""
 var a: integer;
 """
-        expect =str(Program([]))
+        expect =str(Program([VarDecl(Id(r'a'),IntType())]))
         self.assertTrue(TestAST.test(input, expect, 301))
 
     def test_2(self):
         input = r"""
 var a,b: string;
 """
-        expect =str(Program([]))                     
+        expect =str(Program([VarDecl(Id(r'a'),StringType()),VarDecl(Id(r'b'),StringType())]))                     
         self.assertTrue(        TestAST.test(         input,       expect,         302))
 
     def test_3(self):
@@ -37,7 +37,7 @@ var x,y,z:integer;
     g: string; 
     h,t: real;
 """
-        expect=str(Program([]))
+        expect=str(Program([VarDecl(Id(r'x'),IntType()),VarDecl(Id(r'y'),IntType()),VarDecl(Id(r'z'),IntType()),VarDecl(Id(r'g'),StringType()),VarDecl(Id(r'h'),FloatType()),VarDecl(Id(r't'),FloatType())]))
         self.assertTrue(TestAST.test(input, expect, 303))
 
     def test_4(self):
@@ -48,7 +48,7 @@ var b:string;
 var t,h: string;
     p,q: boolean;
 """
-        expect =str(Program([]))
+        expect =str(Program([VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),StringType()),VarDecl(Id(r'f'),FloatType()),VarDecl(Id(r'g'),FloatType()),VarDecl(Id(r't'),StringType()),VarDecl(Id(r'h'),StringType()),VarDecl(Id(r'p'),BoolType()),VarDecl(Id(r'q'),BoolType())]))
         self.assertTrue(TestAST.test(input, expect, 304))
 
     def test_5(self):
@@ -57,7 +57,7 @@ procedure foo();
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 305))
 
     def test_6(self):
@@ -66,7 +66,7 @@ procedure foo(a: string);
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType())],[],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 306))
 
     def test_7(self):
@@ -75,7 +75,7 @@ procedure foo(a: string; b: Real);
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType()),VarDecl(Id(r'b'),FloatType())],[],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 307))
 
     def test_8(self):
@@ -84,7 +84,7 @@ procedure foo(a,b,c: string);
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType()),VarDecl(Id(r'b'),StringType()),VarDecl(Id(r'c'),StringType())],[],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 308))
 
     def test_9(self):
@@ -93,7 +93,7 @@ procedure foo(a,b,c: string; f,k,o: integer; g,h,t: Real);
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType()),VarDecl(Id(r'b'),StringType()),VarDecl(Id(r'c'),StringType()),VarDecl(Id(r'f'),IntType()),VarDecl(Id(r'k'),IntType()),VarDecl(Id(r'o'),IntType()),VarDecl(Id(r'g'),FloatType()),VarDecl(Id(r'h'),FloatType()),VarDecl(Id(r't'),FloatType())],[],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 309))
 
     def test_10(self):
@@ -102,7 +102,7 @@ function foo(): String;
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 310))
 
     def test_11(self):
@@ -111,7 +111,7 @@ function foo(a: string): String;
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType())],[],[],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 311))
 
     def test_12(self):
@@ -120,7 +120,7 @@ function foo(a: string; b: Real): String;
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType()),VarDecl(Id(r'b'),FloatType())],[],[],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 312))
 
     def test_13(self):
@@ -130,7 +130,7 @@ function foo(a,b,c: string;
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),StringType()),VarDecl(Id(r'b'),StringType()),VarDecl(Id(r'c'),StringType()),VarDecl(Id(r'f'),IntType()),VarDecl(Id(r'k'),IntType()),VarDecl(Id(r'o'),IntType()),VarDecl(Id(r'g'),FloatType()),VarDecl(Id(r'h'),FloatType()),VarDecl(Id(r't'),FloatType())],[],[],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 313))
 
     def test_14(self):
@@ -140,7 +140,7 @@ begin
 continue;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Continue()],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 314))
 
     def test_15(self):
@@ -150,7 +150,7 @@ begin
 break;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Break()],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 315))
 
     def test_16(self):
@@ -160,7 +160,7 @@ begin
 return;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Return(None)],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 316))
 
     def test_17(self):
@@ -170,7 +170,7 @@ begin
 return ok();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Return(CallExpr(Id(r'ok'),[]))],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 317))
 
     def test_18(self):
@@ -180,7 +180,7 @@ begin
 return ok(1);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Return(CallExpr(Id(r'ok'),[IntLiteral(1)]))],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 318))
 
     def test_19(self):
@@ -190,7 +190,7 @@ begin
 return ok(1,2);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Return(CallExpr(Id(r'ok'),[IntLiteral(1),IntLiteral(2)]))],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 319))
 
     def test_20(self):
@@ -200,7 +200,7 @@ begin
 return ok(1,a);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Return(CallExpr(Id(r'ok'),[IntLiteral(1),Id(r'a')]))],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 320))
 
     def test_21(self):
@@ -210,7 +210,7 @@ begin
 ok();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 321))
 
     def test_22(self):
@@ -220,7 +220,7 @@ begin
 ok(a);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[Id(r'a')])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 322))
 
     def test_23(self):
@@ -230,7 +230,7 @@ begin
 ok(a,1);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[Id(r'a'),IntLiteral(1)])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 323))
 
     def test_24(self):
@@ -240,7 +240,7 @@ begin
 ok(a,"1",True,falSe);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[Id(r'a'),StringLiteral(r'1'),BooleanLiteral(True),BooleanLiteral(False)])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 324))
 
     def test_25(self):
@@ -250,7 +250,7 @@ begin
 ok("hi", foo());
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[StringLiteral(r'hi'),CallExpr(Id(r'foo'),[])])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 325))
 
     def test_26(self):
@@ -260,7 +260,7 @@ begin
 ok("hi", foo(bar(), 1));
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[StringLiteral(r'hi'),CallExpr(Id(r'foo'),[CallExpr(Id(r'bar'),[]),IntLiteral(1)])])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 326))
 
     def test_27(self):
@@ -270,7 +270,7 @@ begin
 ok(a[1]);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[ArrayCell(Id(r'a'),IntLiteral(1))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 327))
 
     def test_28(self):
@@ -280,7 +280,7 @@ begin
 ok(1[1]);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[ArrayCell(IntLiteral(1),IntLiteral(1))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 328))
 
     def test_29(self):
@@ -290,7 +290,7 @@ begin
 ok(foo()[1]);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(1))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 329))
 
     def test_30(self):
@@ -300,7 +300,7 @@ begin
 ok((foo())[1]);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(1))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 330))
 
     def test_31(self):
@@ -310,7 +310,7 @@ begin
 ok(a[b]);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[ArrayCell(Id(r'a'),Id(r'b'))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 331))
 
     def test_32(self):
@@ -320,7 +320,7 @@ begin
 ok(a[foo()]);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[ArrayCell(Id(r'a'),CallExpr(Id(r'foo'),[]))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 332))
 
     def test_33(self):
@@ -330,7 +330,7 @@ begin
 ok(4 and then 5);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'andthen',IntLiteral(4),IntLiteral(5))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 333))
 
     def test_34(self):
@@ -340,7 +340,7 @@ begin
 ok(4 or else 5);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'orelse',IntLiteral(4),IntLiteral(5))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 334))
 
     def test_35(self):
@@ -350,7 +350,7 @@ begin
 ok(4=5);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'=',IntLiteral(4),IntLiteral(5))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 335))
 
     def test_36(self):
@@ -360,7 +360,7 @@ begin
 ok(4>=5);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'>=',IntLiteral(4),IntLiteral(5))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 336))
 
     def test_37(self):
@@ -370,7 +370,7 @@ begin
 ok(4+5);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'+',IntLiteral(4),IntLiteral(5))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 337))
 
     def test_38(self):
@@ -380,7 +380,7 @@ begin
 ok(4 div 5);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'div',IntLiteral(4),IntLiteral(5))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 338))
 
     def test_39(self):
@@ -390,7 +390,7 @@ begin
 ok(-4);
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[UnaryOp(r'-',IntLiteral(4))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 339))
 
     def test_40(self):
@@ -400,7 +400,7 @@ begin
 ok(5 and then (-6 + "nt" * 3 or 5) div 7 >= a+b-(-f * not(-5*"abc")));
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[CallStmt(Id(r'ok'),[BinaryOp(r'andthen',IntLiteral(5),BinaryOp(r'>=',BinaryOp(r'div',BinaryOp(r'or',BinaryOp(r'+',UnaryOp(r'-',IntLiteral(6)),BinaryOp(r'*',StringLiteral(r'nt'),IntLiteral(3))),IntLiteral(5)),IntLiteral(7)),BinaryOp(r'-',BinaryOp(r'+',Id(r'a'),Id(r'b')),BinaryOp(r'*',UnaryOp(r'-',Id(r'f')),UnaryOp(r'not',BinaryOp(r'*',UnaryOp(r'-',IntLiteral(5)),StringLiteral(r'abc')))))))])],StringType())]))
         self.assertTrue(TestAST.test(input, expect, 340))
 
     def test_41(self):
@@ -410,7 +410,7 @@ var a: integer;
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),IntType())],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 341))
 
     def test_42(self):
@@ -421,7 +421,7 @@ var a, b: integer; c: string;
 begin
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[VarDecl(Id(r'a'),IntType()),VarDecl(Id(r'b'),IntType()),VarDecl(Id(r'c'),StringType()),VarDecl(Id(r'e'),BoolType()),VarDecl(Id(r'f'),BoolType()),VarDecl(Id(r'g'),BoolType())],[],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 342))
 
     def test_43(self):
@@ -431,7 +431,7 @@ begin
     if True then hic();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[])],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 343))
 
     def test_44(self):
@@ -441,7 +441,7 @@ begin
     if True then hic(); else huc();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[])],[CallStmt(Id(r'huc'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 344))
 
     def test_45(self):
@@ -453,7 +453,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[])],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 345))
 
     def test_46(self):
@@ -467,7 +467,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[]),Break(),Continue()],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 346))
 
     def test_47(self):
@@ -481,7 +481,7 @@ begin
     end else return oh();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[]),Break(),Continue()],[Return(CallExpr(Id(r'oh'),[]))])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 347))
 
     def test_48(self):
@@ -497,7 +497,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[]),Break(),Continue()],[Return(None)])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 348))
 
     def test_49(self):
@@ -516,7 +516,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[CallStmt(Id(r'hic'),[]),Break(),Continue()],[CallStmt(Id(r'oh'),[]),Return(None),Break(),CallStmt(Id(r'huc'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 349))
 
     def test_50(self):
@@ -527,7 +527,7 @@ begin
     end else ok();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[],[CallStmt(Id(r'ok'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 350))
 
     def test_51(self):
@@ -538,7 +538,7 @@ begin
     end else begin end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[If(BooleanLiteral(True),[],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 351))
 
     def test_52(self):
@@ -548,7 +548,7 @@ begin
     a := 1;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),IntLiteral(1))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 352))
 
     def test_53(self):
@@ -559,7 +559,7 @@ begin
     b := True;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),IntLiteral(1)),Assign(Id(r'b'),BooleanLiteral(True))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 353))
 
     def test_54(self):
@@ -569,7 +569,7 @@ begin
     a := b := "ahihi! hic hic";
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'ahihi! hic hic')),Assign(Id(r'b'),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 354))
 
     def test_55(self):
@@ -579,7 +579,7 @@ begin
     a[5] := "ahihi! hic hic";
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(Id(r'a'),IntLiteral(5)),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 355))
 
     def test_56(self):
@@ -589,7 +589,7 @@ begin
     foo()[5] := "ahihi! hic hic";
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(5)),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 356))
 
     def test_57(self):
@@ -599,7 +599,7 @@ begin
     a := b[4] := foo()[5] := "ahihi! hic hic";
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(Id(r'b'),IntLiteral(4)),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(CallExpr(Id(r'foo'),[]),IntLiteral(5)),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 357))
 
     def test_58(self):
@@ -609,7 +609,7 @@ begin
     a[1+2] := foo(bar(), "hi", 3.4, -6.5)[4 And then trUE + FalsE];
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(Id(r'a'),BinaryOp(r'+',IntLiteral(1),IntLiteral(2))),ArrayCell(CallExpr(Id(r'foo'),[CallExpr(Id(r'bar'),[]),StringLiteral(r'hi'),FloatLiteral(3.4),UnaryOp(r'-',FloatLiteral(6.5))]),BinaryOp(r'andthen',IntLiteral(4),BinaryOp(r'+',BooleanLiteral(True),BooleanLiteral(False)))))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 358))
 
     def test_59(self):
@@ -619,7 +619,7 @@ begin
     a[1+2] := foo(bar(), "hi", 3.4, -6.5)[4 And then trUE + FalsE] := "ahihi! hic hic";
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(Id(r'a'),BinaryOp(r'+',IntLiteral(1),IntLiteral(2))),StringLiteral(r'ahihi! hic hic')),Assign(ArrayCell(CallExpr(Id(r'foo'),[CallExpr(Id(r'bar'),[]),StringLiteral(r'hi'),FloatLiteral(3.4),UnaryOp(r'-',FloatLiteral(6.5))]),BinaryOp(r'andthen',IntLiteral(4),BinaryOp(r'+',BooleanLiteral(True),BooleanLiteral(False)))),StringLiteral(r'ahihi! hic hic'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 359))
 
     def test_60(self):
@@ -629,7 +629,7 @@ begin
     a := -1.2+4.6*6 mod 7+m-f*k>4+2*5-6 div abc - - - 4 or 3 and then nhyil or else True;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'orelse',BinaryOp(r'andthen',BinaryOp(r'>',BinaryOp(r'-',BinaryOp(r'+',BinaryOp(r'+',UnaryOp(r'-',FloatLiteral(1.2)),BinaryOp(r'mod',BinaryOp(r'*',FloatLiteral(4.6),IntLiteral(6)),IntLiteral(7))),Id(r'm')),BinaryOp(r'*',Id(r'f'),Id(r'k'))),BinaryOp(r'or',BinaryOp(r'-',BinaryOp(r'-',BinaryOp(r'+',IntLiteral(4),BinaryOp(r'*',IntLiteral(2),IntLiteral(5))),BinaryOp(r'div',IntLiteral(6),Id(r'abc'))),UnaryOp(r'-',UnaryOp(r'-',IntLiteral(4)))),IntLiteral(3))),Id(r'nhyil')),BooleanLiteral(True)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 360))
 
     def test_61(self):
@@ -640,7 +640,7 @@ begin
     g := -1.2+4.6*6 mod 7+m-f*k>4+2*5-6 div abc - - - 4 or 3 and then nhyil or else True;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BooleanLiteral(False)),Assign(Id(r'b'),BooleanLiteral(False)),Assign(Id(r'c'),BooleanLiteral(False)),Assign(Id(r'd'),BooleanLiteral(False)),Assign(Id(r'e'),BooleanLiteral(False)),Assign(Id(r'f'),BooleanLiteral(False)),Assign(Id(r'g'),BooleanLiteral(False)),Assign(Id(r'g'),BinaryOp(r'orelse',BinaryOp(r'andthen',BinaryOp(r'>',BinaryOp(r'-',BinaryOp(r'+',BinaryOp(r'+',UnaryOp(r'-',FloatLiteral(1.2)),BinaryOp(r'mod',BinaryOp(r'*',FloatLiteral(4.6),IntLiteral(6)),IntLiteral(7))),Id(r'm')),BinaryOp(r'*',Id(r'f'),Id(r'k'))),BinaryOp(r'or',BinaryOp(r'-',BinaryOp(r'-',BinaryOp(r'+',IntLiteral(4),BinaryOp(r'*',IntLiteral(2),IntLiteral(5))),BinaryOp(r'div',IntLiteral(6),Id(r'abc'))),UnaryOp(r'-',UnaryOp(r'-',IntLiteral(4)))),IntLiteral(3))),Id(r'nhyil')),BooleanLiteral(True)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 361))
 
     def test_62(self):
@@ -650,7 +650,7 @@ begin
     for i := 1 to 10 do hic();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[For(Id(r'i'),IntLiteral(1),IntLiteral(10),True,[CallStmt(Id(r'hic'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 362))
 
     def test_63(self):
@@ -660,7 +660,7 @@ begin
     for i := 1 doWntO 10 do hic();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[For(Id(r'i'),IntLiteral(1),IntLiteral(10),False,[CallStmt(Id(r'hic'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 363))
 
     def test_64(self):
@@ -670,7 +670,7 @@ begin
     for i := a+2*c doWntO h(f+r*2) do hic();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[For(Id(r'i'),BinaryOp(r'+',Id(r'a'),BinaryOp(r'*',IntLiteral(2),Id(r'c'))),CallExpr(Id(r'h'),[BinaryOp(r'+',Id(r'f'),BinaryOp(r'*',Id(r'r'),IntLiteral(2)))]),False,[CallStmt(Id(r'hic'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 364))
 
     def test_65(self):
@@ -680,7 +680,7 @@ begin
     for i := 1 to 10 do return;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[For(Id(r'i'),IntLiteral(1),IntLiteral(10),True,[Return(None)])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 365))
 
     def test_66(self):
@@ -691,7 +691,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[For(Id(r'i'),IntLiteral(1),IntLiteral(10),True,[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 366))
 
     def test_67(self):
@@ -708,7 +708,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[For(Id(r'i'),IntLiteral(1),IntLiteral(10),True,[CallStmt(Id(r'ok'),[]),Assign(Id(r'a'),IntLiteral(4)),Return(None),Break(),Continue(),Return(Id(r'hoho'))])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 367))
 
     def test_68(self):
@@ -718,7 +718,7 @@ begin
     while True do gogo();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[While(BooleanLiteral(True),[CallStmt(Id(r'gogo'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 368))
 
     def test_69(self):
@@ -728,7 +728,7 @@ begin
     while True do return;
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[While(BooleanLiteral(True),[Return(None)])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 369))
 
     def test_70(self):
@@ -738,7 +738,7 @@ begin
     while True do begin end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[While(BooleanLiteral(True),[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 370))
 
     def test_71(self):
@@ -748,7 +748,7 @@ begin
     while Foo() do begin end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[While(CallExpr(Id(r'Foo'),[]),[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 371))
 
     def test_72(self):
@@ -765,7 +765,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[While(BooleanLiteral(False),[CallStmt(Id(r'ok'),[]),Assign(Id(r'a'),IntLiteral(4)),Return(None),Break(),Continue(),Return(Id(r'hoho'))])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 372))
 
     def test_73(self):
@@ -775,7 +775,7 @@ begin
     with i: integer; do ok();
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[With([VarDecl(Id(r'i'),IntType())],[CallStmt(Id(r'ok'),[])])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 373))
 
     def test_74(self):
@@ -785,7 +785,7 @@ begin
     with i: integer; do begin end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[With([VarDecl(Id(r'i'),IntType())],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 374))
 
     def test_75(self):
@@ -795,7 +795,7 @@ begin
     with i,j,k: integer; do begin end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[With([VarDecl(Id(r'i'),IntType()),VarDecl(Id(r'j'),IntType()),VarDecl(Id(r'k'),IntType())],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 375))
 
     def test_76(self):
@@ -809,7 +809,7 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[With([VarDecl(Id(r'i'),IntType()),VarDecl(Id(r'j'),IntType()),VarDecl(Id(r'k'),IntType()),VarDecl(Id(r'g'),StringType()),VarDecl(Id(r'h'),BoolType()),VarDecl(Id(r'p'),BoolType()),VarDecl(Id(r't'),BoolType())],[])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 376))
 
     def test_77(self):
@@ -827,21 +827,21 @@ begin
     end
 end
 """
-        expect =str(Program([]))
+        expect =str(Program([FuncDecl(Id(r'foo'),[],[],[With([VarDecl(Id(r'i'),FloatType())],[CallStmt(Id(r'ok'),[]),Assign(Id(r'a'),IntLiteral(4)),Return(None),Break(),Continue(),Return(Id(r'hoho'))])],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 377))
 
     def test_78(self):
         input = r"""
 var a: integer;
 """
-        expect =str(Program([]))
+        expect =str(Program([VarDecl(Id(r'a'),IntType())]))
         self.assertTrue(TestAST.test(input, expect, 378))
 
     def test_79(self):
         input = r"""
 var a, b, c: array[1 .. 2] of integer;
 """
-        expect =str(Program([]))
+        expect =str(Program([VarDecl(Id(r'a'),ArrayType(1,2,IntType())),VarDecl(Id(r'b'),ArrayType(1,2,IntType())),VarDecl(Id(r'c'),ArrayType(1,2,IntType()))]))
         self.assertTrue(TestAST.test(input, expect, 379))
 
     def test_80(self):
@@ -849,7 +849,7 @@ var a, b, c: array[1 .. 2] of integer;
 var a: array[1 .. 2] of integer;
     u, v: array[1 .. 2] of string;
 """
-        expect =str(Program([]))
+        expect =str(Program([VarDecl(Id(r'a'),ArrayType(1,2,IntType())),VarDecl(Id(r'u'),ArrayType(1,2,StringType())),VarDecl(Id(r'v'),ArrayType(1,2,StringType()))]))
         self.assertTrue(TestAST.test(input, expect, 380))
 
     def test_81(self):
