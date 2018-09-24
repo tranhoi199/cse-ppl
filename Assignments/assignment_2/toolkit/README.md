@@ -82,3 +82,13 @@ from AST import *
 
 + Hiện tại, file `ASTGenSuite.py` đã được fix lại `str()`, còn file cũ được backup lại thành file `ASTGenSuite_[timestamp].py`
 + Chạy lại `./all.sh` để chạy lại testcases như bình thường.
+
+
+
+```bash
+ _____ _                 _     __   __            _
+|_   _| |__   __ _ _ __ | | __ \ \ / /__  _   _  | |
+  | | | '_ \ / _` | '_ \| |/ /  \ V / _ \| | | | | |
+  | | | | | | (_| | | | |   <    | | (_) | |_| | |_|
+  |_| |_| |_|\__,_|_| |_|_|\_\   |_|\___/ \__,_| (_)
+```
