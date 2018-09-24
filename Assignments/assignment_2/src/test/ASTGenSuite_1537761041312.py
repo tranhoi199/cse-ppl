@@ -12,8 +12,8 @@ sys.path.append('../utils')
 #########################################################
 import unittest
 from TestUtils import TestAST
-from AST import *
-# from AntiAST import *
+# from AST import *
+from AntiAST import *
 
 class ASTGenSuite(unittest.TestCase):
     
@@ -834,7 +834,7 @@ end
         input = r"""
 var a: array[1 .. 2] of integer;
 """
-        expect =str(Program([VarDecl(Id(r'a'),ArrayType(1,2,IntType()))]))
+        expect =str(Program([VarDecl(Id(r'a'),IntType())]))
         self.assertTrue(TestAST.test(input, expect, 378))
 
     def test_79_var_arr_n(self):
