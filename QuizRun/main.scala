@@ -1,6 +1,14 @@
+
+
 object Main extends App {
 
+    trait ExpAST
+case class Plus(e1:ExpAST,e2:ExpAST) extends ExpAST
+case class Mul(e1:ExpAST,e2:ExpAST) extends ExpAST
+case class Ident(s:String) extends ExpAST
+case class Intlit(p: Int) extends ExpAST
 
+    print(Intlit(15))
 
     // def mem(x:Int,lst:List[Int]):Boolean = lst match {
     //     case List() => false
