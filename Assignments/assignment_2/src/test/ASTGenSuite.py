@@ -3,13 +3,15 @@
 ######    REMEMBER: Comment before submit code    #######
 #########################################################
 
-import sys
-sys.path.append('../main/mp/utils')
-sys.path.append('../utils')
+# import sys
+# sys.path.append('../main/mp/utils')
+# sys.path.append('../utils')
 
 #########################################################
 ######    REMEMBER: Comment before submit code    #######
 #########################################################
+
+
 import unittest
 from TestUtils import TestAST
 from AST import *
@@ -1606,7 +1608,7 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'      abc         \n \t \b \\         ;;   cltq '))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 415))
 
-    def test_116_op(self):
+    def test_116_and_then_or_else(self):
         input = r"""
 procedure foo();
 begin
@@ -1616,7 +1618,7 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'OR',BinaryOp(r'oR',BinaryOp(r'Or',BinaryOp(r'or',BooleanLiteral(True),BooleanLiteral(True)),BooleanLiteral(False)),BooleanLiteral(True)),BooleanLiteral(False)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 416))
 
-    def test_117_op(self):
+    def test_117_and_then_or_else(self):
         input = r"""
 procedure foo();
 begin
@@ -1626,7 +1628,7 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'andthen',BinaryOp(r'orelse',BinaryOp(r'orelse',BinaryOp(r'andthen',BooleanLiteral(True),BooleanLiteral(True)),BooleanLiteral(False)),BooleanLiteral(True)),BooleanLiteral(False)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 417))
 
-    def test_118_op(self):
+    def test_118_curry_stmt(self):
         input = r"""
 procedure foo();
 begin
@@ -1645,6 +1647,12 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'b'),IntLiteral(1)),Assign(Id(r'a'),Id(r'b')),CallStmt(Id(r'foo'),[]),Return(None),Break(),Return(CallExpr(Id(r'OK'),[])),Return(Id(r'OK'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 418))
 
-#########################################################
-######    REMEMBER: Comment before submit code    #######
-#########################################################
+    def test_119_n_dimen_array(self):
+        input = r"""
+procedure foo();
+begin
+    a[1][2][3][4] := 1;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(ArrayCell(ArrayCell(ArrayCell(Id(r'a'),IntLiteral(1)),IntLiteral(2)),IntLiteral(3)),IntLiteral(4)),IntLiteral(1))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 419))
