@@ -3,13 +3,15 @@
 ######    REMEMBER: Comment before submit code    #######
 #########################################################
 
-import sys
-sys.path.append('../main/mp/utils')
-sys.path.append('../utils')
+# import sys
+# sys.path.append('../main/mp/utils')
+# sys.path.append('../utils')
 
 #########################################################
 ######    REMEMBER: Comment before submit code    #######
 #########################################################
+
+
 import unittest
 from TestUtils import TestAST
 from AST import *
@@ -1479,19 +1481,19 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'+',FloatLiteral(12.05),FloatLiteral(1e-05)),FloatLiteral(1.5e-06)),FloatLiteral(0.5)),FloatLiteral(2e+21)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 406))
 
-#     def test_107_nolimit(self):
-#         input = r"""
-# procedure foo();
-# begin
-#     a := 2e10;
-#     a := 3e100;
-#     a := 4e1000;
-#     a := 5e10000;
-#     a := 6e100000;
-# end
-# """
-#         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(inf))],VoidType())]))
-#         self.assertTrue(TestAST.test(input, expect, 407))
+    def test_107_nolimit(self):
+        input = r"""
+procedure foo();
+begin{
+    a := 2e10;
+    a := 3e100;
+    a := 4e1000;
+    a := 5e10000;
+    a := 6e100000;}
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 407))
 
     def test_108_nolimit(self):
         input = r"""
@@ -1572,19 +1574,19 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(0.0)),Assign(Id(r'a'),FloatLiteral(9.00000000001e-100))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 412))
 
-#     def test_113_nolimit(self):
-#         input = r"""
-# procedure foo();
-# begin
-#     a := 000000000000000000000000004.00000000001e10000;
-#     a := 000000000000000000000000005.00000000001e1000;
-#     a := 000000000000000000000000006.00000000001e100;
-#     a := 000000000000000000000000007.00000000001e10;
-#     a := 000000000000000000000000008.00000000001e1;
-# end
-# """
-#         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),FloatLiteral(inf))],VoidType())]))
-#         self.assertTrue(TestAST.test(input, expect, 413))
+    def test_113_nolimit(self):
+        input = r"""
+procedure foo();
+begin{
+    a := 000000000000000000000000004.00000000001e10000;
+    a := 000000000000000000000000005.00000000001e1000;
+    a := 000000000000000000000000006.00000000001e100;
+    a := 000000000000000000000000007.00000000001e10;
+    a := 000000000000000000000000008.00000000001e1;}
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 413))
 
     def test_114_nolimit(self):
         input = r"""
@@ -1606,7 +1608,7 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),StringLiteral(r'      abc         \n \t \b \\         ;;   cltq '))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 415))
 
-    def test_116_op(self):
+    def test_116_and_then_or_else(self):
         input = r"""
 procedure foo();
 begin
@@ -1616,7 +1618,7 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'OR',BinaryOp(r'oR',BinaryOp(r'Or',BinaryOp(r'or',BooleanLiteral(True),BooleanLiteral(True)),BooleanLiteral(False)),BooleanLiteral(True)),BooleanLiteral(False)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 416))
 
-    def test_117_op(self):
+    def test_117_and_then_or_else(self):
         input = r"""
 procedure foo();
 begin
@@ -1626,7 +1628,7 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'andthen',BinaryOp(r'orelse',BinaryOp(r'orelse',BinaryOp(r'andthen',BooleanLiteral(True),BooleanLiteral(True)),BooleanLiteral(False)),BooleanLiteral(True)),BooleanLiteral(False)))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 417))
 
-    def test_118_op(self):
+    def test_118_curry_stmt(self):
         input = r"""
 procedure foo();
 begin
@@ -1645,6 +1647,93 @@ end
         expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'b'),IntLiteral(1)),Assign(Id(r'a'),Id(r'b')),CallStmt(Id(r'foo'),[]),Return(None),Break(),Return(CallExpr(Id(r'OK'),[])),Return(Id(r'OK'))],VoidType())]))
         self.assertTrue(TestAST.test(input, expect, 418))
 
-#########################################################
-######    REMEMBER: Comment before submit code    #######
-#########################################################
+    def test_119_n_dimen_array(self):
+        input = r"""
+procedure foo();
+begin
+    a[1][2][3][4] := 1;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(ArrayCell(ArrayCell(ArrayCell(Id(r'a'),IntLiteral(1)),IntLiteral(2)),IntLiteral(3)),IntLiteral(4)),IntLiteral(1))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 419))
+
+    def test_120(self):
+        input = r"""
+function foo(
+    a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL
+):
+    array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of BoOLeAn;
+
+var a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+
+begin
+    with
+        a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+        b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+        c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+        d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+    do begin
+        with
+            a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+            b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+            c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+            d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+        do begin
+            with
+                a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+            do begin
+                with
+                    a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                    b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                    c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                    d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+                do begin
+                    return ok();
+                end
+            end
+        end
+    end
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[VarDecl(Id(r'a'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'b'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'c'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'd'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'e'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'f'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'g'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'h'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'i'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'j'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'k'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType()))],[VarDecl(Id(r'a'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'b'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'c'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'd'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'e'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'f'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'g'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'h'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'i'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'j'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'k'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType()))],[With([VarDecl(Id(r'a'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'b'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'c'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'd'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'e'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'f'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'g'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'h'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'i'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'j'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'k'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType()))],[With([VarDecl(Id(r'a'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'b'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'c'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'd'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'e'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'f'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'g'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'h'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'i'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'j'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'k'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType()))],[With([VarDecl(Id(r'a'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'b'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'c'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'd'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'e'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'f'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'g'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'h'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'i'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'j'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'k'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType()))],[With([VarDecl(Id(r'a'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'b'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'c'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,StringType())),VarDecl(Id(r'd'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'e'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'f'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'g'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'h'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'i'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'j'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType())),VarDecl(Id(r'k'),ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,FloatType()))],[Return(CallExpr(Id(r'ok'),[]))])])])])],ArrayType(-999999999999999999999999999999999999999,999999999999999999999999999999999999999,BoolType()))]))
+        self.assertTrue(TestAST.test(input, expect, 420))
+
+    def test_121(self):
+        input = r"""
+procedure foo();
+begin
+    a := a+5*f - not ( -True OR (a <> b*"String"+"False"*False) or else fgh mOD TYR ------ 666666 *
+    ("abc" <= "xyz") ) DIV FalSE MOD QUE + ---- False * "{{}}1e5" + 2e5 {  ....  };
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),BinaryOp(r'+',BinaryOp(r'+',BinaryOp(r'-',BinaryOp(r'+',Id(r'a'),BinaryOp(r'*',IntLiteral(5),Id(r'f'))),BinaryOp(r'MOD',BinaryOp(r'DIV',UnaryOp(r'not',BinaryOp(r'orelse',BinaryOp(r'OR',UnaryOp(r'-',BooleanLiteral(True)),BinaryOp(r'<>',Id(r'a'),BinaryOp(r'+',BinaryOp(r'*',Id(r'b'),StringLiteral(r'String')),BinaryOp(r'*',StringLiteral(r'False'),BooleanLiteral(False))))),BinaryOp(r'-',BinaryOp(r'mOD',Id(r'fgh'),Id(r'TYR')),BinaryOp(r'*',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',IntLiteral(666666)))))),BinaryOp(r'<=',StringLiteral(r'abc'),StringLiteral(r'xyz')))))),BooleanLiteral(False)),Id(r'QUE'))),BinaryOp(r'*',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',UnaryOp(r'-',BooleanLiteral(False))))),StringLiteral(r'{{}}1e5'))),FloatLiteral(200000.0)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 421))
+
+    def test_122(self):
+        input = r"""
+procedure foo();
+begin
+    a := b[1][2][3][4] := foo()[b][3][bar()] := true;
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(ArrayCell(ArrayCell(ArrayCell(CallExpr(Id(r'foo'),[]),Id(r'b')),IntLiteral(3)),CallExpr(Id(r'bar'),[])),BooleanLiteral(True)),Assign(ArrayCell(ArrayCell(ArrayCell(ArrayCell(Id(r'b'),IntLiteral(1)),IntLiteral(2)),IntLiteral(3)),IntLiteral(4)),ArrayCell(ArrayCell(ArrayCell(CallExpr(Id(r'foo'),[]),Id(r'b')),IntLiteral(3)),CallExpr(Id(r'bar'),[]))),Assign(Id(r'a'),ArrayCell(ArrayCell(ArrayCell(ArrayCell(Id(r'b'),IntLiteral(1)),IntLiteral(2)),IntLiteral(3)),IntLiteral(4)))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 422))
+
+    def test_123(self):
+        input = r"""
+procedure foo();
+begin
+    a := (((((((((((((((((((((((((((((((((((((((((u)))))))))))))))))))))))))))))))))))))))));
+end
+"""
+        expect = str(Program([FuncDecl(Id(r'foo'),[],[],[Assign(Id(r'a'),Id(r'u'))],VoidType())]))
+        self.assertTrue(TestAST.test(input, expect, 423))
