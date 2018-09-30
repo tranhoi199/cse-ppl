@@ -84,7 +84,7 @@ class VarDecl(Decl):
     #varType: Type
     def __init__(self, variable, varType):
         self.variable = variable
-        self.varType = varTaype
+        self.varType = varType
 
     def __str__(self):
         return "VarDecl(" + str(self.variable) + "," + str(self.varType) + ")"
