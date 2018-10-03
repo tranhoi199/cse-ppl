@@ -1,0 +1,48 @@
+# AST
+
+exp: term COMPARE term | term ; # COMPARE is none-association
+
+term: (factor EXPONENT)* factor #; # EXPONENT is right-association
+
+factor: operand (ANDOR operand)* ; # ANDOR is left-association
+
+operand: INTLIT | BOOLIT | LB exp RB ;
+
+
+IntLit(int(ctx.INTLIT().getText()))
+BoolLit(toBool(ctx.BOOLIT().getText()))
+Binary(ctx.COMPARE().getText(),self.visit(ctx.term(0)),self.visit(ctx.term(1)))
+
+
+
+
+
+# count node trung gian
+
+program: vardecl+ EOF;
+
+vardecl: type ids SEMI ;
+
+type: INTTYPE | FLOATTYPE | ARRAY LB INTLIT RB OF type ;
+
+ids: ID COMMA ids | ID ;
+
+
+1+(self.visit(ctx.type())
+1+self.visit(ctx.ids())
+1+self.visit(ctx.type())+self.visit(ctx.ids())
+1+sum([self.visit(x)for x in ctx.vardecl()])
+
+
+
+# AST
+
+program: vardecls ;
+
+vardecls: vardecl+ ;
+
+vardecl: type ids ;
+
+type: INTTYPE | FLOATTYPE ;
+
+ids: ID COMMA ids | ID ;

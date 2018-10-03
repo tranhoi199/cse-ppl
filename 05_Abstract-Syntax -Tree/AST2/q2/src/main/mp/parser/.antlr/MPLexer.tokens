@@ -1,0 +1,17 @@
+INTLIT=1
+INTTYPE=2
+FLOATTYPE=3
+LSB=4
+RSB=5
+SIGN=6
+DOTDOT=7
+COMMA=8
+WS=9
+ERROR_CHAR=10
+'integer'=2
+'real'=3
+'['=4
+']'=5
+'-'=6
+'..'=7
+','=8
