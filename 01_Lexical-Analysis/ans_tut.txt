@@ -1,0 +1,13 @@
+Question 4:
+
+(a): a*bbb+
+
+(b): a(aa)*(bb)*b | (aa)+ | (bb)+ | (aa)+(bb)+
+
+(c): a(aaa)*b
+
+
+ToolBox:
+
+https://cyberzhg.github.io/toolbox/regex2nfa
+https://cyberzhg.github.io/toolbox/min_dfa

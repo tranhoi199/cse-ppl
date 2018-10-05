@@ -1,0 +1,27 @@
+Question 4:
+
+ s -> a
+ a -> id a'
+id -> A
+    | B
+    | C
+a' -> + a a'
+    | ϵ
+
+
+https://cyberzhg.github.io/toolbox/left_rec?grammar=cyAtPiBhCmEgLT4gYSArIGEgfCBpZAppZCAtPiBBIHwgQiB8IEM=
+
+
+
+Question 5:
+
+ stmt -> IF expr THEN { stmt } stmt'
+       | other
+ expr -> TRUE
+       | FALSE
+stmt' -> ELSE { stmt }
+       | ϵ
+
+
+
+https://cyberzhg.github.io/toolbox/left_fact?grammar=c3RtdCAtPiBJRiBleHByIFRIRU4geyBzdG10IH0gRUxTRSB7IHN0bXQgfQp8IElGIGV4cHIgVEhFTiB7IHN0bXQgfQp8IG90aGVyCmV4cHIgLT4gVFJVRSB8IEZBTFNF

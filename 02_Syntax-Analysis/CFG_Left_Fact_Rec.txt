@@ -1,0 +1,143 @@
+<exp> 
+	->	<exp> ADDOP <exp> 
+	| 	<exp> MULOP <exp>
+	|	LB <exp> RB
+	|	INTLIT
+	
+
+Left Recusive
+
+https://cyberzhg.github.io/toolbox/left_rec?grammar=PGV4cD4gCgktPgk8ZXhwPiBBRERPUCA8ZXhwPiAKCXwgCTxleHA+IE1VTE9QIDxleHA+Cgl8CUxCIDxleHA+IFJCCgl8CUlOVExJVA==
+
+<exp> -> LB <exp> RB <exp>'
+        | INTLIT <exp>'
+<exp>' -> ADDOP <exp> <exp>'
+        | MULOP <exp> <exp>'
+        | ϵ
+
+Left Factoring
+
+https://cyberzhg.github.io/toolbox/left_fact?grammar=PGV4cD4gCgktPgk8ZXhwPiBBRERPUCA8ZXhwPiAKCXwgCTxleHA+IE1VTE9QIDxleHA+Cgl8CUxCIDxleHA+IFJCCgl8CUlOVExJVA==
+
+<exp> -> <exp> <exp>'
+        | LB <exp> RB
+        | INTLIT
+<exp>' -> ADDOP <exp>
+        | MULOP <exp>
+	
+	
+=====================================
+
+<stmt> -> IF <exp> THEN <stmt> ELSE <stmt>
+        | IF <exp> THEN
+        | <other>
+
+Left Factoring
+
+https://cyberzhg.github.io/toolbox/left_fact?grammar=PHN0bXQ+IC0+IElGIDxleHA+IFRIRU4gPHN0bXQ+IEVMU0UgPHN0bXQ+CiAgICAgICAgfCBJRiA8ZXhwPiBUSEVOCiAgICAgICAgfCA8b3RoZXI+Cg==
+
+<stmt> -> IF <exp> THEN <stmt>'
+         | <other>
+<stmt>' -> <stmt> ELSE <stmt>
+         | ϵ
+
+No left recursive
+
+
+=====================================
+
+exp -> exp + exp | INT | STR
+
+Left Recursive
+
+https://cyberzhg.github.io/toolbox/left_rec?grammar=ZXhwIC0+IGV4cCArIGV4cCB8IElOVCB8IFNUUg==
+
+exp -> INT exp'
+      | STR exp'
+exp' -> + exp exp'
+      | ϵ
+
+
+No left factoring
+
+
+=====================================
+
+exp -> exp - term | term
+term -> term * factor | factor
+factor -> ( exp ) | INT
+
+Left Recursive
+
+https://cyberzhg.github.io/toolbox/left_rec?grammar=ZXhwIC0+IGV4cCAtIHRlcm0gfCB0ZXJtCnRlcm0gLT4gdGVybSAqIGZhY3RvciB8IGZhY3RvcgpmYWN0b3IgLT4gKCBleHAgKSB8IElOVA==
+
+exp -> term exp'
+term -> factor term'
+factor -> ( exp )
+        | INT
+  exp' -> - term exp'
+        | ϵ
+ term' -> * factor term'
+        | ϵ
+
+
+No Left factoring
+
+
+=====================================
+
+exp -> exp1 - exp | exp1
+
+exp1 -> exp1 + exp2 | exp2
+
+exp2 -> exp2 * exp2 | exp3
+
+exp3 -> exp4 / exp4 | exp4
+
+exp4 -> ( exp ) | INT | FLOAT
+
+
+Left Factoring
+
+https://cyberzhg.github.io/toolbox/left_fact?grammar=ZXhwIC0+IGV4cDEgLSBleHAgfCBleHAxCgpleHAxIC0+IGV4cDEgKyBleHAyIHwgZXhwMgoKZXhwMiAtPiBleHAyICogZXhwMiB8IGV4cDMKCmV4cDMgLT4gZXhwNCAvIGV4cDQgfCBleHA0CgpleHA0IC0+ICggZXhwICkgfCBJTlQgfCBGTE9BVA==
+
+
+exp -> exp1 exp'
+ exp1 -> exp1 + exp2
+       | exp2
+ exp2 -> exp2 * exp2
+       | exp3
+ exp3 -> exp4 exp3'
+ exp4 -> ( exp )
+       | INT
+       | FLOAT
+ exp' -> - exp
+       | ϵ
+exp3' -> / exp4
+       | ϵ
+
+Left Recursive
+
+https://cyberzhg.github.io/toolbox/left_rec?grammar=ZXhwIC0+IGV4cDEgLSBleHAgfCBleHAxCgpleHAxIC0+IGV4cDEgKyBleHAyIHwgZXhwMgoKZXhwMiAtPiBleHAyICogZXhwMiB8IGV4cDMKCmV4cDMgLT4gZXhwNCAvIGV4cDQgfCBleHA0CgpleHA0IC0+ICggZXhwICkgfCBJTlQgfCBGTE9BVA==
+
+
+exp -> exp1 - exp
+       | exp1
+ exp1 -> exp2 exp1'
+ exp2 -> exp3 exp2'
+ exp3 -> exp4 / exp4
+       | exp4
+ exp4 -> ( exp )
+       | INT
+       | FLOAT
+exp1' -> + exp2 exp1'
+       | ϵ
+exp2' -> * exp2 exp2'
+       | ϵ
+
+
+
+
+
+
+=====================================
