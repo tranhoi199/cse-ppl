@@ -1,46 +1,29 @@
-import functools
-import operator
+from functools import reduce
 
 
-arr = ['a', 'b', 'c', 'd', 'e']
+def compose(*func):
+    def h(*args):
+        return reduce(lambda x,y: y(*x), reversed(func), args)
+    return h
 
-print(functools.reduce(lambda x, y: x + y, arr))
-'''
-abcde
-'''
+def f(x, y, z):
+    return x + y, y + z
 
-print(functools.reduce(lambda x, y: y + x, arr))
-'''
-edcba
-'''
+def g(x, y):
+    return x * 2, y * 2
 
-print(functools.reduce(lambda x, y: x + y, arr, 'Y'))
-'''
-Yabcde
-'''
+def h(x, y):
+    return x + 1, y + 1, x + y
 
-print(functools.reduce(lambda x, y: y + x, arr, 'Y'))
-'''
-edcbaY
-'''
+def k(x, y, z):
+    return x * y * z
 
+q = compose(k,h,g,f)
 
-lmax = lambda seq: functools.reduce(lambda x, y: x if x > y else y, seq)
-lmin = lambda seq: functools.reduce(lambda x, y: x if x < y else y, seq)
+print(q(1,2,-1)) # 168
 
-lsum = lambda seq: functools.reduce(operator.add, seq)
-lmul = lambda seq: functools.reduce(operator.mul, seq)
-
-lany = lambda func, seq: functools.reduce(lambda x, y: x or func(y), seq, False)
-lall = lambda func, seq: functools.reduce(lambda x, y: x and func(y), seq, True)
-
-lmap = lambda func, seq: functools.reduce(lambda x, y: x + [func(y)], seq, [])
-lfilter = lambda func, seq: functools.reduce(lambda x, y: x + [y] if func(y) else x, seq, [])
-
-
-print(lany(lambda x: x % 2 == 0, [1, 3, 5, 7, 9, 2]))
-print(lall(lambda x: x % 2 == 1, [1, 3, 5, 7, 9, 1]))
-'''
-True
-True
-'''
+# k(h(g(f(1,2,-1))))
+# f(1,2,-1) = 3, 1
+# g(3,1) = 6, 2
+# h(6,2) = 7, 3, 8
+# k(7,3,8) = 7*3*8 = 168
