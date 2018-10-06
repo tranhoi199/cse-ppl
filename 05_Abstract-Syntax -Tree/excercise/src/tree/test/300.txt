@@ -1,4 +1,0 @@
-procedure foo();
-begin
-foo();
-end
