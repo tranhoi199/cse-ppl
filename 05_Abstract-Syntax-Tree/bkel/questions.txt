@@ -1,0 +1,158 @@
+AST 
+	+ Cây đại diện cho abstract syntax structure của code
+	+ Khác với parse tree bằng cách loại bỏ một số token
+	+ Không phụ thuộc vào quá trình parse 
+
+===============================================================
+
+>>>>>>>  Chọn cây AST thich hợp nhất cho biểu thức: 
+
+12 * (3 + 5) - 20 (độ ưu tiên các phép toán như thông lệ)?
+
+Answer:
+
+BinExp("-",BinExp("*",Lit(12),BinExp("+",Lit(3),Lit(5))),Lit(20))
+
+
+
+
+
+
+>>>>>>>  Một giải pháp khác để biểu diễn biểu thức nhị phân là thay vì định nghĩa lớp BinOp như trong bài giảng, ta định nghĩa các lớp Plus, Minus, Mul and Div tương ứng cho các phép toán +,-,* và /. Trong trường hợp này, một khai báo lớp Plus sẽ như thế nào?
+
+case class Plus(e1:Exp,e2:Exp) extends Exp
+
+
+
+
+>>>>>>>  Giả sử ta có luật sinh sau trong văn phạm:      
+
+assign → ID ASSIGN exp SEMI
+
+Trên cây phân tích cú pháp (parse tree) sinh ra bởi ANTLR, nút ứng với luật này là đối tượng của lớp có tên là?
+
+AssignContext
+
+
+
+
+>>>>>>>  Cho luật sinh của văn phạm được viết như sau:            
+
+expp → ADD term expp | ∈
+
+Số nút con của nút ứng với expp là bao nhiêu?
+
+3 | 0
+
+
+
+
+
+>>>>>>>  Cho luật sinh của một văn phạm như sau:            
+
+assign → ID ASSIGN exp SEMI
+
+Giả sử biến ctx đang cất giữ nút ứng với assign trên cây phân tích cú pháp sinh ra bởi ANTLR. Hãy viết biểu thức để truy xuất nút ứng với exp bên vế phải?
+
+ctx.exp
+
+
+
+
+>>>>>>>  Cho luật sinh của một văn phạm như sau:                
+
+ifstmt → IF exp THEN stmt ELSE stmt
+
+Giả sử biến ctx đang cất giữ nút ứng với ifstmt trên cây phân tích cú pháp (parse tree). Hãy viết biểu thức để truy xuất nút ứng với stmt của vế else?
+
+ctx.stmt(1)
+
+
+
+
+>>>>>>>  Cho luật sinh của văn phạm như sau:             
+
+prog → stmt+
+
+Giả sử ctx là biến đang giữ nút ứng với prog. Hãy viết biểu thức để nhận được một danh sách tất cả các nút con stmt của nút ứng với prog?
+
+ctx.stmt
+
+
+
+
+>>>>>>>  Cho văn phạm có các luật sinh sau:
+
+exp → exp ADD term | term
+term → term MUL fact | fact
+fact → ID | INTLIT | LP exp RP
+
+Với văn phạm trên, ANTLR sẽ sinh ra lớp Visitor có bao nhiêu phương thức visit chủ yếu ?
+
+3 - ANTLR sẽ sinh ra một phương thức visit cho mỗi ký hiệu không kết thúc
+
+
+
+
+
+>>>>>>>  Cho văn phạm của ngôn ngữ ABC có luật sinh sau:           
+
+exp → exp ADD term | term
+
+Prototype của phương thức visit sinh ra bởi ANTLR cho luật sinh này là gì?
+
+T visitExp(ABCParser.ExpContext ctx)
+
+
+
+
+
+
+
+
+
+>>>>>>>  Cho các luật sinh của văn phạm của ngôn ngữ ABC như sau:
+
+exp → exp ADD term | term
+term → term MUL fact | fact
+fact → ID | INTLIT | LP exp RP
+
+trong đó ADD là token đại diên phép toán +; MUL đại diện *; ID cho danh hiệu; INTLIT cho số nguyên, LP cho { và RP cho }
+và cấu trúc dữ liệu cho cây AST được định nghĩa (trên ngôn ngữ Scala) qua các lớp sau:
+
+trait ExpAST
+case class Plus(e1:ExpAST,e2:ExpAST) extends ExpAST
+case class Mul(e1:ExpAST,e2:ExpAST) extends ExpAST
+case class Ident(id:String) extends ExpAST
+case class Intlit(val:Int) extends ExpAST
+
+>>>>>>>  >>>>>>>  >>>>>>>  Cho biết đối tượng Plus (lớp con của ExpAST) sẽ được tạo ra trong phương thức visit nào?
+
+token ADD đại diện cho phép + nên Plus được tạo ra trong visitExp
+
+
+>>>>>>>  >>>>>>>  >>>>>>>  Cho biết đối tượng Mul (lớp con của ExpAST) sẽ được tạo ra trong phương thức visit nào?
+
+phương thức visitTerm có thể tạo ra Mul khi các nút con của nó ứng với vế phải term MUL fact.
+
+
+>>>>>>>  >>>>>>>  >>>>>>>  Cho biết đối tượng Id (lớp con của ExpAST) sẽ được tạo ra trong phương thức visit nào?
+
+Id được tạo ra trong phương thức visitFact khi nút con của nó là ID
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
