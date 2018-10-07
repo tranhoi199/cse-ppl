@@ -5,7 +5,7 @@ class Count(MPVisitor):
 
     # Visit a parse tree produced by MPParser#program.
     def visitProgram(self, ctx:MPParser.ProgramContext):
-        return 2 + sum([1+ self.visit(x) for x in ctx.decl()])
+        return 2 + sum(1+ self.visit(x) for x in ctx.decl())
 
 
     # Visit a parse tree produced by MPParser#decl.
