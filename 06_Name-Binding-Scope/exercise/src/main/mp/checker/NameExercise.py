@@ -12,9 +12,12 @@ class NameExercise(BaseVisitor):
     def visitProgram(self,ast,param):
         arr = list(filter(lambda x: isinstance(x, FuncDecl), ast.decl))
         for func in arr:
-            lst = func.local
-            for i in range(1, len(lst)):
-                for j in range(i):
-                    if lst[i].variable == lst[j].variable:
-                        raise RedeclaredException(lst[i].variable.name)
+            self.visitFuncDecl(ast, func)
         return True
+
+    def visitFuncDecl(self,ast,param):
+        lst = param.local
+        for i in range(1, len(lst)):
+            for j in range(i):
+                if lst[i].variable == lst[j].variable:
+                    raise RedeclaredException(lst[i].variable.name)
