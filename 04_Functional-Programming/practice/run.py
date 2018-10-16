@@ -1,46 +1,23 @@
-import functools
-import operator
+# [[1,2,3], [4,5,6], [7], [8,9]] -> [1,2,3,4,5,6,7,8,9]
+
+arr = [[1,2,3], [4,5,6], [7], [8,9]]
+
+#### Method 1: Use sum()
+print(sum(arr, []))
+# interator: arr, start: []
+# such as reduce()
 
 
-arr = ['a', 'b', 'c', 'd', 'e']
-
-print(functools.reduce(lambda x, y: x + y, arr))
-'''
-abcde
-'''
-
-print(functools.reduce(lambda x, y: y + x, arr))
-'''
-edcba
-'''
-
-print(functools.reduce(lambda x, y: x + y, arr, 'Y'))
-'''
-Yabcde
-'''
-
-print(functools.reduce(lambda x, y: y + x, arr, 'Y'))
-'''
-edcbaY
-'''
+#### Method 2: Use reduce()
+from functools import reduce
+print(reduce(lambda lst, ele: lst + ele, arr, [])) # such as sum()
 
 
-lmax = lambda seq: functools.reduce(lambda x, y: x if x > y else y, seq)
-lmin = lambda seq: functools.reduce(lambda x, y: x if x < y else y, seq)
+#### Method 3: Use [for]
+print([i for sublist in arr for i in sublist])
 
-lsum = lambda seq: functools.reduce(operator.add, seq)
-lmul = lambda seq: functools.reduce(operator.mul, seq)
-
-lany = lambda func, seq: functools.reduce(lambda x, y: x or func(y), seq, False)
-lall = lambda func, seq: functools.reduce(lambda x, y: x and func(y), seq, True)
-
-lmap = lambda func, seq: functools.reduce(lambda x, y: x + [func(y)], seq, [])
-lfilter = lambda func, seq: functools.reduce(lambda x, y: x + [y] if func(y) else x, seq, [])
-
-
-print(lany(lambda x: x % 2 == 0, [1, 3, 5, 7, 9, 2]))
-print(lall(lambda x: x % 2 == 1, [1, 3, 5, 7, 9, 1]))
-'''
-True
-True
-'''
+# ???, please:
+print([(i,j) for i in range(4) for j in range(i)])
+# [(1, 0), (2, 0), (2, 1), (3, 0), (3, 1), (3, 2)]
+print([(i,j,k) for i in range(5) for j in range(i) for k in range(j)])
+# [(2, 1, 0), (3, 1, 0), (3, 2, 0), (3, 2, 1), (4, 1, 0), (4, 2, 0), (4, 2, 1), (4, 3, 0), (4, 3, 1), (4, 3, 2)]

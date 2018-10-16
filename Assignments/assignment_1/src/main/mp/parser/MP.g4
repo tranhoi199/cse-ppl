@@ -296,7 +296,7 @@ REAL_LITERAL
 INTEGER_LITERAL : DIGIT+ ;
 
 
-fragment EXPONENT: [eE] SIGN? DIGIT+ ;
+fragment EXPONENT: [eE] SUB? DIGIT+ ;
 
 fragment DIGIT: [0-9] ;
 
