@@ -11,8 +11,7 @@ class RedeclaredException(Exception):
 class NameExercise(BaseVisitor):
     def visitProgram(self,ast,param):
         arr = list(filter(lambda x: isinstance(x, FuncDecl), ast.decl))
-        for func in arr:
-            self.visitFuncDecl(ast, func)
+        [self.visitFuncDecl(ast, func) for func in arr]
         return True
 
     def visitFuncDecl(self,ast,param):
