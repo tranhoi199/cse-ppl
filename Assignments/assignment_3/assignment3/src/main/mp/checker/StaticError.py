@@ -1,6 +1,7 @@
 # update: 16/07/2018
 from abc import ABC
 
+# Kind
 class Kind(ABC):
     pass
 
@@ -24,9 +25,10 @@ class Identifier(Kind):
     def __str__(self):
         return "Identifier"
 
+
+# Static Error
 class StaticError(Exception):
     pass
-
 
 class Redeclared(StaticError):
     """
@@ -36,7 +38,7 @@ class Redeclared(StaticError):
     n: string: name of identifier
     """
 
-    def __init__(self, k, n):
+    def __init__(self, k: Kind, n: str):
         self.k = k
         self.n = n
 
