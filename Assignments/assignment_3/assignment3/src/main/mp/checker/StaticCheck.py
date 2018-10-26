@@ -16,12 +16,22 @@ sys.path.append('../utils')
 
 
 class MType:
+    """
+    partype: list(Type) - params type
+    rettype: Type       - return type
+    """
+
     def __init__(self, partype, rettype):
         self.partype = partype
         self.rettype = rettype
 
 
 class Symbol:
+    """
+    name: string
+    mtype: MType
+    value:
+    """
     def __init__(self, name, mtype, value=None):
         self.name = name
         self.mtype = mtype
@@ -30,9 +40,16 @@ class Symbol:
 
 class StaticChecker(BaseVisitor, Utils):
 
+    # Global Environement - Built-in Functionas
     global_envi = [
         Symbol("getInt", MType([], IntType())),
+        Symbol("getFloat", MType([], FloatType())),
+        Symbol("putInt", MType([IntType()], VoidType()))
         Symbol("putIntLn", MType([IntType()], VoidType()))
+        Symbol("putFloat", MType([FloatType()], VoidType()))
+        Symbol("putFloatLn", MType([FloatType()], VoidType()))
+        Symbol("putBool", MType([BoolType()], VoidType()))
+        Symbol("putBoolLn", MType([BoolType()], VoidType()))
     ]
 
     def __init__(self, ast):
