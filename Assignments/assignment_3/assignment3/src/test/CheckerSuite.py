@@ -13,7 +13,7 @@ function foo(): String;
 begin
 end
 
-function goo(): String;
+function poo(): String;
 begin
 end
 
@@ -23,6 +23,10 @@ end
 
 function fgoo(a,b,c: string; 
     f,k,o: integer; g,h,t: Real): String;
+begin
+end
+
+procedure main();
 begin
 end
 """
