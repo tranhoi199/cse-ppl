@@ -185,9 +185,11 @@ class StaticChecker(BaseVisitor, Utils):
         listNewSymbols = listParams + listLocalVar
         localScope = Checker.checkRedeclared([], listNewSymbols)
         newScope = Scope.merge(scope, localScope)
-        check = [self.visit(x) for x in ast.body]
+        stmts = [self.visit(x) for x in ast.body]
 
         # check Return Statement
+
+        # check Function Not Return
 
     def visitVarDecl(self, ast, scope):
         return None
