@@ -51,7 +51,7 @@ class ExpUtils:
 class Symbol:
     """
     name: string
-    mtype: MType | IntType | FloatType | StringType | BoolType
+    mtype: MType | IntType | FloatType | StringType | BoolType | ArrayType
     value: ???
     kind: Function() | Procedure() | Parameter() | Variable()
     """
@@ -99,7 +99,30 @@ class Symbol:
     def cmp(symbol):
         return symbol.name
 
+    @staticmethod
+    def fromVarDecl(decl):
+        return Symbol(decl.variable.name, decl.varType, kind=Variable())
+    
+    @staticmethod
+    def fromFuncDecl(decl):
+        kind = Procedure() if type(decl.returnType) is VoidType else Function()
+        paramType = [x.varType for x in decl.param]
+        return Symbol(decl.name.name, MType(paramType, decl.returnType), kind=kind)
+
+    @staticmethod
+    def fromDecl(decl):
+        return Symbol.fromVarDecl(decl) if type(decl) is VarDecl else Symbol.fromFuncDecl(decl)
+
 class Scope:
+    @staticmethod
+    def start(section):
+        print("================   " + section + "   ================")
+
+    @staticmethod
+    def end():
+        print("=====================================================")
+
+
     @staticmethod
     def filterVarDecl(listSymbols):
         return [x for x in listSymbols if x.isVar()]
@@ -121,6 +144,9 @@ class Scope:
     def merge(currentScope, comingScope):
         return reduce(lambda lst, sym: lst if Scope.isExisten(lst, sym) else lst+[sym], currentScope, comingScope)
 
+    @staticmethod
+    def log(scope):
+        [print(x) for x in scope]
 
 class Checker:
 
@@ -147,6 +173,14 @@ class Checker:
 
     @staticmethod
     def matchType(patternType, paramType):
+        # Handle Array Type
+        if type(patternType) is ArrayType or type(paramType) is ArrayType:
+            if type(patternType) != type(paramType): return False
+            return patternType.lower == paramType.lower and \
+                    patternType.upper == paramType.upper and \
+                    type(patternType.eleType) == type(paramType.eleType)
+
+        # Handle Primitive Types
         if type(patternType) == type(paramType): return True
         if type(patternType) is FloatType and type(paramType) is IntType: return True
         return False
@@ -181,26 +215,32 @@ class StaticChecker(BaseVisitor, Utils):
         return self.visit(self.ast, StaticChecker.global_envi)
 
     def visitProgram(self, ast: Program, scope):
-        symbols = [self.visit(x, scope) for x in ast.decl]
+        # Return []
+        Scope.start("Program")
+        symbols = [Symbol.fromDecl(x) for x in ast.decl]
         # Check Redeclared variable/function/procedure
         scope = Checker.checkRedeclared(scope, symbols)
         # Check entry procedure
-        entryPoint = Symbol('main', MType([], VoidType()))
+        entryPoint = Symbol('main', MType([], VoidType()), kind=Procedure())
         res = self.lookup(entryPoint.toTuple(), symbols, lambda x: x.toTuple())
         if res is None:
             raise NoEntryPoint()
 
+        [self.visit(x, scope) for x in ast.decl]
+        Scope.end()
         return []
 
     def visitFuncDecl(self, ast: FuncDecl, scope):
         # Return Symbol
+        Scope.start("FuncDecl")
         listParams = [self.visit(x, scope).toParam() for x in ast.param]
         listLocalVar = [self.visit(x, scope).toVar() for x in ast.local]
         listNewSymbols = listParams + listLocalVar
         # Check Redeclared parameter/variable
-        localScope = Checker.checkRedeclared(scope, listNewSymbols)
+        localScope = Checker.checkRedeclared([], listNewSymbols)
         # new scope for statements
         newScope = Scope.merge(scope, localScope)
+        Scope.log(newScope)
 
         stmts = [self.visit(x, newScope) for x in ast.body]
 
@@ -208,39 +248,59 @@ class StaticChecker(BaseVisitor, Utils):
 
         # check Function Not Return
 
-        kind = Procedure() if type(ast.returnType) is VoidType else Function()
-        return Symbol(ast.name.name, MType(listParams, ast.returnType), None, skind)
+        Scope.end()
+        return Symbol.fromDecl(ast)
 
     def visitVarDecl(self, ast, scope):
         # Return Symbol
-        return Symbol(ast.variable.name, MType([], ast.varType), None, Variable())
+        return Symbol.fromDecl(ast)
 
-    def visitAssign(self, ast, scope):
-        # TODO: Type Mismatch In Statement
+    def visitAssign(self, ast: Assign, scope):
+        Scope.start("Assign")
+        Scope.log(scope)
+        lhsType = self.visit(ast.lhs, scope)
+        expType = self.visit(ast.exp, scope)
+        if type(lhsType) is ArrayType:
+            raise TypeMismatchInStatement(ast)
+        if not Checker.matchType(lhsType, expType):
+            raise TypeMismatchInStatement(ast)
+        Scope.end()
         return None
 
-    def visitWith(self, ast, scope):
+    def visitWith(self, ast: With, scope):
+        Scope.start("With")
+        listVar = [self.visit(x, scope).toVar() for x in ast.decl]
+        # Check Redeclared variable
+        localScope = Checker.checkRedeclared([], listVar)
+        # new scope for statements
+        newScope = Scope.merge(scope, localScope)
+
+        _ = [self.visit(x, newScope) for x in ast.stmt]
+
+        Scope.end()
         return None
 
     def visitIf(self, ast: If, scope):
-        condition = self.visit(ast.expr)
-        if not isinstance(condition, BooleanLiteral):
+        Scope.start("If")
+        condType = self.visit(ast.expr, scope)
+        if type(condType) is not BoolType:
             raise TypeMismatchInStatement(ast)
         _ = [self.visit(x, scope) for x in ast.thenStmt]
         _ = [self.visit(x, scope) for x in ast.elseStmt]
+        Scope.end()
 
     def visitFor(self, ast: For, scope):
-        Checker.checkUndeclared(scope, ast.id.name, Identifier())
-
-        idSymbol = Scope.filterId(scope, ast.id)
-        exp1Type = self.visit(ast.expr1)
-        exp2Type = self.visit(ast.expr2)
-        if not isinstance(exp1Type, IntType) or \
-                not isinstance(exp2Type, IntType) or \
-                not isinstance(idSymbol, IntType):
+        Scope.start("For")
+        idSymbol = Checker.checkUndeclared(scope, ast.id.name, Identifier())
+        exp1Type = self.visit(ast.expr1, scope)
+        exp2Type = self.visit(ast.expr2, scope)
+        if type(exp1Type) is not IntType or \
+                type(exp2Type) is not IntType or \
+                type(idSymbol) is not IntType:
             raise TypeMismatchInStatement(ast)
 
         _ = [self.visit(x, scope) for x in ast.loop]
+        Scope.end()
 
     def visitContinue(self, ast, scope):
         return None
@@ -252,22 +312,29 @@ class StaticChecker(BaseVisitor, Utils):
         return None
 
     def visitWhile(self, ast: While, scope):
-        if not isinstance(ast.exp, BooleanLiteral):
+        Scope.start("While")
+        condType = self.visit(ast.exp, scope)
+        if type(condType) is not BoolType:
             raise TypeMismatchInStatement(ast)
         _ = [self.visit(x, scope) for x in ast.sl]
+        Scope.end()
 
     def visitCallStmt(self, ast, scope):
+        Scope.start("CallStmt")
         # Check Undeclared Procedure
         Checker.checkUndeclared(scope, ast.method.name, Procedure())
+        Scope.end()
 
     
     # Visit Expression
     # Return Type
     def visitBinaryOp(self, ast: BinaryOp, scope):
         # Return Type
-        lType = self.visit(ast.left)
-        rType = self.visit(ast.right)
+        Scope.start("BinaryOp")
+        lType = self.visit(ast.left, scope)
+        rType = self.visit(ast.right, scope)
         op = str(ast.op).lower()
+        Scope.end()
         if ExpUtils.isOpForNumber(op): # for number
             if ExpUtils.isNaNType(lType) or ExpUtils.isNaNType(rType):
                 raise TypeMismatchInExpression(ast)
@@ -284,26 +351,44 @@ class StaticChecker(BaseVisitor, Utils):
             return BoolType()
 
     def visitUnaryOp(self, ast: UnaryOp, scope):
-        # Return Type
+        # Return Type, op: ['-', 'not']
+        Scope.start("UnaryOp")
         expType = self.visit(ast.body, scope)
         if (ast.op == '-' and ExpUtils.isNaN(expType)) or (str(ast.op).lower() == 'not' and type(expType) is not BoolType):
             raise TypeMismatchInExpression(ast)
+        Scope.end()
         return expType
 
     def visitCallExpr(self, ast: CallExpr, scope):
         # Return Type
+        Scope.start("CallExpr")
         symbol = Checker.checkUndeclared(scope, ast.method.name, Function())
-        paramType = [self.visit(x) for x in ast.param]
-        Checker.checkParamType(symbol.mtype, paramType)
-        return symbol.mtype
+        paramType = [self.visit(x, scope) for x in ast.param]
+        Scope.log(symbol.mtype.partype)
+        Scope.log(paramType)
+        if not Checker.checkParamType(symbol.mtype.partype, paramType):
+            raise TypeMismatchInExpression(ast)
+        Scope.end()
+        return symbol.mtype.rettype
 
     def visitId(self, ast: Id, scope):
         # Return Type
-        symbol = Checker.checkUndeclared(scope, ast.name, Variable())
+        Scope.start("Id")
+        Scope.log(scope)
+        symbol = Checker.checkUndeclared(scope, ast.name, Identifier())
+        Scope.end()
         return symbol.mtype
 
     def visitArrayCell(self, ast: ArrayCell, scope):
-        return None
+        # Return Type
+        Scope.start("ArrayCell")
+        # arr[idx] - a[1], foo()["bar" + goo()]
+        arrType = self.visit(ast.arr) # type of arr
+        idxType = self.visit(ast.idx) # type of idx
+        if type(idxType) is not IntType or type(arrType) is not ArrayType:
+            raise TypeMismatchInExpression(ast)
+        Scope.end()
+        return arrType.eleType
 
     # Visit Literal Values
     # Return Type of Literal
@@ -336,5 +421,5 @@ class StaticChecker(BaseVisitor, Utils):
     def visitVoidType(self, ast, scope):
         return VoidType()
 
-    def visitArrayType(self, ast, scope):
-        return ArrayType()
+    def visitArrayType(self, ast: ArrayType, scope):
+        return ArrayType(ast.lower, ast.upper, ast.eleType)
