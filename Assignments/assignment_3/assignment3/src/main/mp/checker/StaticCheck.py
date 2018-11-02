@@ -308,14 +308,16 @@ class StaticChecker(BaseVisitor, Utils):
         # Return Type of return result
         scope = params[0]
         retType = params[1]
+        inLoop = params[2]
         Scope.start("With")
         listVar = [self.visit(x, scope).toVar() for x in ast.decl]
         # Check Redeclared variable
         localScope = Checker.checkRedeclared([], listVar)
         # new scope for statements
         newScope = Scope.merge(scope, localScope)
+        # Scope.log(newScope)
 
-        stmts = [self.visit(x, params) for x in ast.stmt]
+        stmts = [self.visit(x, (newScope, retType, inLoop)) for x in ast.stmt]
 
         Scope.end()
         return (ast, Checker.handleReturnStmts(stmts))

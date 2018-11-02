@@ -36,6 +36,14 @@ begin
     // return f3;
     
     if (f = 2) then return f4;
+
+    with i,j,k: integer; 
+        g: String;
+        h,p,t: BooLean;
+    do begin
+        g := "123";
+        if t then i := 1; else t := false;
+    end
     
     for f := 1 to 10 do k := 4;
 
