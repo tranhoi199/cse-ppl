@@ -8,27 +8,37 @@ class CheckerSuite(unittest.TestCase):
 var a, b, c: integer;
     x, y, z: string;
 var g, h, f: real;
-{
+
 function foo(): String;
 begin
+    bar();
+    bar();
+    bar();
     return "1";
+end
+
+function rft(a: integer; b,c: String): boolean;
+begin
+    bar();
+    return False;
 end
 
 procedure bar();
 begin
+    bar();
+    bar();
 end
-}
+
 function tar(
     a, b, c: string; 
     f, k, o: integer; 
     g, h, t: Real 
     ): array[-4 .. 5] of boolean;
 var 
-{
+
     f1: array[-1 .. 2] of boolean;
     f2: array[-1 .. 5] of boolean;
     f3: array[-4 .. 5] of string;
-    }
     f4: array[-4 .. 5] of boolean;
 begin
     // return f1;
@@ -50,8 +60,8 @@ begin
     for f := f * k + 4 to 14+5-f do begin
         k := 5;
         // break;
-        if k = 5 break;
-        if k = 5 continue;
+        if k = 5 then break;
+        if k = 5 then continue;
         k := 5;
     end
 
@@ -89,12 +99,16 @@ begin
     // a := foo();
 end
 
+
 procedure main();
-var a: integer;
+var a: integer; x: boolean;
 begin
+    // bar();
+    putStringLn(foo());
+    // x := rft(1, "", "");
 end
-{
-procedure main1();
+
+procedure nty();
 var d: integer; x: real; g, k, p: string;
 u, v: boolean;
 begin
@@ -119,7 +133,7 @@ begin
     // p := tar("", g, p, d, 3, 4, 3, 4.5, x);
     // p := tar("", g, p, d, 3, 4.1, 3.2, 4.5, x);
 end
-}
+
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 400))

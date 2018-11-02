@@ -139,4 +139,4 @@ class Unreachable(StaticError):
         self.m = m
 
     def __str__(self):
-        return "Unreachable " + str(self.k) + ": " + m
+        return "Unreachable " + str(self.k) + ": " + self.m
