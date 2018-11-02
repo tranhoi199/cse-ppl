@@ -119,12 +119,12 @@ class Symbol:
 class Scope:
     @staticmethod
     def start(section):
-        print("================   " + section + "   ================")
+        # print("================   " + section + "   ================")
         pass
 
     @staticmethod
     def end():
-        print("=====================================================")
+        # print("=====================================================")
         pass
 
     @staticmethod

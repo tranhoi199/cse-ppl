@@ -9,15 +9,21 @@ if (!fs.existsSync(dist)) {
 
 let text = '';
 
-for (let i = 120; i <= 135; i++) {
+for (let i = 1; i <= 300; i++) {
     text += `
     def test_${i}(self):
         input = r"""
 
+procedure main();
+begin
+
+end
+
 """
-        expect = str()
-        self.assertTrue(TestAST.test(input, expect, ${300+i}))
+        expect = "[]"
+        self.assertTrue(TestChecker.test(input, expect, ${100 + i}))
+
 `
 }
 
-fs.writeFileSync(path.join(dist, './gen_ast.py'), text, 'utf8');
+fs.writeFileSync(path.join(dist, './gen_stt.py'), text, 'utf8');
