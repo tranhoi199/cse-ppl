@@ -99,7 +99,7 @@ class FunctionNotReturn(StaticError):
         self.m = m
 
     def __str__(self):
-        return "Function " + m + "Not Return "
+        return "Function " + self.m + "Not Return "
 
 
 class BreakNotInLoop(StaticError):
