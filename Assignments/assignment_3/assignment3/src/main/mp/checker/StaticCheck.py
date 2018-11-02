@@ -219,6 +219,14 @@ class Checker:
     def isStopTypeStatment(retType):
         return Checker.isReturnType(retType) or type(retType) in [Break]
 
+class Graph:
+    link = {}
+
+    @staticmethod
+    def add(u, v):
+        if type(Graph.link[u]) != list: Graph.link[u] = []
+        if v != u and v not in Graph.link[u]: link[u].append(v)
+
 class StaticChecker(BaseVisitor, Utils):
 
     # Global Environement - Built-in Functions - Default is Function
@@ -248,13 +256,24 @@ class StaticChecker(BaseVisitor, Utils):
         symbols = [Symbol.fromDecl(x) for x in ast.decl]
         # Check Redeclared variable/function/procedure
         scope = Checker.checkRedeclared(scope, symbols)
+
         # Check entry procedure
         entryPoint = Symbol('main', MType([], VoidType()), kind=Procedure())
         res = self.lookup(entryPoint.toTuple_2(), symbols, lambda x: x.toTuple_2())
-        if res is None:
-            raise NoEntryPoint()
+        if res is None: raise NoEntryPoint()
 
+        # Init graph
+        listFuncDecl = ["main"] + [x.name.name for x in ast.decl if type(x) is FuncDecl]
+        for x in listFuncDecl: Graph.link[x] = []
+        
+        # Visit children
         [self.visit(x, scope) for x in ast.decl]
+
+        # Check unreachable function / procedure
+        for x in listFuncDecl:
+            res = self.lookup(x.toTuple_2(), StaticChecker.invokedFunctions, lambda x: x.toTuple_2())
+            if res: raise Unreachable(x.getKind(), x.name)
+
         Scope.end()
         return []
 
@@ -270,8 +289,8 @@ class StaticChecker(BaseVisitor, Utils):
         newScope = Scope.merge(scope, localScope)
         # Scope.log(newScope)
 
-        # params: (scope, retType, inLoop)
-        stmts = [self.visit(x, (newScope, ast.returnType, False)) for x in ast.body]
+        # params: (scope, retType, inLoop, funcName)
+        stmts = [self.visit(x, (newScope, ast.returnType, False, ast.name.name)) for x in ast.body]
 
         # Type of return result
         retType = Checker.handleReturnStmts(stmts)
@@ -281,6 +300,9 @@ class StaticChecker(BaseVisitor, Utils):
         if Checker.isReturnTypeFunction(ast.returnType) and not Checker.isReturnTypeFunction(retType):
             raise FunctionNotReturn(ast.name.name)
 
+        # Update Graph
+
+
         Scope.end()
         return Symbol.fromDecl(ast)
 
@@ -288,7 +310,7 @@ class StaticChecker(BaseVisitor, Utils):
         # Return Symbol
         return Symbol.fromDecl(ast)
 
-# Visit Statements -> use params (scope, retType, inLoop)
+# Visit Statements -> use params (scope, retType, inLoop, funcName)
 # Return tuple (Statement, Type of return type)
 
     def visitAssign(self, ast: Assign, params):
@@ -396,12 +418,19 @@ class StaticChecker(BaseVisitor, Utils):
             raise TypeMismatchInStatement(ast)
         return (ast, ret)
 
-    def visitCallStmt(self, ast, params):
+    def visitCallStmt(self, ast: CallStmt, params):
         # Return None
         scope = params[0]
         Scope.start("CallStmt")
         # Check Undeclared Procedure
-        Checker.checkUndeclared(scope, ast.method.name, Procedure())
+        symbol = Checker.checkUndeclared(scope, ast.method.name, Procedure())
+
+        paramType = [self.visit(x, scope) for x in ast.param]
+        # Scope.log(symbol.mtype.partype)
+        # Scope.log(paramType)
+        if not Checker.checkParamType(symbol.mtype.partype, paramType):
+            raise TypeMismatchInExpression(ast)
+
         Scope.end()
         return (ast, None)
 
@@ -449,6 +478,7 @@ class StaticChecker(BaseVisitor, Utils):
         # Scope.log(paramType)
         if not Checker.checkParamType(symbol.mtype.partype, paramType):
             raise TypeMismatchInExpression(ast)
+
         Scope.end()
         return symbol.mtype.rettype
 
