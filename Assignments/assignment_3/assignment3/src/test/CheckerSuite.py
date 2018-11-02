@@ -21,8 +21,8 @@ end
         input = r"""
 
 procedure main();
+var a,b,c,a: integer;
 begin
-
 end
 
 """
@@ -34,8 +34,10 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,b: string;
 begin
-
 end
 
 """
@@ -47,6 +49,10 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,y: array[1 .. 2] of boolean;
 begin
 
 end
@@ -60,8 +66,15 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure main();
+begin
 end
 
 """
@@ -73,8 +86,23 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure f1();
+begin
+end
+
+procedure f2();
+begin
+end
+
+procedure f1();
+begin
 end
 
 """
@@ -86,8 +114,24 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure f1();
+begin
+end
+
+procedure f2();
+begin
+end
+
+function f1(): String;
+begin
+    return "";
 end
 
 """
@@ -99,8 +143,15 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure f1(a,x,g,x: string);
+begin
 end
 
 """
@@ -112,8 +163,15 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure f1(a,x,g: string; b,y,h: real; c,z,h: array[1 .. 2] of boolean);
+begin
 end
 
 """
@@ -125,8 +183,16 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure f1(a,x,g: string; b,y,h: real; c,z,t: array[1 .. 2] of boolean);
+var z: boolean;
+begin
 end
 
 """
@@ -138,8 +204,16 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+end
 
+procedure f1(a,x,g: string; b,y,h: real; c,z,t: array[1 .. 2] of boolean);
+var i,j,k: integer; u,v,t: real;
+begin
 end
 
 """
@@ -151,8 +225,17 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+    f2();
+end
 
+procedure f1(a,x,g: string; b,y,h: real; c,z,t: array[1 .. 2] of boolean);
+var i,j,k: integer; u,v,f: real;
+begin
 end
 
 """
@@ -164,8 +247,17 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+    a := f2();
+end
 
+procedure f1(a,x,g: string; b,y,h: real; c,z,t: array[1 .. 2] of boolean);
+var i,j,k: integer; u,v,f: real;
+begin
 end
 
 """
@@ -177,8 +269,17 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
+    f := 1;
+end
 
+procedure f1(a,x,g: string; b,y,h: real; c,z,t: array[1 .. 2] of boolean);
+var i,j,k: integer; u,v,f: real;
+begin
 end
 
 """
@@ -190,9 +291,25 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
 begin
-
+    p1();
+    a := f1();
+    p2();
 end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -203,8 +320,31 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+    a := getInt();
+    p := getFloat();
+    putInt(b);
+    putFloat(k);
+    putIntLn(c);
+    putFloatLn(q);
+    putBoolLn(g[1]);
+    putString(x);
+    putStringLn("H");
+    putLn();
+end
 
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -216,8 +356,25 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+end
 
+procedure getInt();
+begin
+end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -229,9 +386,28 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
-
 end
+
+function putLn(): String;
+begin
+    return "";
+end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -242,9 +418,24 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
-
+    if 1 then p1();
 end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -255,9 +446,24 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
-
+    if a then p1();
 end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -268,9 +474,24 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
-
+    if g then p1();
 end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -281,8 +502,22 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+    if a+b*c then p1();
+end
 
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -294,8 +529,34 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+    if g[1] then p1();
+    if g[1] and h[2] then p1();
+    if g[1] OR h[2] AnD g[2] then p1();
+    if g[1] AND thEn h[2] aNd nOt g[2] OR ElSE h[1] then p1();
+    if a = 4 then p1();
+    if a+b*c = 4 then p1();
+    if a*b+c-4*(4+6+b*2-4*2*2*4*6+c) = b*2-4*2*2*4 and then g[2] or h[1] then p1();
+    if a*b+c-4*(4+6+b*2-4*2*2*4*6+c) > b*2-4*2*2*4 and then g[2] or h[1] then p1();
+    if a*b+c-4*(4+6+b*2-4*2*2*4*6+c) < b*2-4*2*2*4 and then g[2] or h[1] then p1();
+    if a*b+c-4*(4+6+b*2-4*2*2*4*6+c) <> b*2-4*2*2*4 and then g[2] or h[1] then p1();
+    if a*b+c-4*(4+6+b*2-4*2*2*4*6+c) >= b*2-4*2*2*4 and then g[2] or h[1] then p1();
+    if a*b+c-4*(4+6+b*2-4*2*2*4*6+c) <= b*2-4*2*2*4 and then g[2] or h[1] then p1();
+    if x then p1();
+end
 
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -307,9 +568,27 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
-
+    for a := 1 to 10 do p1();
+    for a := a*b+c-4*(4+6+b*2-4*2*2*4*6+c) to 10 do p1();
+    for a := 10 to a*b+c-4*(4+6+b*2-4*2*2*4*6+c) do p1();
+    for a := 10.0 to a*b+c-4*(4+6+b*2-4*2*2*4*6+c) do p1();
 end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -320,9 +599,27 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
-
+    while g[2] do p1();
+    while a*b+c-4*(4+6+b*2-4*2*2*4*6+c) = b*2-4*2*2*4 do p1();
+    while a*b+c-4*(4+6+b*2-4*2*2*4*6+c) < b*2-4*2*2*4 and then g[2] or h[1] do p1();
+    while g do p1();
 end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
 
 """
         expect = "[]"
@@ -333,8 +630,36 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+    a := 1;
+    p := 5.0;
+    q := 1;
+    k := a;
+    a := b := 1;
+    a := b := c := 1;
+    a := b := c := a*b+c-4*(4+6+b*2-4*2*2*4*6+c);
+    p := a := b := c := a*b+c-4*(4+6+b*2-4*2*2*4*6+c);
+    p := q := k := a := b := c := a*b+c-4*(4+6+b*2-4*2*2*4*6+c);
 
+    a := f1();
+    k := f1();
+    p := q := k := a := b := c := f1();
+
+    p := a := k := a := b := c := f1();
+end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -346,8 +671,32 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+    g[1] := True;
+    h[1] := False;
+    g[1] := h[2];
+    g[2] := h[1] and True;
+    h[1] := g[1] AND thEn h[2] aNd nOt g[2] OR ElSE h[1];
+    h[2] := a*b+c-4*(4+6+b*2-4*2*2*4*6+c) = b*2-4*2*2*4;
+    g[2] := g[1] AND thEn h[2] aNd nOt g[2] OR ElSE h[1];
+    h[1] := a*b+c-4*(4+6+b*2-4*2*2*4*6+c) = b*2-4*2*2*4 and then g[2] or h[1];
+    g[1] := g[2] := h[1] := a*b+c-4*(4+6+b*2-4*2*2*4*6+c) = b*2-4*2*2*4 and then g[2] or h[1];
 
+    h[1] := a;
+end
+
+procedure p1();
+begin
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -359,8 +708,22 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+end
 
+procedure p1();
+begin
+    return "";
+end
+
+function f1(): integer;
+begin
+    return 0;
 end
 
 """
@@ -372,8 +735,22 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+end
 
+procedure p1();
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return;
 end
 
 """
@@ -385,8 +762,31 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+end
 
+procedure p1();
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var
+    a1: array[0 .. 15] of real;
+    a2: array[-5 .. 10] of string;
+    a3: array[-5 .. 10] of real;
+begin
+    return a1;
 end
 
 """
@@ -398,8 +798,31 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
 begin
+end
 
+procedure p1();
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var
+    a1: array[0 .. 15] of real;
+    a2: array[-5 .. 10] of string;
+    a3: array[-5 .. 10] of real;
+begin
+    return a2;
 end
 
 """
@@ -411,8 +834,34 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
+    r: array [-5 .. 10] of real;
 begin
+    p1();
+    a := f1();
+end
 
+procedure p1();
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var
+    a1: array[0 .. 15] of real;
+    a2: array[-5 .. 10] of string;
+    a3: array[-5 .. 10] of real;
+begin
+    return a3;
 end
 
 """
@@ -424,8 +873,17 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
+    r: array [-5 .. 10] of real;
 begin
-
+    g[a] := True;
+    g[a+b+c] := True;
+    g[1] := g[a*b*b] := h[2] := False;
+    g[1] := g["abc"] := g[2] := True;
 end
 
 """
@@ -435,10 +893,37 @@ end
 
     def test_34(self):
         input = r"""
-
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
+    r: array [-5 .. 10] of real;
 begin
+    g[a] := True;
+    g[a+b+c] := True;
+    g[1] := g[a*b*b] := h[2] := False;
+    g[1] := g[f1()] := g[2] := True;
+    p := q := f2()[4] := k := 5.0;
+    p := q := f2()[4] := k := 5 + b * c - a;
+    p := q := f2()[4] := k := FALSE;
+end
 
+procedure p1();
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var a3: array[-5 .. 10] of real;
+begin
+    return a3;
 end
 
 """
@@ -463,8 +948,33 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
+    r: array [-5 .. 10] of real;
 begin
+    p1(1,b,"",x);
+    p1(a*b+c-4*(4+6+b*2-4*2*2*4*6+c),getInt(),"abc",x);
+    p1(getInt(),getFloat(),"abc",x);
+    p1(getFloat(),getInt(),"abc",x);
+end
 
+procedure p1(a: integer; b:REAL; x,y: string);
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var a3: array[-5 .. 10] of real;
+begin
+    return a3;
 end
 
 """
@@ -476,9 +986,40 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
+    r: array [-5 .. 10] of real;
 begin
-
+    g[1] := f3(1,b,"",x);
+    g[1] := f3(a*b+c-4*(4+6+b*2-4*2*2*4*6+c),getInt(),"abc",x);
+    g[1] := f3(getInt(),getFloat(),"abc",x);
+    g[1] := f3(getFloat(),getInt(),"abc",x);
 end
+
+procedure p1(a: integer; b:REAL; x,y: string);
+begin
+    return;
+end
+
+function f3(a: integer; b:REAL; x,y: string): BOOLEAN;
+begin
+    return True;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var a3: array[-5 .. 10] of real;
+begin
+    return a3;
+end
+
 
 """
         expect = "[]"
@@ -490,8 +1031,12 @@ end
 
 procedure main();
 begin
-
 end
+
+function f1(): integer;
+begin
+end
+
 
 """
         expect = "[]"
@@ -501,9 +1046,19 @@ end
     def test_39(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
 end
 
 """
@@ -514,10 +1069,29 @@ end
     def test_40(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
 end
+
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then return b;
+        else if v then return b;
+        else if v then return b;
+        else if v then return b;
+    end
+end
+
 
 """
         expect = "[]"
@@ -527,10 +1101,39 @@ end
     def test_41(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
 end
+
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then return b;
+        else begin
+            while a < 10 do begin
+                for a := 1 to 10 do begin
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    a := 10;
+                end
+            end
+        end
+    end
+end
+
 
 """
         expect = "[]"
@@ -540,9 +1143,44 @@ end
     def test_42(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then return b;
+        else begin
+            while a < 10 do begin
+                for a := 1 to 10 do begin
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    a := 10;
+
+                    if a = 10 then begin
+                        for a := 1 to 10 do return a;
+                    end else begin
+                        b := 1;
+                        return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                    end
+                end
+            end
+        end
+    end
 end
 
 """
@@ -553,9 +1191,45 @@ end
     def test_43(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    break;
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then return b;
+        else begin
+            while a < 10 do begin
+                for a := 1 to 10 do begin
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    a := 10;
+
+                    if a = 10 then begin
+                        for a := 1 to 10 do return a;
+                    end else begin
+                        b := 1;
+                        return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                    end
+                end
+            end
+        end
+    end
 end
 
 """
@@ -566,9 +1240,45 @@ end
     def test_44(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    continue;
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then return b;
+        else begin
+            while a < 10 do begin
+                for a := 1 to 10 do begin
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    a := 10;
+
+                    if a = 10 then begin
+                        for a := 1 to 10 do return a;
+                    end else begin
+                        b := 1;
+                        return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                    end
+                end
+            end
+        end
+    end
 end
 
 """
@@ -579,9 +1289,49 @@ end
     def test_45(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then break;
+        else return b;
+    end
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then return b;
+        else begin
+            while a < 10 do begin
+                for a := 1 to 10 do begin
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    a := 10;
+
+                    if a = 10 then begin
+                        for a := 1 to 10 do return a;
+                    end else begin
+                        b := 1;
+                        return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                    end
+                end
+            end
+        end
+    end
 end
 
 """
@@ -592,10 +1342,51 @@ end
     def test_46(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
 end
+
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    for a := 1 to 10 do begin
+        if v then return b;
+        else if v then break;
+        else begin
+            while a < 10 do begin
+                for a := 1 to 10 do begin
+                    if a = 10 then continue;
+                    if a = 10 then break;
+                    if a = 10 then return b;
+                    else if a = 10 then break;
+                    else if a = 10 then return b;
+                    else if a = 10 then return b;
+                    a := 10;
+
+                    if a = 10 then begin
+                        for a := 1 to 10 do continue;
+                        return (1*3+1*5+3-1+5*3+1-3+5) * a+b;
+                    end else begin
+                        b := 1;
+                        return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                    end
+                end
+            end
+        end
+    end
+end
+
 
 """
         expect = "[]"
@@ -605,9 +1396,53 @@ end
     def test_47(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) * a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+        break;
+    end
 end
 
 """
@@ -618,9 +1453,62 @@ end
     def test_48(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) * a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            return 5.4;
+
+        end
+    end
 end
 
 """
@@ -631,10 +1519,64 @@ end
     def test_49(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
 end
+
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) / a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            return 5;
+
+        end
+    end
+end
+
 
 """
         expect = "[]"
@@ -644,9 +1586,65 @@ end
     def test_50(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            return 5;
+
+            for i := 1 to 10 do begin
+            end
+
+        end
+    end
 end
 
 """
@@ -657,9 +1655,71 @@ end
     def test_51(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            return 5;
+
+            for a := 1 to 10 do begin
+                with i, j, k: integer;
+                    f1, f2, f3: boolean; do begin
+                        for i := j*k to j/k do begin
+                            putLn();
+                        end
+                    end
+            end
+
+        end
+    end
 end
 
 """
@@ -670,9 +1730,71 @@ end
     def test_52(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            return 5;
+
+            for a := 1 to 10 do begin
+                with i, j, k: integer;
+                    f1, f2, f3: boolean; do begin
+                        for i := j+k to j*k do begin
+                            putLn();
+                        end
+                    end
+            end
+
+        end
+    end
 end
 
 """
@@ -683,9 +1805,72 @@ end
     def test_53(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            for a := 1 to 10 do begin
+                with i, j, k: integer;
+                    f1, f2, f3: boolean; do begin
+                        for i := j+k to j*k do begin
+                            putLn();
+                            break;
+                        end
+
+                        return 5;
+                    end
+            end
+
+        end
+    end
 end
 
 """
@@ -696,9 +1881,74 @@ end
     def test_54(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            for a := 1 to 10 do begin
+                with i, j, k: integer;
+                    f1, f2, f3: boolean; do begin
+                        for i := j+k to j*k do begin
+                            putLn();
+                            break;
+
+                            return 5;
+                        end
+
+                        return 5;
+                    end
+            end
+
+        end
+    end
 end
 
 """
@@ -709,9 +1959,77 @@ end
     def test_55(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            for a := 1 to 10 do begin
+                with i, j, k: integer;
+                    f1, f2, f3: boolean; do begin
+                        for i := j+k to j*k do begin
+                            putLn();
+                            if i >= 5 then break;
+                            if j <= 10 then continue;
+                            if i >= 0 then break;
+                            else continue;
+                            
+                            return 5;
+                        end
+
+                        return 10;
+                    end
+            end
+
+        end
+    end
 end
 
 """

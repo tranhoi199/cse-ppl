@@ -160,7 +160,7 @@ class Checker:
     @staticmethod
     def checkRedeclared(currentScope, listNewSymbols):
         # Return merged scope
-        newScope = currentScope
+        newScope = currentScope.copy()
         for x in listNewSymbols:
             f = Checker.utils.lookup(x.name, newScope, Symbol.cmp)
             if f is not None:
@@ -203,7 +203,10 @@ class Checker:
         for i in range(0, len(stmts)-1):
             if Checker.isStopTypeStatment(stmts[i][1]):
                 raise UnreachableStatement(stmts[i+1][0])
-        return None if stmts == [] else stmts[-1][1]
+        if stmts == []: return None
+        retType = stmts[-1][1]
+        # If Break, return None
+        return retType if Checker.isReturnType(retType) else None
 
     @staticmethod
     def isReturnTypeFunction(retType):
@@ -239,6 +242,7 @@ class Graph:
     def log():
         print('Number of nodes in graph: ', len(Graph.link))
         print(Graph.link)
+        print(Graph.visited)
 
     @staticmethod
     def dfs(u):
@@ -262,15 +266,15 @@ class StaticChecker(BaseVisitor, Utils):
     global_envi = [
         Symbol("getInt", MType([], IntType())),
         Symbol("getFloat", MType([], FloatType())),
-        Symbol("putInt", MType([IntType()], VoidType())),
-        Symbol("putIntLn", MType([IntType()], VoidType())),
-        Symbol("putFloat", MType([FloatType()], VoidType())),
-        Symbol("putFloatLn", MType([FloatType()], VoidType())),
-        Symbol("putBool", MType([BoolType()], VoidType())),
-        Symbol("putBoolLn", MType([BoolType()], VoidType())),
-        Symbol("putString", MType([StringType()], VoidType())),
-        Symbol("putStringLn", MType([StringType()], VoidType())),
-        Symbol("putLn", MType([], VoidType()))
+        Symbol("putInt", MType([IntType()], VoidType()), kind=Procedure()),
+        Symbol("putIntLn", MType([IntType()], VoidType()), kind=Procedure()),
+        Symbol("putFloat", MType([FloatType()], VoidType()), kind=Procedure()),
+        Symbol("putFloatLn", MType([FloatType()], VoidType()), kind=Procedure()),
+        Symbol("putBool", MType([BoolType()], VoidType()), kind=Procedure()),
+        Symbol("putBoolLn", MType([BoolType()], VoidType()), kind=Procedure()),
+        Symbol("putString", MType([StringType()], VoidType()), kind=Procedure()),
+        Symbol("putStringLn", MType([StringType()], VoidType()), kind=Procedure()),
+        Symbol("putLn", MType([], VoidType()), kind=Procedure())
     ]
 
     def __init__(self, ast):
@@ -281,8 +285,6 @@ class StaticChecker(BaseVisitor, Utils):
 
     def visitProgram(self, ast: Program, globalEnv):
         Scope.start("Program")
-        # Convert Global Built-in functions to Procedure() type
-        globalEnv = [x.toProc() for x in globalEnv]
         # Check Redeclared variable/function/procedure
         symbols = [Symbol.fromDecl(x) for x in ast.decl]
         scope = Checker.checkRedeclared(globalEnv, symbols)
@@ -294,9 +296,11 @@ class StaticChecker(BaseVisitor, Utils):
         listFuncDecl = globalEnv + [entryPoint] + [Symbol.fromDecl(x) for x in ast.decl if type(x) is FuncDecl]
         for x in listFuncDecl: Graph.add(x.name)
         Graph.setDefaultVisitedNodes([u.name for u in globalEnv])
+        Graph.log()
         # Visit children
         [self.visit(x, scope) for x in ast.decl]
         # Check unreachable function/procedure
+        Graph.log()
         Graph.dfs("main")
         u = Graph.getUnreachableNode()
         if u is not None:
@@ -340,7 +344,7 @@ class StaticChecker(BaseVisitor, Utils):
         funcName = params[3]
         lhsType = self.visit(ast.lhs, (scope, funcName))
         expType = self.visit(ast.exp, (scope, funcName))
-        if type(lhsType) in [ArrayType, VoidType] or not Checker.matchType(lhsType, expType):
+        if type(lhsType) in [ArrayType, VoidType, StringType] or not Checker.matchType(lhsType, expType):
             raise TypeMismatchInStatement(ast)
         Scope.end()
         return (ast, None)
@@ -440,7 +444,7 @@ class StaticChecker(BaseVisitor, Utils):
         # Check Match Type
         paramType = [self.visit(x, (scope, funcName)) for x in ast.param]
         if not Checker.checkParamType(symbol.mtype.partype, paramType):
-            raise TypeMismatchInExpression(ast)
+            raise TypeMismatchInStatement(ast)
         # Update Graph
         Graph.add(funcName, ast.method.name)
         Scope.end()
