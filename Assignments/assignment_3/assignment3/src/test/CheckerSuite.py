@@ -8,23 +8,85 @@ class CheckerSuite(unittest.TestCase):
 var a, b, c: integer;
     x, y, z: string;
 var g, h, f: real;
-
+{
 function foo(): String;
 begin
+    return "1";
 end
 
 procedure bar();
 begin
 end
-
+}
 function tar(
     a, b, c: string; 
     f, k, o: integer; 
-    g, h, t: Real): String;
+    g, h, t: Real 
+    ): array[-4 .. 5] of boolean;
+var 
+{
+    f1: array[-1 .. 2] of boolean;
+    f2: array[-1 .. 5] of boolean;
+    f3: array[-4 .. 5] of string;
+    }
+    f4: array[-4 .. 5] of boolean;
 begin
+    // return f1;
+    // return f2;
+    // return f3;
+    
+    if (f = 2) then return f4;
+    
+    for f := 1 to 10 do k := 4;
+
+    for f := f * k + 4 to 14+5-f do begin
+        k := 5;
+        // break;
+        if k = 5 break;
+        if k = 5 continue;
+        k := 5;
+    end
+
+    // if k = 5 then return f4; else return f4;
+
+
+    if k = 5 then begin
+        k := 5;
+        if k = 5 then begin
+            k := 5;
+            if k = 5 then
+                for k :=  1 to 10 do break;
+            return f4;
+        end else begin
+            k := 5;
+            // if k = 5 break;
+            // return f4;
+            if k = 5 then begin
+                return f4;
+            end
+            else if k = 5 then return f4;
+            else if k = 5 then return f4;
+            else if k = 5 then return f4;
+            else return f4;
+        end
+    end else begin
+        return f4;
+    end 
+    
+    // if (f = 2) then continue;
+    // break;
+    // return f4;
+    
+    // foo();
+    // a := foo();
 end
 
 procedure main();
+var a: integer;
+begin
+end
+{
+procedure main1();
 var d: integer; x: real; g, k, p: string;
 u, v: boolean;
 begin
@@ -49,6 +111,7 @@ begin
     // p := tar("", g, p, d, 3, 4, 3, 4.5, x);
     // p := tar("", g, p, d, 3, 4.1, 3.2, 4.5, x);
 end
+}
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 400))
