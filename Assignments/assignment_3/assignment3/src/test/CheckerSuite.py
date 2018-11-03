@@ -1079,6 +1079,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1111,6 +1112,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1153,6 +1155,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1184,7 +1187,7 @@ begin
 end
 
 """
-        expect = r"""Unreachable Function: f1"""
+        expect = r"""Function f1Not Return """
         self.assertTrue(TestChecker.test(input, expect, 142))
 
 
@@ -1201,6 +1204,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1250,6 +1254,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1299,6 +1304,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1352,6 +1358,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1406,6 +1413,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1463,6 +1471,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1529,6 +1538,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1596,6 +1606,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1665,6 +1676,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1740,6 +1752,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1815,6 +1828,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1874,7 +1888,7 @@ begin
 end
 
 """
-        expect = r"""Unreachable Function: f1"""
+        expect = r"""Function f1Not Return """
         self.assertTrue(TestChecker.test(input, expect, 153))
 
 
@@ -1891,6 +1905,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -1969,6 +1984,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -2033,7 +2049,7 @@ begin
 end
 
 """
-        expect = r"""Unreachable statement: Return(Some(IntLiteral(10)))"""
+        expect = r"""Unreachable statement: Return(Some(IntLiteral(5)))"""
         self.assertTrue(TestChecker.test(input, expect, 155))
 
 
@@ -2050,6 +2066,7 @@ begin
 end
 
 function f1(): integer;
+var a: integer;
 begin
     a := 10;
     if u then return b;
@@ -2126,6 +2143,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2149,6 +2167,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2173,6 +2192,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2197,6 +2217,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2221,6 +2242,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2246,6 +2268,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2276,6 +2299,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2313,6 +2337,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2350,6 +2375,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2386,6 +2412,7 @@ var
     u,v: boolean;
 
 procedure main();
+var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
@@ -2613,6 +2640,7 @@ procedure p1(); begin for a:=1 to 10 do begin p2(); p1(); p2(); p1(); end end
 procedure p2(); begin for a:=1 to 10 do begin p1(); p2(); p1(); p3(); main(); p3(); end end
 procedure p3(); begin for a:=1 to 10 do begin p3(); p1(); p2(); main(); main(); end end
 procedure p4(); 
+var a: integer;
 begin
 for a:=1 to 10 do
     p1(); p2(); p3(); p4(); p4(); main(); 
@@ -2632,7 +2660,7 @@ end
 var a: integer;
 
 """
-        expect = r"""Unreachable Function: f4"""
+        expect = r"""Undeclared Identifier: a"""
         self.assertTrue(TestChecker.test(input, expect, 174))
 
 
@@ -4055,18 +4083,29 @@ end
 
 procedure main();
 begin
+    foo(True, 2, 1, 2, 3);
+end
+
+procedure foo(a: Boolean; b: Boolean; x,y: Integer; z: Real);
+begin
 
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: CallStmt(Id(foo),[BooleanLiteral(True),IntLiteral(2),IntLiteral(1),IntLiteral(2),IntLiteral(3)])"""
         self.assertTrue(TestChecker.test(input, expect, 216))
 
 
     def test_117(self):
         input = r"""
 
+
 procedure main();
+begin
+    foo(True, False, 1, 2, 3);
+end
+
+procedure foo(a: Boolean; b: Boolean; x,y: Integer; z: Real);
 begin
 
 end
@@ -4081,11 +4120,18 @@ end
 
 procedure main();
 begin
+    foo(True, False, 1, 2, 3);
+end
+
+procedure foo(a: Boolean; b: Boolean; x,y: Integer; z: Real);
+var
+    a: array [1 .. 100] of String;
+begin
 
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Redeclared Variable: a"""
         self.assertTrue(TestChecker.test(input, expect, 218))
 
 
@@ -4093,6 +4139,13 @@ end
         input = r"""
 
 procedure main();
+begin
+    foo(True, False, 1, 2, 3);
+end
+
+procedure foo(a: Boolean; b: Boolean; x,y: Integer; z: Real);
+var
+    arr: array [1 .. 100] of String;
 begin
 
 end
@@ -4107,11 +4160,17 @@ end
 
 procedure main();
 begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
 
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 220))
 
 
@@ -4120,11 +4179,19 @@ end
 
 procedure main();
 begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
 
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+begin
+    return "";
+    a := True;
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable statement: AssignStmt(Id(a),BooleanLiteral(True))"""
         self.assertTrue(TestChecker.test(input, expect, 221))
 
 
@@ -4133,11 +4200,18 @@ end
 
 procedure main();
 begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
 
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+begin
+    if a then return 5; else return "";
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: Return(Some(IntLiteral(5)))"""
         self.assertTrue(TestChecker.test(input, expect, 222))
 
 
@@ -4146,7 +4220,14 @@ end
 
 procedure main();
 begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
 
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+begin
+    if a then return "123"; else return "456";
 end
 
 """
@@ -4159,15 +4240,638 @@ end
 
 procedure main();
 begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
 
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+begin
+    if a then return "1";
+    else if a then return "2";
+    else if a then return "3";
+    else if a then return "4";
+    else if a then return "5";
+
+    a := True;
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 224))
 
 
     def test_125(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+begin
+    if a then return "1";
+    else if a then return "2";
+    else if a then return "3";
+    else if a then return "4";
+    else if a then return "5";
+    else return "!"
+
+    a := True;
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(a),BooleanLiteral(True))"""
+        self.assertTrue(TestChecker.test(input, expect, 225))
+
+
+
+    def test_126(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then break; else break;
+
+        a := b := True or False;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(b),BinaryOp(or,BooleanLiteral(True),BooleanLiteral(False)))"""
+        self.assertTrue(TestChecker.test(input, expect, 226))
+
+
+    def test_127(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then break; else continue;
+
+        i := 1;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1))"""
+        self.assertTrue(TestChecker.test(input, expect, 227))
+
+
+    def test_128(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else continue;
+
+        j := 6;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(j),IntLiteral(6))"""
+        self.assertTrue(TestChecker.test(input, expect, 228))
+
+
+    def test_129(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else break;
+
+        j := 10000;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(j),IntLiteral(10000))"""
+        self.assertTrue(TestChecker.test(input, expect, 229))
+
+
+    def test_130(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else break;
+        end
+
+        i := 123;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(123))"""
+        self.assertTrue(TestChecker.test(input, expect, 230))
+
+
+    def test_131(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; do begin
+                    if a then return "3";
+                    else return "5";
+                end
+            end
+        end
+
+        i := 123;
+    end
+end
+
+"""
+        expect = r"""Type Mismatch In Statement: If(Id(a),[Return(Some(StringLiteral(3)))],[Return(Some(StringLiteral(5)))])"""
+        self.assertTrue(TestChecker.test(input, expect, 231))
+
+
+    def test_132(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else return "5";
+                end
+            end
+        end
+
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
+        self.assertTrue(TestChecker.test(input, expect, 232))
+
+
+    def test_133(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else break;
+                end
+            end
+        end
+
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
+        self.assertTrue(TestChecker.test(input, expect, 233))
+
+
+    def test_134(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else return main();
+                end
+            end
+        end
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Undeclared Function: main"""
+        self.assertTrue(TestChecker.test(input, expect, 234))
+
+
+    def test_135(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else return foo(g, b, i,j,i*j+4-2*6);
+                end
+            end
+        end
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
+        self.assertTrue(TestChecker.test(input, expect, 235))
+
+
+    def test_136(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    for i := 1 to 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else main();
+                end
+            end
+        end
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Function fooNot Return """
+        self.assertTrue(TestChecker.test(input, expect, 236))
+
+
+    def test_137(self):
+        input = r"""
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    while i < 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else main();
+                end
+            end
+        end
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Function fooNot Return """
+        self.assertTrue(TestChecker.test(input, expect, 237))
+
+
+    def test_138(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    while i < 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else return foo(b,g,i,i,i);
+                end
+            end
+        end
+        i := 1000;
+    end
+end
+
+"""
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
+        self.assertTrue(TestChecker.test(input, expect, 238))
+
+
+    def test_139(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    while i < 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else main();
+                end
+            end
+        end
+        i := 1000;
+        while i < 100 do main();
+        while i < 100 do main();
+        with i: string; do begin
+            while b do begin
+                break;
+            end
+            putString(i);
+            return foo(True, True, j,x,i);
+        end
+    end
+end
+
+"""
+        expect = r"""Type Mismatch In Expression: CallExpr(Id(foo),[BooleanLiteral(True),BooleanLiteral(True),Id(j),Id(x),Id(i)])"""
+        self.assertTrue(TestChecker.test(input, expect, 239))
+
+
+    def test_140(self):
+        input = r"""
+
+
+procedure main();
+begin
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    while i < 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else main();
+                end
+            end
+        end
+        i := 1000;
+        while i < 100 do main();
+        while i < 100 do main();
+        with i: string; do begin
+            while b do begin
+                break;
+            end
+            putString(i);
+            return foo(True, True, j,x,y);
+        end
+    end
+end
+
+"""
+        expect = r"""Function fooNot Return """
+        self.assertTrue(TestChecker.test(input, expect, 240))
+
+
+    def test_141(self):
+        input = r"""
+
+procedure main();
+begin
+    // PUTSTRINGLN(foo(True, False, 1, 2, 3));
+end
+
+function foo(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+begin
+    while i < 1000 do begin
+        a := True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "1";
+            else if a then return "2";
+            else begin
+                with a: integer; g: boolean; do begin
+                    if a mod 10 = x and then b or else g then return "3";
+                    else main();
+                end
+            end
+        end
+        i := 1000;
+        while i < 100 do main();
+        while i < 100 do main();
+        with i: string; do begin
+            while b do begin
+                break;
+            end
+            putString(i);
+            return foo(True, True, j,x,y);
+        end
+    end
+    while i < 100 do main();
+    while i < 100 do main();
+    with i: string; do begin
+        while b do begin
+            break;
+        end
+        putString(i);
+        return foo(True, True, j,x,y);
+    end
+end
+
+"""
+        expect = r"""Unreachable Function: foo"""
+        self.assertTrue(TestChecker.test(input, expect, 241))
+
+
+    def test_142(self):
         input = r"""
 
 procedure main();
@@ -4177,4 +4881,109 @@ end
 
 """
         expect = r"""[]"""
-        self.assertTrue(TestChecker.test(input, expect, 225))
+        self.assertTrue(TestChecker.test(input, expect, 242))
+
+
+    def test_143(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 243))
+
+
+    def test_144(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 244))
+
+
+    def test_145(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 245))
+
+
+    def test_146(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 246))
+
+
+    def test_147(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 247))
+
+
+    def test_148(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 248))
+
+
+    def test_149(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 249))
+
+
+    def test_150(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 250))
+

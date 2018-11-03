@@ -43,6 +43,7 @@ def main(argv):
             # from CheckerSuite_1 import CheckerSuite
             from CheckerSuite import CheckerSuite
             # from CheckerSuite_ import CheckerSuite
+            # from CheckerSuite_D import CheckerSuite
             # from CheckerSuite_P import CheckerSuite
             getAndTest(CheckerSuite)
         elif argv[1] == 'CodeGenSuite':

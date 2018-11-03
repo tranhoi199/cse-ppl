@@ -56,11 +56,12 @@ class Symbol:
     """
 
     # Default Declare Type is Function Declare - kind Function
-    def __init__(self, name, mtype, value=None, kind=Function()):
+    def __init__(self, name, mtype, value=None, kind=Function(), isGlobal=False):
         self.name = name
         self.mtype = mtype
         self.value = value
         self.kind = kind
+        self.isGlobal = isGlobal
 
     def __str__(self):
         return 'Symbol(' + self.name + ',' + str(self.mtype) + ',' + str(self.kind) + ')'
@@ -96,6 +97,10 @@ class Symbol:
         self.kind = Variable()
         return self
 
+    def toGlobal(self):
+        self.isGlobal = True
+        return self
+
     # compare function between 2 instances
     @staticmethod
     def cmp(symbol):
@@ -128,14 +133,6 @@ class Scope:
         pass
 
     @staticmethod
-    def filterVarDecl(listSymbols):
-        return [x for x in listSymbols if x.isVar()]
-
-    @staticmethod
-    def filterFuncDecl(listSymbols):
-        return [x for x in listSymbols if x.isFunc()]
-
-    @staticmethod
     def isExisten(listSymbols, symbol):
         return len([x for x in listSymbols if str(x.name).lower() == str(symbol.name).lower()]) > 0
 
@@ -164,9 +161,10 @@ class Checker:
         return newScope
 
     @staticmethod
-    def checkUndeclared(visibleScope, name, kind):
+    def checkUndeclared(visibleScope, name, kind, notGlobal=False):
         # Return Symbol declared in scope
-        res = Checker.utils.lookup((str(name).lower(), type(kind)), visibleScope, lambda x: x.toTuple())
+        scope = visibleScope if not notGlobal else [x for x in visibleScope if not x.isGlobal]
+        res = Checker.utils.lookup((str(name).lower(), type(kind)), scope, lambda x: x.toTuple())
         if res is None:
             raise Undeclared(kind, name)
         return res
@@ -214,7 +212,7 @@ class Checker:
 
     @staticmethod
     def isStopTypeStatment(retType):
-        return Checker.isReturnType(retType) or type(retType) in [Break]
+        return Checker.isReturnType(retType) or type(retType) in [Break, Continue]
 
 
 # Graph for Call Statements and Call Expression between Functions and Procedures
@@ -288,7 +286,7 @@ class StaticChecker(BaseVisitor, Utils):
     def visitProgram(self, ast: Program, globalEnv):
         Scope.start("Program")
         # Check Redeclared variable/function/procedure
-        symbols = [Symbol.fromDecl(x) for x in ast.decl]
+        symbols = [Symbol.fromDecl(x).toGlobal() for x in ast.decl]
         scope = Checker.checkRedeclared(globalEnv, symbols)
         # Check no entry procedure "main"
         entryPoint = Symbol('main', MType([], VoidType()), kind=Procedure())
@@ -382,7 +380,10 @@ class StaticChecker(BaseVisitor, Utils):
         ret1 = Checker.handleReturnStmts(stmts1)
         ret2 = Checker.handleReturnStmts(stmts2)
         Scope.end()
-        return (ast, None if ret1 is None or ret2 is None else retType if Break not in [type(ret1), type(ret2)] else Break())
+        if ret1 is None or ret2 is None: return (ast, None)
+        if all([x not in [type(ret1), type(ret2)] for x in [Break, Continue]]): return (ast, retType)
+        return (ast, Break()) # or Continue()
+        # return (ast, None if ret1 is None or ret2 is None else retType if Break not in [type(ret1), type(ret2)] else Break())
 
     def visitFor(self, ast: For, params):
         Scope.start("For")
@@ -390,7 +391,7 @@ class StaticChecker(BaseVisitor, Utils):
         retType = params[1]
         funcName = params[3]
         # Check Undeclared Identifier
-        idSymbol = Checker.checkUndeclared(scope, ast.id.name, Identifier())
+        idSymbol = Checker.checkUndeclared(scope, ast.id.name, Identifier(), notGlobal=True)
         # Check Type Expression
         exp1Type = self.visit(ast.expr1, (scope, funcName))
         exp2Type = self.visit(ast.expr2, (scope, funcName))
@@ -400,7 +401,8 @@ class StaticChecker(BaseVisitor, Utils):
         stmts = [self.visit(x, (scope, retType, True, funcName)) for x in ast.loop]
         Scope.end()
         retType = Checker.handleReturnStmts(stmts)
-        return (ast, retType if type(retType) is not Break else None)
+        # return (ast, retType if type(retType) is not Break else None)
+        return (ast, None)
 
     def visitWhile(self, ast: While, params):
         Scope.start("While")
@@ -415,12 +417,13 @@ class StaticChecker(BaseVisitor, Utils):
         stmts = [self.visit(x, (scope, retType, True, funcName)) for x in ast.sl]
         Scope.end()
         retType = Checker.handleReturnStmts(stmts)
-        return (ast, retType if type(retType) is not Break else None)
+        # return (ast, retType if type(retType) is not Break else None)
+        return (ast, None)
 
     def visitContinue(self, ast, params):
         inLoop = params[2]
         if not inLoop: raise ContinueNotInLoop()
-        return (ast, None)
+        return (ast, Continue())
 
     def visitBreak(self, ast, params):
         inLoop = params[2]
@@ -484,7 +487,7 @@ class StaticChecker(BaseVisitor, Utils):
         scope = params[0]
         funcName = params[1]
         expType = self.visit(ast.body, (scope, funcName))
-        if (ast.op == '-' and ExpUtils.isNaN(expType)) or (str(ast.op).lower() == 'not' and type(expType) is not BoolType):
+        if (ast.op == '-' and ExpUtils.isNaNType(expType)) or (str(ast.op).lower() == 'not' and type(expType) is not BoolType):
             raise TypeMismatchInExpression(ast)
         return expType
 
