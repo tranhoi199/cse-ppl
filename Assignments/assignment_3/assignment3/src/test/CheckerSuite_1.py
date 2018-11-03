@@ -6,33 +6,17 @@ class CheckerSuite(unittest.TestCase):
     
     def test_1(self):
         input = r"""
-
-var
-    a,b,c: integer;
-    x,y,z: real;
-
-procedure main();
-var 
-    i,j,p: integer;
-    a : array [ 1 .. 5 ] of real;
-begin
-    
-end
-
-function f1(): array [ 1 .. 3 ] of real;
-var nt: array [ 1 .. 3] of string;
-begin
-    with nt: array [ 1 .. 3 ] of real; do begin
-        return nt;
-    end
-end
-
-var
-    i,j,k: string;
-    p,q,r: boolean;
-
-var nt: array [ 1 .. 3 ] of real;
-
+ procedure main();
+                var a: real;
+                i,j:integer;
+                begin
+                    for i := 1 to 10 do begin
+                        for j := i downto 1 do
+                            if (i + j) mod 2 = 1 then break;
+                    continue;
+                    end
+                    continue;
+                end
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 101))

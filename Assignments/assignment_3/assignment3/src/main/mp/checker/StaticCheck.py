@@ -468,9 +468,9 @@ class StaticChecker(BaseVisitor, Utils):
             if ExpUtils.isNaNType(lType) or ExpUtils.isNaNType(rType):
                 raise TypeMismatchInExpression(ast)
             if str(op).lower() in ['div', 'mod']:
-                if type(lType) is FloatType or type(rType) is FloatType:
+                if FloatType in [type(lType), type(rType)]:
                     raise TypeMismatchInExpression(ast)
-                return IntType
+                return IntType()
             if op in ['+', '-', '*']: return ExpUtils.mergeNumberType(lType, rType)
             if op == '/': return FloatType()
             return BoolType()  # = <> >= ...
