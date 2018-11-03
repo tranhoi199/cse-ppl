@@ -2040,9 +2040,76 @@ end
     def test_56(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
+end
 
+function f1(): integer;
+begin
+    a := 10;
+    if u then return b;
+    b := 1;
+    if u then begin
+        if v then return a;
+        else if u then return 2;
+    end
+    if u then begin
+        for a := 1 to 10 do begin
+            if v then return b;
+            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+            else begin
+                while a < 10 do begin
+                    for a := 1 to 10 do begin
+                        if a = 10 then continue;
+                        if a = 10 then break;
+                        if a = 10 then return b;
+                        else if a = 10 then break;
+                        else if a = 10 then return b;
+                        else if a = 10 then return b;
+                        a := 10;
+
+                        if a = 10 then begin
+                            for a := 1 to 10 do continue;
+                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
+                        end else begin
+                            b := 1;
+                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
+                        end
+                    end
+                end
+            end
+        end
+    end else begin
+
+        if u then begin
+            with i,j,k: integer; do begin
+                return 5;
+            end
+        end else begin
+
+            for a := 1 to 10 do begin
+                with i, j, k: integer;
+                    f1, f2, f3: boolean; do begin
+                        for i := j+k to j*k do begin
+                            putLn();
+                            if i >= 5 then break;
+                            if j <= 10 then continue;
+                            if i >= 0 then break;
+                            else return 0;
+
+                            a := 10;
+                        end
+                        return a;
+                    end
+            end
+
+        end
+    end
 end
 
 """
@@ -2053,9 +2120,19 @@ end
     def test_57(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            break;
+        end
+    end
 end
 
 """
@@ -2066,9 +2143,20 @@ end
     def test_58(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            break;
+            continue;
+        end
+    end
 end
 
 """
@@ -2079,9 +2167,20 @@ end
     def test_59(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            break;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2092,9 +2191,20 @@ end
     def test_60(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then break; else continue;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2105,9 +2215,21 @@ end
     def test_61(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then break; else return;
+            y := 1;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2118,9 +2240,26 @@ end
     def test_62(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then break;
+            else if a = 1 then return;
+            else if a = 1 then break;
+            else if a = 1 then return;
+            else if a = 1 then break;
+            else return;
+            y := 1;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2131,9 +2270,33 @@ end
     def test_63(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then begin
+                with i: integer; do begin
+                    a := 12;
+                    for i := 1 to 10 do a := a + 1;
+                end
+                return a + 5;
+            end
+            else begin
+                while a < 10 do begin
+                    a := a + 1;
+                end
+                break;
+            end
+            y := 1;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2144,9 +2307,33 @@ end
     def test_64(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then begin
+                with i: integer; do begin
+                    a := 12;
+                    for i := 1 to 10 do a := a + 1;
+                end
+                return ;
+            end
+            else begin
+                while a < 10 do begin
+                    a := a + 1;
+                end
+                break;
+            end
+            y := 1;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2157,11 +2344,34 @@ end
     def test_65(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then begin
+                with i: integer; do begin
+                    a := 12;
+                    for i := 1 to 10 do a := a + 1;
+                end
+                break ;
+            end
+            else begin
+                while a < 10 do begin
+                    a := a + 1;
+                end
+                break;
+            end
+            y := 1;
+        end
+        x := 1;
+    end
 end
-
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 165))
@@ -2170,9 +2380,33 @@ end
     def test_66(self):
         input = r"""
 
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
+
 procedure main();
 begin
-
+    for a := 1 to 10 do begin
+        for b := 10 downto 10 do begin
+            x := 1;
+            if a = 1 then begin
+                with i: integer; do begin
+                    a := 12;
+                    for i := 1 to 10 do a := a + 1;
+                end
+                return ;
+            end
+            else begin
+                while a < 10 do begin
+                    a := a + 1;
+                end
+                return;
+            end
+            y := 1;
+        end
+        x := 1;
+    end
 end
 
 """
@@ -2183,9 +2417,13 @@ end
     def test_67(self):
         input = r"""
 
-procedure main();
-begin
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
 
+procedure p1();
+begin
 end
 
 """
@@ -2196,9 +2434,22 @@ end
     def test_68(self):
         input = r"""
 
-procedure main();
-begin
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
 
+procedure p1();
+begin
+end
+
+procedure p2();
+begin
+end
+
+function f1(): String;
+begin
+    return "";
 end
 
 """
@@ -2209,9 +2460,13 @@ end
     def test_69(self):
         input = r"""
 
-procedure main();
-begin
+var 
+    a,b: integer;
+    x,y: real;
+    u,v: boolean;
 
+procedure main(a: integer);
+begin
 end
 
 """
@@ -2224,8 +2479,25 @@ end
 
 procedure main();
 begin
-
+    p1();
+    p2();
+    p3();
+    putStringLn(f1(False));
+    putStringLn(f2(False));
+    putStringLn(f3(False));
+    putStringLn(f4(False));
 end
+
+procedure p1(); begin end
+procedure p2(); begin end
+procedure p3(); begin end
+procedure p4(); begin end
+
+function f1(x: boolean): String; begin return ""; end
+function f2(x: boolean): String; begin return ""; end
+function f3(x: boolean): String; begin return ""; end
+function f4(x: boolean): String; begin return ""; end
+
 
 """
         expect = "[]"
@@ -2237,8 +2509,27 @@ end
 
 procedure main();
 begin
-
+    p1();
+    putStringLn(f1(False));
 end
+
+procedure p1(); begin p2(); p1(); p2(); p1(); end
+procedure p2(); begin p1(); p2(); p1(); p3(); main(); p3(); end
+procedure p3(); begin p3(); p1(); p2(); main(); main(); end
+procedure p4(); 
+begin 
+    p1(); p2(); p3(); p4(); p4(); main(); 
+    putStringLn(f1(False));
+    putStringLn(f2(False));
+    putStringLn(f3(False));
+    putStringLn(f4(False));
+end
+
+function f1(x: boolean): String; begin putStringLn(f2(False)); return ""; end
+function f2(x: boolean): String; begin putStringLn(f3(False)); return ""; end
+function f3(x: boolean): String; begin putStringLn(f4(False)); return ""; end
+function f4(x: boolean): String; begin return ""; end
+
 
 """
         expect = "[]"
@@ -2250,8 +2541,26 @@ end
 
 procedure main();
 begin
-
+    p1();
+    putStringLn(f1(False));
 end
+
+procedure p1(); begin p2(); p1(); p2(); p1(); end
+procedure p2(); begin p1(); p2(); p1(); p3(); main(); p3(); end
+procedure p3(); begin p3(); p1(); p2(); main(); main(); end
+procedure p4(); 
+begin 
+    p1(); p2(); p3(); p4(); p4(); main(); 
+    putStringLn(f1(False));
+    putStringLn(f2(False));
+    putStringLn(f3(False));
+end
+
+function f1(x: boolean): String; begin putStringLn(f2(False)); return ""; end
+function f2(x: boolean): String; begin putStringLn(f3(False)); return ""; end
+function f3(x: boolean): String; begin p4(); return ""; end
+function f4(x: boolean): String; begin return ""; end
+
 
 """
         expect = "[]"
@@ -2263,7 +2572,27 @@ end
 
 procedure main();
 begin
+    p1();
+    putStringLn(f1(False));
+end
 
+procedure p1(); begin p2(); p1(); p2(); p1(); end
+procedure p2(); begin p1(); p2(); p1(); p3(); main(); p3(); end
+procedure p3(); begin p3(); p1(); p2(); main(); main(); end
+procedure p4(); 
+begin 
+    p1(); p2(); p3(); p4(); p4(); main(); 
+    putStringLn(f1(False));
+end
+
+function f1(x: boolean): String; begin putStringLn(f2(False)); return ""; end
+function f2(x: boolean): String; begin p2(); p1(); main(); putStringLn(f3(False)); return ""; end
+function f3(x: boolean): String; begin p4(); return ""; end
+function f4(x: boolean): String; 
+begin 
+    p1(); p2(); p3(); p4(); p4(); main(); 
+    putStringLn(f1(False));
+    return ""; 
 end
 
 """
@@ -2276,8 +2605,32 @@ end
 
 procedure main();
 begin
-
+    p1();
+    putStringLn(f1(False));
 end
+
+procedure p1(); begin for a:=1 to 10 do begin p2(); p1(); p2(); p1(); end end
+procedure p2(); begin for a:=1 to 10 do begin p1(); p2(); p1(); p3(); main(); p3(); end end
+procedure p3(); begin for a:=1 to 10 do begin p3(); p1(); p2(); main(); main(); end end
+procedure p4(); 
+begin
+for a:=1 to 10 do
+    p1(); p2(); p3(); p4(); p4(); main(); 
+    putStringLn(f1(False));
+end
+end
+
+function f1(x: boolean): String; begin putStringLn(f2(False)); return ""; end
+function f2(x: boolean): String; begin p2(); p1(); main(); putStringLn(f3(False)); return ""; end
+function f3(x: boolean): String; begin p4(); return ""; end
+function f4(x: boolean): String; 
+begin 
+    p1(); p2(); p3(); p4(); p4(); main(); 
+    putStringLn(f1(False));
+    return ""; 
+end
+
+var a: integer;
 
 """
         expect = "[]"
@@ -2289,8 +2642,15 @@ end
 
 procedure main();
 begin
-
+    x := a / b;
+    x := y := z := a + b * c/3;
+    z := x := a := b := 4;
+    a := x / y;
 end
+
+var
+    a,b,c: integer;
+    x,y,z: real;
 
 """
         expect = "[]"
@@ -2300,10 +2660,21 @@ end
     def test_76(self):
         input = r"""
 
+
 procedure main();
 begin
-
+    x := a / b;
+    x := y := z := a + b * c/3;
+    z := x := a := b := 4;
+    x := y := z := a * b + c - 3 * 2 + 1 - 6;
+    x := y := z := a * b + c - 3 * 2 + 1 - 6 / 123;
+    x := y := z := a := a * b + c - 3 * 2 + 1 - 6 / 123;
 end
+
+var
+    a,b,c: integer;
+    x,y,z: real;
+
 
 """
         expect = "[]"
@@ -2313,10 +2684,23 @@ end
     def test_77(self):
         input = r"""
 
+
+var
+    a,b,c: integer;
+    x,y,z: real;
+
 procedure main();
 begin
-
+    x := a / b;
+    x := y := z := a + b * c/3;
+    z := x := a := b := 4;
+    x := y := z := a * b + c - 3 * 2 + 1 - 6;
+    x := y := z := a * b + c - 3 * 2 + 1 - 6 / 123;
 end
+
+var
+    a,b,c: integer;
+    x,y,z: real;
 
 """
         expect = "[]"
@@ -2326,10 +2710,22 @@ end
     def test_78(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if p then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2339,10 +2735,22 @@ end
     def test_79(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if p and q then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2352,10 +2760,23 @@ end
     def test_80(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if (p = i) and q then main();
+    if p = i and q then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2365,10 +2786,22 @@ end
     def test_81(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2378,10 +2811,23 @@ end
     def test_82(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2391,10 +2837,23 @@ end
     def test_83(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] >= i then main();
+    if a[2] <= x then main();
+    if a[3] + a[2] + i * (j - k / (123)) and q or else (r AND i = j) then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
 
 """
         expect = "[]"
@@ -2404,10 +2863,23 @@ end
     def test_84(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] >= i then main();
+    if a[2] <= x then main();
+    if a[3] + a[2] + i * (j - p / (123)) and q or else (r AND i = j) then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
 
 """
         expect = "[]"
@@ -2417,10 +2889,26 @@ end
     def test_85(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] >= i then main();
+    if a[2] <= x then main();
+    if (a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p)) 
+        then main();
+    // and q or else (r AND (i = j)) then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2430,10 +2918,26 @@ end
     def test_86(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] >= i then main();
+    if a[2] <= x then main();
+    if
+    (a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p))
+    and q // or else (r AND (i = j)) then main();
+        then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
 
 """
         expect = "[]"
@@ -2443,11 +2947,26 @@ end
     def test_87(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] >= i then main();
+    if a[2] <= x then main();
+    if
+    ((a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p)))
+    and q // or else (r AND (i = j)) then main();
+        then main();
 end
 
+var
+    i,j,k: string;
+    p,q,r: boolean;
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 187))
@@ -2456,10 +2975,28 @@ end
     def test_88(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    if a[1] >= i then main();
+    if a[2] <= x then main();
+    if
+    ((a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p)))
+    and q or else (r AND (i = j)) 
+        then main();
 end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
 
 """
         expect = "[]"
@@ -2469,10 +3006,29 @@ end
     def test_89(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin 
+    return nt;
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2482,11 +3038,31 @@ end
     def test_90(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    
 end
 
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 190))
@@ -2495,10 +3071,37 @@ end
     def test_91(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1();
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
 
 """
         expect = "[]"
@@ -2508,10 +3111,36 @@ end
     def test_92(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[a[1]];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2521,10 +3150,35 @@ end
     def test_93(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2534,10 +3188,37 @@ end
     def test_94(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if ij = 1 then return;
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2547,10 +3228,38 @@ end
     def test_95(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if i = 1 then return;
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
 
 """
         expect = "[]"
@@ -2560,10 +3269,37 @@ end
     def test_96(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then return;
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2573,10 +3309,36 @@ end
     def test_97(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2586,10 +3348,38 @@ end
     def test_98(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then break;
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2599,10 +3389,42 @@ end
     def test_99(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
 end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then begin
+            r := false;
+            return nt;
+        end
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
 
 """
         expect = "[]"
@@ -2612,9 +3434,45 @@ end
     def test_100(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
+end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then begin
+            r := false;
+            return f2();
+        end
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
+function f2(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
 end
 
 """
@@ -2625,9 +3483,49 @@ end
     def test_101(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
+end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then begin
+            r := false;
+            return f2();
+        end else begin
+            while r do begin
+                if R break;
+            end
+        end
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
+function f2(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
 end
 
 """
@@ -2638,9 +3536,50 @@ end
     def test_102(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
+end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then begin
+            r := false;
+            return f2();
+        end else begin
+            while r do begin
+                if R break; else return f2();
+            end
+        end
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
+function f2(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
 end
 
 """
@@ -2651,9 +3590,51 @@ end
     def test_103(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
+end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then begin
+            r := false;
+            return f2();
+        end else begin
+            while r do begin
+                if R break; else return f2();
+                return f2();
+            end
+        end
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
+function f2(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
 end
 
 """
@@ -2664,9 +3645,61 @@ end
     def test_104(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    a[1] := f1()[2];
+    a[2] := f1()[1] := f1()[2];
+    f1()[2] := a[1];
+    f1()[1] := a[1] := a[2] := f1()[2];
+    f1()[2] := f1()[i+j+i+j+i+j*2*4*6*6*4*2];
+end
+
+function f1(): array [ 1 .. 3 ] of real;
+var nt: array [ 1 .. 3] of string;
+begin
+    if r then
+    with nt: array [ 1 .. 3 ] of real; do begin
+        return nt;
+    end else begin
+        if r then begin
+            r := false;
+            return f2();
+        end else begin
+            while r do begin
+                if R break; else return f3();
+            end
+            return f4();
+        end
+        return f1();
+    end
+end
+
+var
+    i,j,k: string;
+    p,q,r: boolean;
+
+var nt: array [ 1 .. 3 ] of real;
+
+function f2(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
+end
+
+function f3(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
+end
+
+function f4(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
 end
 
 """
@@ -2677,10 +3710,18 @@ end
     def test_105(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
 end
+
+var A: Real;
 
 """
         expect = "[]"
@@ -2690,11 +3731,21 @@ end
     def test_106(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    I := 1;
 end
 
+procedure GETINT();
+begin
+end
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 206))
@@ -2703,9 +3754,25 @@ end
     def test_107(self):
         input = r"""
 
-procedure main();
-begin
 
+var
+    a,b,c: integer;
+    x,y,z: real;
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    I := 1;
+end
+
+procedure p1();
+begin
+end
+
+procedure P1();
+begin
 end
 
 """
@@ -2729,9 +3796,19 @@ end
     def test_109(self):
         input = r"""
 
-procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
 begin
+    I := 1;
+end
 
+procedure p1();
+begin
+end
+
+procedure MAIN();
+begin
 end
 
 """
@@ -2742,9 +3819,24 @@ end
     def test_110(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure p1();
+begin
+end
+
+procedure MAIN();
+begin
+end
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    I := 1;
 end
 
 """
@@ -2755,9 +3847,25 @@ end
     def test_111(self):
         input = r"""
 
-procedure main();
-begin
+var
+    a,b,c: integer;
+    x,y,z: real;
 
+procedure p1();
+begin
+end
+
+function MAIN(): String;
+begin
+    return "";
+end
+
+procedure main();
+var 
+    i,j,p: integer;
+    a : array [ 1 .. 5 ] of real;
+begin
+    I := 1;
 end
 
 """
@@ -2770,7 +3878,15 @@ end
 
 procedure main();
 begin
+    foo();
+end
 
+var a: integer;
+
+procedure foo();
+begin
+    a := a+5*f - not ( -True OR (a <> b*"String"+"False"*False) or else fgh mOD TYR ------ 666666 *
+    ("abc" <= "xyz") ) DIV FalSE MOD QUE + ---- False * "{{}}1e5" + 2e5 {  ....  };
 end
 
 """
@@ -2783,7 +3899,46 @@ end
 
 procedure main();
 begin
+    foo();
+end
 
+procedure foo();
+var 
+    a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+    d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL
+
+begin
+    with
+        a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+        b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+        c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+        d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+    do begin
+        with
+            a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+            b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+            c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+            d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+        do begin
+            with
+                a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+            do begin
+                with
+                    a: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                    b: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                    c: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of sTriNG; 
+                    d,e,f,g,h,i,j,k: array [-999999999999999999999999999999999999999 .. 999999999999999999999999999999999999999] of REAL;
+                do begin
+                    return;
+                end
+            end
+        end
+    end
 end
 
 """
@@ -2796,7 +3951,21 @@ end
 
 procedure main();
 begin
+    foo();
+end
 
+procedure foo();
+var a: real;
+begin
+    a := 000000000000000000000000001.00000000001e-10000000000;
+    a := 000000000000000000000000002.00000000001e-1000000000;
+    a := 000000000000000000000000003.00000000001e-100000000;
+    a := 000000000000000000000000004.00000000001e-10000000;
+    a := 000000000000000000000000005.00000000001e-1000000;
+    a := 000000000000000000000000006.00000000001e-100000;
+    a := 000000000000000000000000007.00000000001e-10000;
+    a := 000000000000000000000000008.00000000001e-1000;
+    a := 000000000000000000000000009.00000000001e-100;
 end
 
 """
@@ -2809,7 +3978,72 @@ end
 
 procedure main();
 begin
+    foo();
+end
 
+procedure foo();
+var a: real;
+begin
+    a := 000000000000000000000000001.00000000001e-10000000000;
+    a := 000000000000000000000000002.00000000001e-1000000000;
+    a := 000000000000000000000000003.00000000001e-100000000;
+    a := 000000000000000000000000004.00000000001e-10000000;
+    a := 000000000000000000000000005.00000000001e-1000000;
+    a := 000000000000000000000000006.00000000001e-100000;
+    a := 000000000000000000000000007.00000000001e-10000;
+    a := 000000000000000000000000008.00000000001e-1000;
+    a := 000000000000000000000000009.00000000001e-100;
+
+    a := 10000000000e-10000000000;
+    a := 20000000000e-1000000000;
+    a := 30000000000e-100000000;
+    a := 40000000000e-10000000;
+    a := 50000000000e-1000000;
+    a := 60000000000e-100000;
+    a := 70000000000e-10000;
+    a := 80000000000e-1000;
+    a := 90000000000e-100;
+
+    a := 1.000000000000001;
+    a := 2.00000000000001;
+    a := 3.0000000000001;
+    a := 4.000000000001;
+    a := 5.00000000001;
+    a := 6.0000000001;
+    a := 7.000000001;
+    a := 8.00000001;
+
+    a := 10000000000e-10000000000;
+    a := 20000000000e-1000000000;
+    a := 30000000000e-100000000;
+    a := 40000000000e-10000000;
+    a := 50000000000e-1000000;
+    a := 60000000000e-100000;
+    a := 70000000000e-10000;
+    a := 80000000000e-1000;
+    a := 90000000000e-100;
+
+    a := 2e-10000000;
+    a := 3e-1000000;
+    a := 4e-100000;
+    a := 5e-10000;
+    a := 6e-1000;
+    a := 7e-100;
+    a := 8e-10;
+
+    a := 2e10;
+    a := 3e100;
+    a := 4e1000;
+    a := 5e10000;
+    a := 6e100000;
+
+    a := 00000012345;
+    a := 123456789123456789;
+    a := 123456789123456789123456789;
+    a := 123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789123456789123456789;
 end
 
 """
@@ -3920,1304 +5154,3 @@ end
 """
         expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 300))
-
-
-    def test_201(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 301))
-
-
-    def test_202(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 302))
-
-
-    def test_203(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 303))
-
-
-    def test_204(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 304))
-
-
-    def test_205(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 305))
-
-
-    def test_206(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 306))
-
-
-    def test_207(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 307))
-
-
-    def test_208(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 308))
-
-
-    def test_209(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 309))
-
-
-    def test_210(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 310))
-
-
-    def test_211(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 311))
-
-
-    def test_212(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 312))
-
-
-    def test_213(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 313))
-
-
-    def test_214(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 314))
-
-
-    def test_215(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 315))
-
-
-    def test_216(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 316))
-
-
-    def test_217(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 317))
-
-
-    def test_218(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 318))
-
-
-    def test_219(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 319))
-
-
-    def test_220(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 320))
-
-
-    def test_221(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 321))
-
-
-    def test_222(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 322))
-
-
-    def test_223(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 323))
-
-
-    def test_224(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 324))
-
-
-    def test_225(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 325))
-
-
-    def test_226(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 326))
-
-
-    def test_227(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 327))
-
-
-    def test_228(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 328))
-
-
-    def test_229(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 329))
-
-
-    def test_230(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 330))
-
-
-    def test_231(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 331))
-
-
-    def test_232(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 332))
-
-
-    def test_233(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 333))
-
-
-    def test_234(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 334))
-
-
-    def test_235(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 335))
-
-
-    def test_236(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 336))
-
-
-    def test_237(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 337))
-
-
-    def test_238(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 338))
-
-
-    def test_239(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 339))
-
-
-    def test_240(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 340))
-
-
-    def test_241(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 341))
-
-
-    def test_242(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 342))
-
-
-    def test_243(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 343))
-
-
-    def test_244(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 344))
-
-
-    def test_245(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 345))
-
-
-    def test_246(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 346))
-
-
-    def test_247(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 347))
-
-
-    def test_248(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 348))
-
-
-    def test_249(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 349))
-
-
-    def test_250(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 350))
-
-
-    def test_251(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 351))
-
-
-    def test_252(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 352))
-
-
-    def test_253(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 353))
-
-
-    def test_254(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 354))
-
-
-    def test_255(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 355))
-
-
-    def test_256(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 356))
-
-
-    def test_257(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 357))
-
-
-    def test_258(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 358))
-
-
-    def test_259(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 359))
-
-
-    def test_260(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 360))
-
-
-    def test_261(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 361))
-
-
-    def test_262(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 362))
-
-
-    def test_263(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 363))
-
-
-    def test_264(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 364))
-
-
-    def test_265(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 365))
-
-
-    def test_266(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 366))
-
-
-    def test_267(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 367))
-
-
-    def test_268(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 368))
-
-
-    def test_269(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 369))
-
-
-    def test_270(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 370))
-
-
-    def test_271(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 371))
-
-
-    def test_272(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 372))
-
-
-    def test_273(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 373))
-
-
-    def test_274(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 374))
-
-
-    def test_275(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 375))
-
-
-    def test_276(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 376))
-
-
-    def test_277(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 377))
-
-
-    def test_278(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 378))
-
-
-    def test_279(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 379))
-
-
-    def test_280(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 380))
-
-
-    def test_281(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 381))
-
-
-    def test_282(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 382))
-
-
-    def test_283(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 383))
-
-
-    def test_284(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 384))
-
-
-    def test_285(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 385))
-
-
-    def test_286(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 386))
-
-
-    def test_287(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 387))
-
-
-    def test_288(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 388))
-
-
-    def test_289(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 389))
-
-
-    def test_290(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 390))
-
-
-    def test_291(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 391))
-
-
-    def test_292(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 392))
-
-
-    def test_293(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 393))
-
-
-    def test_294(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 394))
-
-
-    def test_295(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 395))
-
-
-    def test_296(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 396))
-
-
-    def test_297(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 397))
-
-
-    def test_298(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 398))
-
-
-    def test_299(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 399))
-
-
-    def test_300(self):
-        input = r"""
-
-procedure main();
-begin
-
-end
-
-"""
-        expect = "[]"
-        self.assertTrue(TestChecker.test(input, expect, 400))
-

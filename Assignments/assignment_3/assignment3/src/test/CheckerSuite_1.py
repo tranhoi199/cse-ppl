@@ -6,76 +6,74 @@ class CheckerSuite(unittest.TestCase):
     
     def test_1(self):
         input = r"""
-var 
-    a,b: integer;
-    x,y: real;
-    u,v: boolean;
-
 procedure main();
 begin
+    foo();
 end
 
-function f1(): integer;
+procedure foo();
+var a: real;
 begin
-    a := 10;
-    if u then return b;
-    b := 1;
-    if u then begin
-        if v then return a;
-        else if u then return 2;
-    end
-    if u then begin
-        for a := 1 to 10 do begin
-            if v then return b;
-            else if v then return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
-            else begin
-                while a < 10 do begin
-                    for a := 1 to 10 do begin
-                        if a = 10 then continue;
-                        if a = 10 then break;
-                        if a = 10 then return b;
-                        else if a = 10 then break;
-                        else if a = 10 then return b;
-                        else if a = 10 then return b;
-                        a := 10;
+    a := 000000000000000000000000001.00000000001e-10000000000;
+    a := 000000000000000000000000002.00000000001e-1000000000;
+    a := 000000000000000000000000003.00000000001e-100000000;
+    a := 000000000000000000000000004.00000000001e-10000000;
+    a := 000000000000000000000000005.00000000001e-1000000;
+    a := 000000000000000000000000006.00000000001e-100000;
+    a := 000000000000000000000000007.00000000001e-10000;
+    a := 000000000000000000000000008.00000000001e-1000;
+    a := 000000000000000000000000009.00000000001e-100;
 
-                        if a = 10 then begin
-                            for a := 1 to 10 do continue;
-                            return (1*3+1*5+3-1+5*3+1-3+5) - a+b;
-                        end else begin
-                            b := 1;
-                            return (2*4+6*6+4-2+4*6+4-4+6) * a+b;
-                        end
-                    end
-                end
-            end
-        end
-    end else begin
+    a := 10000000000e-10000000000;
+    a := 20000000000e-1000000000;
+    a := 30000000000e-100000000;
+    a := 40000000000e-10000000;
+    a := 50000000000e-1000000;
+    a := 60000000000e-100000;
+    a := 70000000000e-10000;
+    a := 80000000000e-1000;
+    a := 90000000000e-100;
 
-        if u then begin
-            with i,j,k: integer; do begin
-                return 5;
-            end
-        end else begin
+    a := 1.000000000000001;
+    a := 2.00000000000001;
+    a := 3.0000000000001;
+    a := 4.000000000001;
+    a := 5.00000000001;
+    a := 6.0000000001;
+    a := 7.000000001;
+    a := 8.00000001;
 
-            for a := 1 to 10 do begin
-                with i, j, k: integer;
-                    f1, f2, f3: boolean; do begin
-                        for i := j+k to j*k do begin
-                            putLn();
-                            if i >= 5 then break;
-                            if j <= 10 then continue;
-                            if i >= 0 then break;
-                            else return 0;
+    a := 10000000000e-10000000000;
+    a := 20000000000e-1000000000;
+    a := 30000000000e-100000000;
+    a := 40000000000e-10000000;
+    a := 50000000000e-1000000;
+    a := 60000000000e-100000;
+    a := 70000000000e-10000;
+    a := 80000000000e-1000;
+    a := 90000000000e-100;
 
-                            a := 10;
-                        end
-                        return a;
-                    end
-            end
+    a := 2e-10000000;
+    a := 3e-1000000;
+    a := 4e-100000;
+    a := 5e-10000;
+    a := 6e-1000;
+    a := 7e-100;
+    a := 8e-10;
 
-        end
-    end
+    a := 2e10;
+    a := 3e100;
+    a := 4e1000;
+    a := 5e10000;
+    a := 6e100000;
+
+    a := 00000012345;
+    a := 123456789123456789;
+    a := 123456789123456789123456789;
+    a := 123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789123456789;
+    a := 123456789123456789123456789123456789123456789123456789123456789;
 end
 
 """

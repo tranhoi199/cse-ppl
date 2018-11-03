@@ -69,10 +69,10 @@ class Symbol:
         return self.kind if self.isFunc() else Identifier()
 
     def toTuple(self):
-        return (self.name, type(self.getKind()))
+        return (str(self.name).lower(), type(self.getKind()))
 
     def toTupleString(self):
-        return (self.name, str(self.mtype))
+        return (str(self.name).lower(), str(self.mtype))
 
     def isVar(self):
         return type(self.mtype) is not MType
@@ -99,7 +99,7 @@ class Symbol:
     # compare function between 2 instances
     @staticmethod
     def cmp(symbol):
-        return symbol.name
+        return str(symbol.name).lower()
 
     @staticmethod
     def fromVarDecl(decl):
@@ -136,13 +136,8 @@ class Scope:
         return [x for x in listSymbols if x.isFunc()]
 
     @staticmethod
-    def filterId(listSymbols, id):
-        f = [x for x in listSymbols if x.name == id.name]
-        return f[0] if len(f) > 0 else None
-
-    @staticmethod
     def isExisten(listSymbols, symbol):
-        return len([x for x in listSymbols if x.name == symbol.name]) > 0
+        return len([x for x in listSymbols if str(x.name).lower() == str(symbol.name).lower()]) > 0
 
     @staticmethod
     def merge(currentScope, comingScope):
@@ -162,7 +157,7 @@ class Checker:
         # Return merged scope
         newScope = currentScope.copy()
         for x in listNewSymbols:
-            f = Checker.utils.lookup(x.name, newScope, Symbol.cmp)
+            f = Checker.utils.lookup(str(x.name).lower(), newScope, Symbol.cmp)
             if f is not None:
                 raise Redeclared(x.kind, x.name)
             newScope.append(x)
@@ -171,7 +166,7 @@ class Checker:
     @staticmethod
     def checkUndeclared(visibleScope, name, kind):
         # Return Symbol declared in scope
-        res = Checker.utils.lookup((name, type(kind)), visibleScope, lambda x: x.toTuple())
+        res = Checker.utils.lookup((str(name).lower(), type(kind)), visibleScope, lambda x: x.toTuple())
         if res is None:
             raise Undeclared(kind, name)
         return res
@@ -203,10 +198,7 @@ class Checker:
         for i in range(0, len(stmts)-1):
             if Checker.isStopTypeStatment(stmts[i][1]):
                 raise UnreachableStatement(stmts[i+1][0])
-        if stmts == []: return None
-        retType = stmts[-1][1]
-        # If Break, return None
-        return retType if Checker.isReturnType(retType) else None
+        return None if stmts == [] else stmts[-1][1]
 
     @staticmethod
     def isReturnTypeFunction(retType):
@@ -233,10 +225,13 @@ class Graph:
 
     @staticmethod
     def add(u, v=None): # v is None when add new node
+        u = str(u).lower()
         if type(Graph.link.get(u)) != list:
             Graph.link[u] = []
             Graph.visited[u] = False
-        if v and v != u and v not in Graph.link[u]: Graph.link[u].append(v)
+        if v is None: return
+        v = str(v).lower()
+        if v != u and v not in Graph.link[u]: Graph.link[u].append(v)
 
     @staticmethod
     def log():
@@ -246,6 +241,7 @@ class Graph:
 
     @staticmethod
     def dfs(u):
+        u = str(u).lower()
         Graph.visited[u] = True
         [Graph.dfs(v) for v in Graph.link[u] if not Graph.visited[v]]
 
@@ -257,7 +253,7 @@ class Graph:
 
     @staticmethod
     def setDefaultVisitedNodes(listNodes):
-        for u in listNodes: Graph.visited[u] = True
+        for u in listNodes: Graph.visited[str(u).lower()] = True
 
 
 class StaticChecker(BaseVisitor, Utils):
@@ -296,11 +292,11 @@ class StaticChecker(BaseVisitor, Utils):
         listFuncDecl = globalEnv + [entryPoint] + [Symbol.fromDecl(x) for x in ast.decl if type(x) is FuncDecl]
         for x in listFuncDecl: Graph.add(x.name)
         Graph.setDefaultVisitedNodes([u.name for u in globalEnv])
-        Graph.log()
+        # Graph.log()
         # Visit children
         [self.visit(x, scope) for x in ast.decl]
         # Check unreachable function/procedure
-        Graph.log()
+        # Graph.log()
         Graph.dfs("main")
         u = Graph.getUnreachableNode()
         if u is not None:
@@ -380,7 +376,7 @@ class StaticChecker(BaseVisitor, Utils):
         ret1 = Checker.handleReturnStmts(stmts1)
         ret2 = Checker.handleReturnStmts(stmts2)
         Scope.end()
-        return (ast, None if ret1 is None or ret2 is None else retType)
+        return (ast, None if ret1 is None or ret2 is None else retType if Break not in [type(ret1), type(ret2)] else Break())
 
     def visitFor(self, ast: For, params):
         Scope.start("For")
@@ -397,7 +393,8 @@ class StaticChecker(BaseVisitor, Utils):
         # Visit statements
         stmts = [self.visit(x, (scope, retType, True, funcName)) for x in ast.loop]
         Scope.end()
-        return (ast, Checker.handleReturnStmts(stmts))
+        retType = Checker.handleReturnStmts(stmts)
+        return (ast, retType if type(retType) is not Break else None)
 
     def visitWhile(self, ast: While, params):
         Scope.start("While")
@@ -411,7 +408,8 @@ class StaticChecker(BaseVisitor, Utils):
         # Visit statements
         stmts = [self.visit(x, (scope, retType, True, funcName)) for x in ast.sl]
         Scope.end()
-        return (ast, Checker.handleReturnStmts(stmts))
+        retType = Checker.handleReturnStmts(stmts)
+        return (ast, retType if type(retType) is not Break else None)
 
     def visitContinue(self, ast, params):
         inLoop = params[2]
