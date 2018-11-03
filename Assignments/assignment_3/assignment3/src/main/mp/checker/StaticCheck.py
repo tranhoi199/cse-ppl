@@ -224,6 +224,11 @@ class Graph:
     visited = {} # { 'n1': True, 'n2': False, 'n3': False }
 
     @staticmethod
+    def initialize():
+        Graph.link.clear()
+        Graph.visited.clear()
+
+    @staticmethod
     def add(u, v=None): # v is None when add new node
         u = str(u).lower()
         if type(Graph.link.get(u)) != list:
@@ -277,6 +282,7 @@ class StaticChecker(BaseVisitor, Utils):
         self.ast = ast
 
     def check(self):
+        Graph.initialize()
         return self.visit(self.ast, StaticChecker.global_envi)
 
     def visitProgram(self, ast: Program, globalEnv):
