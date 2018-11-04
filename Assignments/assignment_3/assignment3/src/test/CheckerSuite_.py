@@ -3826,6 +3826,8 @@ end
 var 
     i,j,p: integer;
     a : array [ 1 .. 5 ] of real;
+
+procedure main();
 begin
     I := 1;
 end
@@ -4092,7 +4094,7 @@ begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: CallStmt(Id(foo),[BooleanLiteral(True),IntLiteral(2),IntLiteral(1),IntLiteral(2),IntLiteral(3)])"""
         self.assertTrue(TestChecker.test(input, expect, 216))
 
 
@@ -4131,7 +4133,7 @@ begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Redeclared Variable: a"""
         self.assertTrue(TestChecker.test(input, expect, 218))
 
 
@@ -4170,7 +4172,7 @@ begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 220))
 
 
@@ -4191,7 +4193,7 @@ begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable statement: AssignStmt(Id(a),BooleanLiteral(True))"""
         self.assertTrue(TestChecker.test(input, expect, 221))
 
 
@@ -4211,7 +4213,7 @@ begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: Return(Some(IntLiteral(5)))"""
         self.assertTrue(TestChecker.test(input, expect, 222))
 
 
@@ -4257,7 +4259,7 @@ begin
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 224))
 
 
@@ -4278,13 +4280,13 @@ begin
     else if a then return "3";
     else if a then return "4";
     else if a then return "5";
-    else return "!"
+    else return "!";
 
     a := True;
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable statement: AssignStmt(Id(a),BooleanLiteral(True))"""
         self.assertTrue(TestChecker.test(input, expect, 225))
 
 
@@ -4312,7 +4314,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(b),BinaryOp(or,BooleanLiteral(True),BooleanLiteral(False)))"""
         self.assertTrue(TestChecker.test(input, expect, 226))
 
 
@@ -4339,7 +4341,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1))"""
         self.assertTrue(TestChecker.test(input, expect, 227))
 
 
@@ -4366,7 +4368,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(j),IntLiteral(6))"""
         self.assertTrue(TestChecker.test(input, expect, 228))
 
 
@@ -4393,7 +4395,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(j),IntLiteral(10000))"""
         self.assertTrue(TestChecker.test(input, expect, 229))
 
 
@@ -4426,7 +4428,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(123))"""
         self.assertTrue(TestChecker.test(input, expect, 230))
 
 
@@ -4464,7 +4466,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Type Mismatch In Statement: If(Id(a),[Return(Some(StringLiteral(3)))],[Return(Some(StringLiteral(5)))])"""
         self.assertTrue(TestChecker.test(input, expect, 231))
 
 
@@ -4501,7 +4503,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
         self.assertTrue(TestChecker.test(input, expect, 232))
 
 
@@ -4538,7 +4540,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
         self.assertTrue(TestChecker.test(input, expect, 233))
 
 
@@ -4574,7 +4576,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Undeclared Function: main"""
         self.assertTrue(TestChecker.test(input, expect, 234))
 
 
@@ -4611,7 +4613,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
         self.assertTrue(TestChecker.test(input, expect, 235))
 
 
@@ -4648,7 +4650,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 236))
 
 
@@ -4684,7 +4686,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 237))
 
 
@@ -4721,7 +4723,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable statement: AssignStmt(Id(i),IntLiteral(1000))"""
         self.assertTrue(TestChecker.test(input, expect, 238))
 
 
@@ -4767,7 +4769,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Type Mismatch In Expression: CallExpr(Id(foo),[BooleanLiteral(True),BooleanLiteral(True),Id(j),Id(x),Id(i)])"""
         self.assertTrue(TestChecker.test(input, expect, 239))
 
 
@@ -4813,7 +4815,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Function fooNot Return """
         self.assertTrue(TestChecker.test(input, expect, 240))
 
 
@@ -4867,7 +4869,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""Unreachable Function: foo"""
         self.assertTrue(TestChecker.test(input, expect, 241))
 
 
@@ -4876,11 +4878,18 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: integer;
+
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 242))
 
 
@@ -4889,11 +4898,18 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
+
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 243))
 
 
@@ -4902,11 +4918,19 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+var a: real;
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
+
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 244))
 
 
@@ -4915,11 +4939,19 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+var a: integer;
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
+
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 245))
 
 
@@ -4928,11 +4960,18 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo(a: integer);
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
+
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 246))
 
 
@@ -4945,7 +4984,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 247))
 
 
@@ -4958,7 +4997,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 248))
 
 
@@ -4971,7 +5010,7 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 249))
 
 
@@ -4984,6 +5023,6 @@ begin
 end
 
 """
-        expect = "[]"
+        expect = r"""[]"""
         self.assertTrue(TestChecker.test(input, expect, 250))
 

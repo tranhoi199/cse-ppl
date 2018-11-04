@@ -336,6 +336,7 @@ begin
     putString(x);
     putStringLn("H");
     putLn();
+    p1();
 end
 
 procedure p1();
@@ -348,7 +349,7 @@ begin
 end
 
 """
-        expect = r"""Unreachable Procedure: p1"""
+        expect = r"""Unreachable Function: f1"""
         self.assertTrue(TestChecker.test(input, expect, 116))
 
 
@@ -1518,6 +1519,8 @@ begin
 
         end
     end
+
+    return 5;
 end
 
 """
@@ -1573,6 +1576,7 @@ begin
                 end
             end
         end
+        return 42;
     end else begin
 
         if u then begin
@@ -2309,7 +2313,7 @@ begin
                     a := 12;
                     for i := 1 to 10 do a := a + 1;
                 end
-                return a + 5;
+                return;
             end
             else begin
                 while a < 10 do begin
@@ -2324,7 +2328,7 @@ begin
 end
 
 """
-        expect = r"""Type Mismatch In Statement: Return(Some(BinaryOp(+,Id(a),IntLiteral(5))))"""
+        expect = r"""Unreachable statement: AssignStmt(Id(y),IntLiteral(1))"""
         self.assertTrue(TestChecker.test(input, expect, 163))
 
 
@@ -3438,12 +3442,12 @@ var nt: array [ 1 .. 3] of string;
 begin
     if r then
     with nt: array [ 1 .. 3 ] of real; do begin
-        return nt;
+        return f2();
     end else begin
         if r then begin
             r := false;
             return nt;
-        end
+        end else return f2();
     end
 end
 
@@ -3452,6 +3456,11 @@ var
     p,q,r: boolean;
 
 var nt: array [ 1 .. 3 ] of real;
+
+function f2(): array [ 1 .. 3 ] of real;
+begin
+    return nt;
+end
 
 """
         expect = r"""Type Mismatch In Statement: Return(Some(Id(nt)))"""
@@ -3826,6 +3835,8 @@ end
 var 
     i,j,p: integer;
     a : array [ 1 .. 5 ] of real;
+
+procedure main();
 begin
     I := 1;
 end
@@ -3839,7 +3850,7 @@ begin
 end
 
 """
-        expect = r"""Unreachable Procedure: p1"""
+        expect = r"""Redeclared Procedure: MAIN"""
         self.assertTrue(TestChecker.test(input, expect, 209))
 
 
@@ -4278,7 +4289,7 @@ begin
     else if a then return "3";
     else if a then return "4";
     else if a then return "5";
-    else return "!"
+    else return "!";
 
     a := True;
 end
@@ -4876,11 +4887,18 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: integer;
+
 """
-        expect = r"""[]"""
+        expect = r"""Undeclared Identifier: a"""
         self.assertTrue(TestChecker.test(input, expect, 242))
 
 
@@ -4889,11 +4907,18 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
+
 """
-        expect = r"""[]"""
+        expect = r"""Undeclared Identifier: a"""
         self.assertTrue(TestChecker.test(input, expect, 243))
 
 
@@ -4902,11 +4927,19 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
 
+procedure foo();
+var a: real;
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
+
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: For(Id(a)IntLiteral(1),IntLiteral(10),True,[CallStmt(Id(foo),[])])"""
         self.assertTrue(TestChecker.test(input, expect, 244))
 
 
@@ -4915,8 +4948,16 @@ end
 
 procedure main();
 begin
-
+    foo();
 end
+
+procedure foo();
+var a: integer;
+begin
+    for a := 1 to 10 do foo();
+end
+
+var a: real;
 
 """
         expect = r"""[]"""
@@ -4928,8 +4969,15 @@ end
 
 procedure main();
 begin
-
+    foo(5);
 end
+
+procedure foo(a: integer);
+begin
+    for a := 1 to 10 do foo(a);
+end
+
+var a: real;
 
 """
         expect = r"""[]"""
@@ -4940,12 +4988,14 @@ end
         input = r"""
 
 procedure main();
+var s: string;
 begin
-
+    putStringLn(s);
+    s := "123";
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: AssignStmt(Id(s),StringLiteral(123))"""
         self.assertTrue(TestChecker.test(input, expect, 247))
 
 
