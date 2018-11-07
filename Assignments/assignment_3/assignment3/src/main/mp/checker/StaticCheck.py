@@ -198,21 +198,26 @@ class Graph:
 
     link = {} # { 'n1': ['n2', 'n3'], 'n2': [], 'n3': ['n1', 'n2'] }
     visited = {} # { 'n1': True, 'n2': False, 'n3': False }
+    invoked = {} # { 'n1': True, 'n2': False, 'n3': False }
 
     @staticmethod
     def initialize():
         Graph.link.clear()
         Graph.visited.clear()
+        Graph.invoked.clear()
 
     @staticmethod
-    def add(u, v=None): # v is None when add new node
+    def add(u, v=None): # v is None when add new node, else u call v
         u = str(u).lower()
         if type(Graph.link.get(u)) != list:
             Graph.link[u] = []
             Graph.visited[u] = False
+            Graph.invoked[u] = False
         if v is None: return
         v = str(v).lower()
-        if v != u and v not in Graph.link[u]: Graph.link[u].append(v)
+        if v != u and v not in Graph.link[u]: 
+            Graph.link[u].append(v)
+            Graph.invoked[v] = True # v is invoked by u
 
     @staticmethod
     def log():
@@ -228,6 +233,8 @@ class Graph:
 
     @staticmethod
     def getUnreachableNode():
+        for u in Graph.link:
+            if not Graph.visited[u] and not Graph.invoked[u]: return u
         for u in Graph.link:
             if not Graph.visited[u]: return u
         return None

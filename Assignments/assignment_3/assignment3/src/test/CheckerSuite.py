@@ -9,11 +9,11 @@ class CheckerSuite(unittest.TestCase):
 
 procedure main();
 begin
-
+    ok();
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Undeclared Procedure: ok"""
         self.assertTrue(TestChecker.test(input, expect, 101))
 
 
@@ -936,12 +936,40 @@ end
         input = r"""
 
 procedure main();
+var 
+    a,b,c: integer;
+    x,y,z: string;
+    g,h,t: array[1 .. 2] of boolean;
+    p,q,k: real;
+    r: array [-5 .. 10] of real;
 begin
+    g[a] := True;
+    g[a+b+c] := True;
+    g[1] := g[a*b*b] := h[2] := False;
+    g[1] := g[f1()] := g[2] := True;
+    p := q := f2()[4] := k := 5.0;
+    p := q := f2()[4] := k := 5 + b * c - a;
+    p := q := g[1] := f2()[4] := p := 4+2*4-4+6;
+end
 
+procedure p1();
+begin
+    return;
+end
+
+function f1(): integer;
+begin
+    return 0;
+end
+
+function f2(): array [-5 .. 10] of real;
+var a3: array[-5 .. 10] of real;
+begin
+    return a3;
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: AssignStmt(ArrayCell(Id(g),IntLiteral(1)),ArrayCell(CallExpr(Id(f2),[]),IntLiteral(4)))"""
         self.assertTrue(TestChecker.test(input, expect, 135))
 
 
@@ -1655,15 +1683,15 @@ begin
 
             return 5;
 
-            for i := 1 to 10 do begin
+            with i: integer; do begin
+                for i := 1 to 10 do begin end
             end
-
         end
     end
 end
 
 """
-        expect = r"""Undeclared Identifier: i"""
+        expect = r"""Unreachable statement: With([VarDecl(Id(i),IntType)],[For(Id(i)IntLiteral(1),IntLiteral(10),True,[])])"""
         self.assertTrue(TestChecker.test(input, expect, 150))
 
 
@@ -2151,14 +2179,21 @@ var a, b: integer;
 begin
     for a := 1 to 10 do begin
         for b := 10 downto 10 do begin
-            x := 1;
-            break;
+            for a := 10 to 10 do begin
+                while u do begin
+                    x := 1;
+                    break;
+                end
+                x := y := a := b := a+b;
+                continue;
+                break;
+            end
         end
     end
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable statement: Break"""
         self.assertTrue(TestChecker.test(input, expect, 157))
 
 
@@ -2199,16 +2234,36 @@ procedure main();
 var a, b: integer;
 begin
     for a := 1 to 10 do begin
-        for b := 10 downto 10 do begin
+        for b := 10 downto 1 do begin
             x := 1;
             break;
         end
         x := 1;
+        for b := 2 downto 10 do begin
+            x := 1;
+            break;
+        end
+        for b := 3 downto 10 do begin
+            x := 1;
+            for b := 4 downto 10 do begin
+                x := 1;
+                for b := 5 downto 10 do begin
+                    x := 1;
+                    break;
+                    for b := 6 downto 10 do begin
+                        x := 1;
+                        break;
+                    end
+                end
+                break;
+            end
+            break;
+        end
     end
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable statement: For(Id(b)IntLiteral(6),IntLiteral(10),False,[AssignStmt(Id(x),IntLiteral(1)),Break])"""
         self.assertTrue(TestChecker.test(input, expect, 159))
 
 
@@ -2229,11 +2284,12 @@ begin
             if a = 1 then break; else continue;
         end
         x := 1;
+        y := b := a := x := 1;
     end
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: AssignStmt(Id(a),Id(x))"""
         self.assertTrue(TestChecker.test(input, expect, 160))
 
 
@@ -2934,15 +2990,16 @@ begin
     if (a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p)) 
         then main();
     // and q or else (r AND (i = j)) then main();
+
+    main(1);
 end
 
 var
     i,j,k: string;
     p,q,r: boolean;
 
-
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: CallStmt(Id(main),[IntLiteral(1)])"""
         self.assertTrue(TestChecker.test(input, expect, 185))
 
 
@@ -2993,13 +3050,15 @@ begin
     ((a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p)))
     and q // or else (r AND (i = j)) then main();
         then main();
+    main(1);
 end
 
 var
     i,j,k: string;
     p,q,r: boolean;
+
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: CallStmt(Id(main),[IntLiteral(1)])"""
         self.assertTrue(TestChecker.test(input, expect, 187))
 
 
@@ -3022,15 +3081,21 @@ begin
     ((a[3] + a[2] + i * (j - p / (123))) > (a[3] + a[2] + i * (j - p / 1.0 * 1.0 / p)))
     and q or else (r AND (i = j)) 
         then main();
+    foo();
 end
 
 var
     i,j,k: string;
     p,q,r: boolean;
 
+function foo(): array [-10000 .. 100000] of integer;
+var main: array [-10000 .. 100000] of integer;
+begin
+    return main;
+end
 
 """
-        expect = r"""[]"""
+        expect = r"""Undeclared Procedure: foo"""
         self.assertTrue(TestChecker.test(input, expect, 188))
 
 
@@ -3203,6 +3268,7 @@ begin
     with nt: array [ 1 .. 3 ] of real; do begin
         return nt;
     end
+    main();
 end
 
 var
@@ -3212,7 +3278,7 @@ var
 var nt: array [ 1 .. 3 ] of real;
 
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable statement: CallStmt(Id(main),[])"""
         self.assertTrue(TestChecker.test(input, expect, 193))
 
 
@@ -3821,11 +3887,12 @@ end
 
 procedure main();
 begin
-
 end
 
+var a,b,c,d,main: integer;
+
 """
-        expect = r"""[]"""
+        expect = r"""Redeclared Variable: main"""
         self.assertTrue(TestChecker.test(input, expect, 208))
 
 
@@ -3979,8 +4046,10 @@ begin
     end
 end
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 213))
 
 
@@ -4006,8 +4075,10 @@ begin
     a := 000000000000000000000000009.00000000001e-100;
 end
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 214))
 
 
@@ -4082,10 +4153,12 @@ begin
     a := 123456789123456789123456789123456789123456789;
     a := 123456789123456789123456789123456789123456789123456789;
     a := 123456789123456789123456789123456789123456789123456789123456789;
+
+    a := 123456789123456789123456789 + 123456789123456789123456789123456789123456789 + 123456789123456789123456789123456789123456789123456789 * 123456789123456789123456789123456789123456789123456789 - 123456789123456789123456789123456789123456789123456789 / (123456789123456789123456789123456789123456789123456789 and 1);
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Expression: BinaryOp(and,IntLiteral(123456789123456789123456789123456789123456789123456789),IntLiteral(1))"""
         self.assertTrue(TestChecker.test(input, expect, 215))
 
 
@@ -4118,11 +4191,14 @@ end
 
 procedure foo(a: Boolean; b: Boolean; x,y: Integer; z: Real);
 begin
-
+    main();
+    main();
 end
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 217))
 
 
@@ -4161,8 +4237,10 @@ begin
 
 end
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 219))
 
 
@@ -4241,8 +4319,10 @@ begin
     if a then return "123"; else return "456";
 end
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 223))
 
 
@@ -4959,8 +5039,10 @@ end
 
 var a: real;
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 245))
 
 
@@ -4979,8 +5061,10 @@ end
 
 var a: real;
 
+procedure nty(); begin end
+
 """
-        expect = r"""[]"""
+        expect = r"""Unreachable Procedure: nty"""
         self.assertTrue(TestChecker.test(input, expect, 246))
 
 
@@ -5007,8 +5091,11 @@ begin
 
 end
 
+var a, b, c: Integer; X,Y,Z: String;
+    MaIN: boolean;
+
 """
-        expect = r"""[]"""
+        expect = r"""Redeclared Variable: MaIN"""
         self.assertTrue(TestChecker.test(input, expect, 248))
 
 
@@ -5016,16 +5103,440 @@ end
         input = r"""
 
 procedure main();
+var main: integer;
 begin
-
+    with main: string; do begin
+        putStringLn(main);
+        for main := getInt() to 10000 do begin 
+            putStringLn(main);
+        end
+    end
 end
 
 """
-        expect = r"""[]"""
+        expect = r"""Type Mismatch In Statement: For(Id(main)CallExpr(Id(getInt),[]),IntLiteral(10000),True,[CallStmt(Id(putStringLn),[Id(main)])])"""
         self.assertTrue(TestChecker.test(input, expect, 249))
 
 
     def test_150(self):
+        input = r"""
+
+procedure main();
+var i,j,k: integer;
+    main: string;
+    a: array[1 .. 10] of real;
+    p,q: boolean;
+begin
+    for i := 1 to 10 do begin
+        a[i+j*k] := a[j+i*k] := a[1] := a[0];
+        putStringLn(main);
+        for j := i+j*k to i-j*k do begin
+            while p do begin
+                main();
+            end
+        end
+    end
+end
+
+"""
+        expect = r"""Undeclared Procedure: main"""
+        self.assertTrue(TestChecker.test(input, expect, 250))
+
+
+    def test_151(self):
+        input = r"""
+
+procedure main();
+var i,j,k: integer;
+    main: string;
+    a: array[1 .. 10] of real;
+    p,q: boolean;
+begin
+    for i := 1 to 10 do begin
+        a[i+j*k] := a[j+i*k] := a[1] := a[0];
+        putStringLn(main);
+        for j := i+j*k to i-j*k do begin
+            while p do begin
+                with main: integer; p: string; do begin
+                    if main > p then break;
+                end
+            end
+        end
+    end
+end
+
+"""
+        expect = r"""Type Mismatch In Expression: BinaryOp(>,Id(main),Id(p))"""
+        self.assertTrue(TestChecker.test(input, expect, 251))
+
+
+    def test_152(self):
+        input = r"""
+
+procedure main();
+var i,j,k: integer;
+    main: string;
+    a: array[1 .. 10] of real;
+    p,q: boolean;
+begin
+    for i := 1 to 10 do begin
+        a[i+j*k] := a[j+i*k] := a[1] := a[0];
+        putStringLn(main);
+        for j := i+j*k to i-j*k do begin
+            while p do begin
+                with main: integer; p: string; do begin
+                    if main > j then break;
+                    putStringLn(p);
+                    if getInt() < main then continue;
+                    main := getInt();
+                    putInt(getInt());
+                    putIntLn(main);
+                    with p: boolean; do begin
+                        if i < j and then p then putString(main);
+                    end
+                end
+                p := false;
+            end
+        end
+    end
+end
+
+"""
+        expect = r"""Type Mismatch In Statement: CallStmt(Id(putString),[Id(main)])"""
+        self.assertTrue(TestChecker.test(input, expect, 252))
+
+
+    def test_153(self):
+        input = r"""
+
+procedure main();
+var i,j,k: integer;
+    main: string;
+    a: array[1 .. 10] of real;
+    p,q: boolean;
+begin
+    for i := 1 to 10 do begin
+        a[i+j*k] := a[j+i*k] := a[1] := a[0];
+        putStringLn(main);
+        for j := i+j*k to i-j*k do begin
+            while p do begin
+                with main: integer; p: string; do begin
+                    if main > j then break;
+                    putStringLn(p);
+                    if getInt() < main then continue;
+                    main := getInt();
+                    putInt(getInt());
+                    putIntLn(main);
+                    with p: boolean; do begin
+                        if i < j and then p then main := k;
+                        else break;
+                    end
+                end
+                p := false;
+                break;
+            end
+            a[1] := getFloat();
+            putFloatLn(a[1]);
+            PutFloat(GetFloat());
+            main();
+        end
+    end
+end
+
+"""
+        expect = r"""Undeclared Procedure: main"""
+        self.assertTrue(TestChecker.test(input, expect, 253))
+
+
+    def test_154(self):
+        input = r"""
+
+procedure main();
+var main: string;
+begin
+    putStringLn(main);
+    with main: integer; do begin
+        putIntLn(main);
+        with main: boolean; do begin
+            if main then begin
+                with main: array[1 .. 10] of real; do begin
+                    main[1] := getFloat();
+                    putFloatLn(main[2]);
+                end
+            end else begin
+                main := False;
+                with main: real; do begin
+                    putFloat(main);
+                    with main: string; do begin
+                        putString(main);
+                    end
+                end
+            end
+            main := FALSE;
+            for main := 1 to 1000 do begin
+                putString(main);
+            end
+        end
+    end
+end
+
+"""
+        expect = r"""Type Mismatch In Statement: For(Id(main)IntLiteral(1),IntLiteral(1000),True,[CallStmt(Id(putString),[Id(main)])])"""
+        self.assertTrue(TestChecker.test(input, expect, 254))
+
+
+    def test_155(self):
+        input = r"""
+
+procedure main();
+begin
+    p1();
+    p2();
+    p3();
+    with p1: integer; do begin
+        p2();
+        p3();
+        with p2: string; do begin
+            p3();
+            with p1, p2: boolean; p3: string; do begin
+                if p1 then begin 
+                    if p2 then putStringLn(p3);
+                end
+                p3();
+            end
+        end
+    end
+end
+
+procedure p1(); begin end
+procedure p2(); begin end
+procedure p3(); begin end
+
+"""
+        expect = r"""Undeclared Procedure: p3"""
+        self.assertTrue(TestChecker.test(input, expect, 255))
+
+
+    def test_156(self):
+        input = r"""
+
+procedure main();
+begin
+    putIntLn(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(1)))))))))))))))))));
+    putFloatLn(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(1)))))))))))))))))));
+    putInt(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(fi(fr(1))))))))))))))))))));
+end
+
+function fi(r: real): integer; begin return 1; end
+function fr(i: integer): real; begin return 1; end
+
+"""
+        expect = r"""Type Mismatch In Statement: CallStmt(Id(putInt),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[CallExpr(Id(fi),[CallExpr(Id(fr),[IntLiteral(1)])])])])])])])])])])])])])])])])])])])])"""
+        self.assertTrue(TestChecker.test(input, expect, 256))
+
+
+    def test_157(self):
+        input = r"""
+
+procedure p7(); begin p7(); p7(); p7(); main(); end
+procedure p6(); begin p6(); p6(); p6(); main(); end
+procedure p5(); begin p5(); p5(); p5(); main(); end
+procedure p4(); begin p4(); p4(); p4(); main(); end
+procedure p3(); begin p3(); p3(); p3(); main(); p6(); p7(); end
+procedure p2(); begin p2(); p2(); p2(); main(); p4(); p5(); end
+procedure p1(); begin p1(); p1(); p1(); main(); p2(); p3(); end
+
+procedure main();
+begin
+end
+
+"""
+        expect = r"""Unreachable Procedure: p1"""
+        self.assertTrue(TestChecker.test(input, expect, 257))
+
+
+    def test_158(self):
+        input = r"""
+
+procedure p7(); begin p7(); p7(); p7(); main(); end
+procedure p6(); begin p6(); p6(); p6(); main(); end
+procedure p5(); begin p5(); p5(); p5(); main(); end
+procedure p4(); begin p4(); p4(); p4(); main(); end
+procedure p3(); begin p3(); p3(); p3(); main(); p6(); p7(); end
+procedure p2(); begin p2(); p2(); p2(); main(); p4(); p5(); end
+procedure p1(); begin p1(); p1(); p1(); main(); p2(); p3(); end
+
+procedure y7(); begin y7(); y7(); y7(); main(); p1(); end
+procedure y6(); begin y6(); y6(); y6(); main(); end
+procedure y5(); begin y5(); y5(); y5(); main(); end
+procedure y4(); begin y4(); y4(); y4(); main(); end
+procedure y3(); begin y3(); y3(); y3(); main(); y6(); y7(); end
+procedure y2(); begin y2(); y2(); y2(); main(); y4(); y5(); end
+procedure y1(); begin y1(); y1(); y1(); main(); y2(); y3(); end
+
+procedure main();
+begin
+end
+
+"""
+        expect = r"""Unreachable Procedure: y1"""
+        self.assertTrue(TestChecker.test(input, expect, 258))
+
+
+    def test_159(self):
+        input = r"""
+
+procedure p7(); begin p7(); p7(); p7(); main(); end
+procedure p6(); begin p6(); p6(); p6(); main(); end
+procedure p5(); begin p5(); p5(); p5(); main(); end
+procedure p4(); begin p4(); p4(); p4(); main(); y1(); end
+procedure p3(); begin p3(); p3(); p3(); main(); p6(); p7(); end
+procedure p2(); begin p2(); p2(); p2(); main(); p4(); p5(); end
+procedure p1(); begin p1(); p1(); p1(); main(); p2(); p3(); end
+
+procedure y7(); begin y7(); y7(); y7(); main(); end
+procedure y6(); begin y6(); y6(); y6(); main(); end
+procedure y5(); begin y5(); y5(); y5(); main(); end
+procedure y4(); begin y4(); y4(); y4(); main(); end
+procedure y3(); begin y3(); y3(); y3(); main(); y6(); y7(); end
+procedure y2(); begin y2(); y2(); y2(); main(); y4(); y5(); end
+procedure y1(); begin y1(); y1(); y1(); main(); y2(); y3(); end
+
+procedure main();
+begin
+end
+
+"""
+        expect = r"""Unreachable Procedure: p1"""
+        self.assertTrue(TestChecker.test(input, expect, 259))
+
+
+    def test_160(self):
+        input = r"""
+
+procedure p7(); begin p7(); p7(); p7(); main(); end
+procedure p6(); begin p6(); p6(); p6(); main(); end
+procedure p5(); begin p5(); p5(); p5(); main(); end
+procedure p4(); begin p4(); p4(); p4(); main(); end
+procedure p3(); begin p3(); p3(); p3(); main(); p6(); p7(); end
+procedure p2(); begin p2(); p2(); p2(); main(); p4(); p5(); end
+procedure p1(); begin p1(); p1(); p1(); main(); p2(); p3(); end
+
+procedure y7(); begin y7(); y7(); y7(); main(); p1(); end
+procedure y6(); begin y6(); y6(); y6(); main(); end
+procedure y5(); begin y5(); y5(); y5(); main(); end
+procedure y4(); begin y4(); y4(); y4(); main(); end
+procedure y3(); begin y3(); y3(); y3(); main(); y6(); y7(); end
+procedure y2(); begin y2(); y2(); y2(); main(); y4(); y5(); end
+procedure y1(); begin y1(); y1(); y1(); main(); y2(); y3(); end
+
+procedure x7(); begin x7(); x7(); x7(); main(); end
+procedure x6(); begin x6(); x6(); x6(); main(); end
+procedure x5(); begin x5(); x5(); x5(); main(); end
+procedure x4(); begin x4(); x4(); x4(); main(); end
+procedure x3(); begin x3(); x3(); x3(); main(); x6(); x7(); end
+procedure x2(); begin x2(); x2(); x2(); main(); x4(); x5(); end
+procedure x1(); begin x1(); x1(); x1(); main(); x2(); x3(); end
+
+procedure main();
+begin
+    y1();
+end
+
+"""
+        expect = r"""Unreachable Procedure: x1"""
+        self.assertTrue(TestChecker.test(input, expect, 260))
+
+
+    def test_161(self):
+        input = r"""
+
+procedure p7(); begin p7(); p7(); p7(); main(); x1(); end
+procedure p6(); begin p6(); p6(); p6(); main(); end
+procedure p5(); begin p5(); p5(); p5(); main(); end
+procedure p4(); begin p4(); p4(); p4(); main(); end
+procedure p3(); begin p3(); p3(); p3(); main(); p6(); p7(); end
+procedure p2(); begin p2(); p2(); p2(); main(); p4(); p5(); end
+procedure p1(); begin p1(); p1(); p1(); main(); p2(); p3(); end
+
+procedure y7(); begin y7(); y7(); y7(); main(); y1(); end
+procedure y6(); begin y6(); y6(); y6(); main(); end
+procedure y5(); begin y5(); y5(); y5(); main(); end
+procedure y4(); begin y4(); y4(); y4(); main(); end
+procedure y3(); begin y3(); y3(); y3(); main(); y6(); y7(); end
+procedure y2(); begin y2(); y2(); y2(); main(); y4(); y5(); end
+procedure y1(); begin y1(); y1(); y1(); main(); y2(); y3(); end
+
+procedure x7(); begin x7(); x7(); x7(); main(); x1(); end
+procedure x6(); begin x6(); x6(); x6(); main(); end
+procedure x5(); begin x5(); x5(); x5(); main(); end
+procedure x4(); begin x4(); x4(); x4(); main(); end
+procedure x3(); begin x3(); x3(); x3(); main(); x6(); x7(); end
+procedure x2(); begin x2(); x2(); x2(); main(); x4(); x5(); end
+procedure x1(); begin x1(); x1(); x1(); main(); x2(); x3(); end
+
+procedure main();
+begin
+    y1();
+end
+
+"""
+        expect = r"""Unreachable Procedure: p1"""
+        self.assertTrue(TestChecker.test(input, expect, 261))
+
+
+    def test_162(self):
+        input = r"""
+
+procedure p7(); begin p7(); p7(); p7(); main(); p1(); end
+procedure p6(); begin p6(); p6(); p6(); main(); end
+procedure p5(); begin p5(); p5(); p5(); main(); end
+procedure p4(); begin p4(); p4(); p4(); main(); end
+procedure p3(); begin p3(); p3(); p3(); main(); p6(); p7(); end
+procedure p2(); begin p2(); p2(); p2(); main(); p4(); p5(); end
+procedure p1(); begin p1(); p1(); p1(); main(); p2(); p3(); end
+
+procedure y7(); begin y7(); y7(); y7(); main(); y1(); end
+procedure y6(); begin y6(); y6(); y6(); main(); end
+procedure y5(); begin y5(); y5(); y5(); main(); end
+procedure y4(); begin y4(); y4(); y4(); main(); end
+procedure y3(); begin y3(); y3(); y3(); main(); y6(); y7(); end
+procedure y2(); begin y2(); y2(); y2(); main(); y4(); y5(); end
+procedure y1(); begin y1(); y1(); y1(); main(); y2(); y3(); end
+
+procedure x7(); begin x7(); x7(); x7(); main(); x1(); end
+procedure x6(); begin x6(); x6(); x6(); main(); end
+procedure x5(); begin x5(); x5(); x5(); main(); end
+procedure x4(); begin x4(); x4(); x4(); main(); end
+procedure x3(); begin x3(); x3(); x3(); main(); x6(); x7(); end
+procedure x2(); begin x2(); x2(); x2(); main(); x4(); x5(); end
+procedure x1(); begin x1(); x1(); x1(); main(); x2(); x3(); end
+
+procedure main();
+begin
+end
+
+"""
+        expect = r"""Unreachable Procedure: p7"""
+        self.assertTrue(TestChecker.test(input, expect, 262))
+
+
+    def test_163(self):
+        input = r"""
+
+procedure p2(); begin p2(); p1(); main(); end
+procedure p1(); begin p2(); p1(); main(); end
+
+procedure main();
+begin
+end
+
+"""
+        expect = r"""Unreachable Procedure: p2"""
+        self.assertTrue(TestChecker.test(input, expect, 263))
+
+
+    def test_164(self):
         input = r"""
 
 procedure main();
@@ -5035,5 +5546,83 @@ end
 
 """
         expect = r"""[]"""
-        self.assertTrue(TestChecker.test(input, expect, 250))
+        self.assertTrue(TestChecker.test(input, expect, 264))
+
+
+    def test_165(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 265))
+
+
+    def test_166(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 266))
+
+
+    def test_167(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 267))
+
+
+    def test_168(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 268))
+
+
+    def test_169(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 269))
+
+
+    def test_170(self):
+        input = r"""
+
+procedure main();
+begin
+
+end
+
+"""
+        expect = r"""[]"""
+        self.assertTrue(TestChecker.test(input, expect, 270))
 

@@ -584,7 +584,7 @@ class CheckerSuite(unittest.TestCase):
                 end
                 
             """
-        expect = ""
+        expect = "[]"
         self.assertTrue(TestChecker.test(input, expect, 495))
 
     def test_mismatchexp13(self):
