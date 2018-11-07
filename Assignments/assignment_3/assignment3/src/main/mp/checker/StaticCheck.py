@@ -1,5 +1,4 @@
-#########################################################
-#########################################################
+# 1610852 - Huynh Sam Ha
 
 from StaticError import *
 from Utils import Utils
@@ -11,9 +10,6 @@ import sys
 sys.path.append('../../../../target/main/mp/parser')
 sys.path.append('../utils')
 
-
-#########################################################
-#########################################################
 
 class MType:
     """
@@ -31,12 +27,8 @@ class MType:
 
 class ExpUtils:
     @staticmethod
-    def isNumberType(expType):
-        return type(expType) in [IntType, FloatType]
-
-    @staticmethod
     def isNaNType(expType):
-        return not ExpUtils.isNumberType(expType)
+        return type(expType) not in [IntType, FloatType]
 
     @staticmethod
     def isOpForNumber(operator):
@@ -50,9 +42,10 @@ class ExpUtils:
 class Symbol:
     """
     name: string
-    mtype: MType | IntType | FloatType | StringType | BoolType | ArrayType
+    mtype: MType | ArrayType | PrimitiveType(IntType | FloatType | StringType | BoolType)
     value: ???
     kind: Function() | Procedure() | Parameter() | Variable()
+    isGlobal: boolean
     """
 
     # Default Declare Type is Function Declare - kind Function
@@ -67,27 +60,13 @@ class Symbol:
         return 'Symbol(' + self.name + ',' + str(self.mtype) + ',' + str(self.kind) + ')'
 
     def getKind(self):
-        return self.kind if self.isFunc() else Identifier()
+        return self.kind if type(self.mtype) is MType else Identifier()
 
     def toTuple(self):
         return (str(self.name).lower(), type(self.getKind()))
 
     def toTupleString(self):
         return (str(self.name).lower(), str(self.mtype))
-
-    def isVar(self):
-        return type(self.mtype) is not MType
-
-    def isFunc(self):
-        return type(self.mtype) is MType
-
-    def toFunc(self):
-        self.kind = Function()
-        return self
-
-    def toProc(self):
-        self.kind = Procedure()
-        return self
 
     def toParam(self):
         self.kind = Parameter()
@@ -141,8 +120,7 @@ class Scope:
         return reduce(lambda lst, sym: lst if Scope.isExisten(lst, sym) else lst+[sym], currentScope, comingScope)
 
     @staticmethod
-    def log(scope):
-        [print(x) for x in scope]
+    def log(scope): [print(x) for x in scope]
 
 
 class Checker:
@@ -154,7 +132,7 @@ class Checker:
         # Return merged scope
         newScope = currentScope.copy()
         for x in listNewSymbols:
-            f = Checker.utils.lookup(str(x.name).lower(), newScope, Symbol.cmp)
+            f = Checker.utils.lookup(Symbol.cmp(x), newScope, Symbol.cmp)
             if f is not None:
                 raise Redeclared(x.kind, x.name)
             newScope.append(x)
@@ -297,7 +275,7 @@ class StaticChecker(BaseVisitor, Utils):
         for x in listFuncDecl: Graph.add(x.name)
         Graph.setDefaultVisitedNodes([u.name for u in globalEnv])
         # Graph.log()
-        # Visit children
+        # Visit declares
         [self.visit(x, scope) for x in ast.decl]
         # Check unreachable function/procedure
         # Graph.log()
@@ -310,7 +288,6 @@ class StaticChecker(BaseVisitor, Utils):
         return []
 
     def visitFuncDecl(self, ast: FuncDecl, scope):
-        # Return Symbol
         Scope.start("FuncDecl")
         listParams = [self.visit(x, scope).toParam() for x in ast.param]
         listLocalVar = [self.visit(x, scope).toVar() for x in ast.local]
@@ -326,22 +303,17 @@ class StaticChecker(BaseVisitor, Utils):
         if Checker.isReturnTypeFunction(ast.returnType) and not Checker.isReturnTypeFunction(retType):
             raise FunctionNotReturn(ast.name.name)
         Scope.end()
-        return Symbol.fromDecl(ast)
 
     def visitVarDecl(self, ast, scope):
-        # Return Symbol
-        return Symbol.fromDecl(ast)
+        return Symbol.fromVarDecl(ast)
 
-
-# Visit Statements -> use params (scope, retType, inLoop, funcName)
+# Visit Statements - params: (scope, retType, inLoop, funcName)
 # Return a tuple (Statement, Type of return type)
 
     def visitAssign(self, ast: Assign, params):
         # Return None Type
         Scope.start("Assign")
-        scope = params[0]
-        retType = params[1]
-        funcName = params[3]
+        scope, retType, inLoop, funcName = params
         lhsType = self.visit(ast.lhs, (scope, funcName))
         expType = self.visit(ast.exp, (scope, funcName))
         if type(lhsType) in [ArrayType, VoidType, StringType] or not Checker.matchType(lhsType, expType):
@@ -351,10 +323,7 @@ class StaticChecker(BaseVisitor, Utils):
 
     def visitWith(self, ast: With, params):
         Scope.start("With")
-        scope = params[0]
-        retType = params[1]
-        inLoop = params[2]
-        funcName = params[3]
+        scope, retType, inLoop, funcName = params
         listVar = [self.visit(x, scope).toVar() for x in ast.decl]
         # Check Redeclared variable
         localScope = Checker.checkRedeclared([], listVar)
@@ -366,9 +335,7 @@ class StaticChecker(BaseVisitor, Utils):
 
     def visitIf(self, ast: If, params):
         Scope.start("If")
-        scope = params[0]
-        retType = params[1]
-        funcName = params[3]
+        scope, retType, inLoop, funcName = params
         # Check Type Expression
         condType = self.visit(ast.expr, (scope, funcName))
         if type(condType) is not BoolType:
@@ -382,14 +349,11 @@ class StaticChecker(BaseVisitor, Utils):
         Scope.end()
         if ret1 is None or ret2 is None: return (ast, None)
         if all([x not in [type(ret1), type(ret2)] for x in [Break, Continue]]): return (ast, retType)
-        return (ast, Break()) # or Continue()
-        # return (ast, None if ret1 is None or ret2 is None else retType if Break not in [type(ret1), type(ret2)] else Break())
+        return (ast, Break()) # or use Continue() as alternative
 
     def visitFor(self, ast: For, params):
         Scope.start("For")
-        scope = params[0]
-        retType = params[1]
-        funcName = params[3]
+        scope, retType, inLoop, funcName = params
         # Check Undeclared Identifier
         idSymbol = Checker.checkUndeclared(scope, ast.id.name, Identifier(), notGlobal=True)
         # Check Type Expression
@@ -401,14 +365,11 @@ class StaticChecker(BaseVisitor, Utils):
         stmts = [self.visit(x, (scope, retType, True, funcName)) for x in ast.loop]
         Scope.end()
         retType = Checker.handleReturnStmts(stmts)
-        # return (ast, retType if type(retType) is not Break else None)
         return (ast, None)
 
     def visitWhile(self, ast: While, params):
         Scope.start("While")
-        scope = params[0]
-        retType = params[1]
-        funcName = params[3]
+        scope, retType, inLoop, funcName = params
         # Check Type Expression
         condType = self.visit(ast.exp, (scope, funcName))
         if type(condType) is not BoolType:
@@ -417,23 +378,20 @@ class StaticChecker(BaseVisitor, Utils):
         stmts = [self.visit(x, (scope, retType, True, funcName)) for x in ast.sl]
         Scope.end()
         retType = Checker.handleReturnStmts(stmts)
-        # return (ast, retType if type(retType) is not Break else None)
         return (ast, None)
 
     def visitContinue(self, ast, params):
-        inLoop = params[2]
+        scope, retType, inLoop, funcName = params
         if not inLoop: raise ContinueNotInLoop()
         return (ast, Continue())
 
     def visitBreak(self, ast, params):
-        inLoop = params[2]
+        scope, retType, inLoop, funcName = params
         if not inLoop: raise BreakNotInLoop()
         return (ast, Break())
 
     def visitReturn(self, ast: Return, params):
-        scope = params[0]
-        retType = params[1]
-        funcName = params[3]
+        scope, retType, inLoop, funcName = params
         if type(retType) is VoidType and ast.expr:
             raise TypeMismatchInStatement(ast)
         ret = self.visit(ast.expr, (scope, funcName)) if ast.expr else VoidType()
@@ -444,82 +402,73 @@ class StaticChecker(BaseVisitor, Utils):
     def visitCallStmt(self, ast: CallStmt, params):
         # Return None Type
         Scope.start("CallStmt")
-        scope = params[0]
-        funcName = params[3]
-        # Check Undeclared Procedure
-        symbol = Checker.checkUndeclared(scope, ast.method.name, Procedure())
-        # Check Match Type
-        paramType = [self.visit(x, (scope, funcName)) for x in ast.param]
-        if not Checker.checkParamType(symbol.mtype.partype, paramType):
-            raise TypeMismatchInStatement(ast)
-        # Update Graph
-        Graph.add(funcName, ast.method.name)
+        scope, retType, inLoop, funcName = params
+        self.handleCall(ast, scope, funcName, Procedure())
         Scope.end()
         return (ast, None)
 
 
-# Visit Expression -> use params (scope, funcName)
-# Return Type
+# Visit Expression - params: (scope, funcName)
+# Return Type of expression
 
     def visitBinaryOp(self, ast: BinaryOp, params):
-        scope = params[0]
-        funcName = params[1]
+        scope, funcName = params
+        op = str(ast.op).lower()
         lType = self.visit(ast.left, (scope, funcName))
         rType = self.visit(ast.right, (scope, funcName))
-        op = str(ast.op).lower()
-        if ExpUtils.isOpForNumber(op):  # for number
+        if ExpUtils.isOpForNumber(op): # for number
             if ExpUtils.isNaNType(lType) or ExpUtils.isNaNType(rType):
                 raise TypeMismatchInExpression(ast)
-            if str(op).lower() in ['div', 'mod']:
+            if op in ['div', 'mod']:
                 if FloatType in [type(lType), type(rType)]:
                     raise TypeMismatchInExpression(ast)
                 return IntType()
             if op in ['+', '-', '*']: return ExpUtils.mergeNumberType(lType, rType)
             if op == '/': return FloatType()
-            return BoolType()  # = <> >= ...
-        else:  # for logical
-            if type(lType) is not BoolType or type(rType) is not BoolType:
-                raise TypeMismatchInExpression(ast)
-            return BoolType()
+            return BoolType() # operators: =, <>, <, >=, ...
+        # for logical
+        if False in [type(x) is BoolType for x in [lType, rType]]:
+            raise TypeMismatchInExpression(ast)
+        return BoolType()
 
     def visitUnaryOp(self, ast: UnaryOp, params):
-        # op: ['-', 'not']
-        scope = params[0]
-        funcName = params[1]
+        scope, funcName = params
+        op = str(ast.op).lower() # op: ['-', 'not']
         expType = self.visit(ast.body, (scope, funcName))
-        if (ast.op == '-' and ExpUtils.isNaNType(expType)) or (str(ast.op).lower() == 'not' and type(expType) is not BoolType):
+        if (op == '-' and ExpUtils.isNaNType(expType)) or (op == 'not' and type(expType) is not BoolType):
             raise TypeMismatchInExpression(ast)
         return expType
 
     def visitCallExpr(self, ast: CallExpr, params):
-        scope = params[0]
-        funcName = params[1]
-        symbol = Checker.checkUndeclared(scope, ast.method.name, Function())
-        paramType = [self.visit(x, (scope, funcName)) for x in ast.param]
-        if not Checker.checkParamType(symbol.mtype.partype, paramType):
-            raise TypeMismatchInExpression(ast)
-        # Update Graph
-        Graph.add(funcName, ast.method.name)
+        scope, funcName = params
+        symbol = self.handleCall(ast, scope, funcName, Function())
         return symbol.mtype.rettype
 
     def visitId(self, ast: Id, params):
-        scope = params[0]
+        scope, funcName = params
         symbol = Checker.checkUndeclared(scope, ast.name, Identifier())
         return symbol.mtype
 
     def visitArrayCell(self, ast: ArrayCell, params):
-        scope = params[0]
-        funcName = params[1]
-        # arr[idx] - a[1], foo()["bar" + goo()]
+        scope, funcName = params
+        # arr[idx], example: a[1], a[x+5], foo()[4], foo()["bar" + goo()], ...
         arrType = self.visit(ast.arr, (scope, funcName))  # type of arr
         idxType = self.visit(ast.idx, (scope, funcName))  # type of idx
         if type(idxType) is not IntType or type(arrType) is not ArrayType:
             raise TypeMismatchInExpression(ast)
         return arrType.eleType
 
+    def handleCall(self, ast, scope, funcName, kind): # kind: Procedure() | Function()
+        symbol = Checker.checkUndeclared(scope, ast.method.name, kind)
+        # Check Match Type
+        paramType = [self.visit(x, (scope, funcName)) for x in ast.param]
+        if not Checker.checkParamType(symbol.mtype.partype, paramType):
+            raise TypeMismatchInExpression(ast) if type(kind) is Function else TypeMismatchInStatement(ast)
+        # Update Graph
+        Graph.add(funcName, ast.method.name)
+        return symbol
 
-# Visit Literal Values
-# Return Type of Literal
+# Visit Literal Values => Return Type of Literal
 
     def visitIntLiteral(self, ast, params):
         return IntType()
