@@ -39,12 +39,11 @@ def main(argv):
             from ASTGenSuite import ASTGenSuite
             getAndTest(ASTGenSuite)
         elif argv[1] == 'CheckerSuite':
-            # from CheckerSuite_A import CheckerSuite
+            from CheckerSuite_001 import CheckerSuite
             # from CheckerSuite_1 import CheckerSuite
-            from CheckerSuite import CheckerSuite
+            # from CheckerSuite import CheckerSuite
             # from CheckerSuite_ import CheckerSuite
-            # from CheckerSuite_D import CheckerSuite
-            # from CheckerSuite_P import CheckerSuite
+
             getAndTest(CheckerSuite)
         elif argv[1] == 'CodeGenSuite':
             from CodeGenSuite import CheckCodeGenSuite
