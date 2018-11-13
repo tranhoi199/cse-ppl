@@ -1,0 +1,6 @@
+procedure main (); begin
+            getIntLn();
+        end
+        function foo ():INTEGER; begin
+            putIntLn(4);
+        end
