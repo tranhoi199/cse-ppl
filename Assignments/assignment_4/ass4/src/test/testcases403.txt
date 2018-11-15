@@ -1,1 +1,0 @@
-Program([FuncDecl(Id(main),[],VoidType(),[],[CallStmt(Id(putIntLn),[])])])

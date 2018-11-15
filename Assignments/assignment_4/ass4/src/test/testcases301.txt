@@ -1,3 +1,0 @@
-function foo ():INTEGER; begin
-            putIntLn(4);
-        end

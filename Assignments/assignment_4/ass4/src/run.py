@@ -1,13 +1,14 @@
-import sys,os
+from antlr4 import *
+import unittest
+import subprocess
+import sys
+import os
 sys.path.append('./test/')
 sys.path.append('./main/mp/parser/')
 sys.path.append('./main/mp/utils/')
 sys.path.append('./main/mp/astgen/')
 sys.path.append('./main/mp/checker/')
 sys.path.append('./main/mp/codegen/')
-import subprocess
-import unittest
-from antlr4 import *
 
 ANTLR_JAR = os.environ.get('ANTLR_LIB')
 TARGET_DIR = '../target'
@@ -17,13 +18,13 @@ def main(argv):
     if len(argv) < 1:
         printUsage()
     elif argv[0] == 'gen':
-        subprocess.run(["java","-jar",ANTLR_JAR,"-o","../target","-no-listener","-visitor","main/mp/parser/MP.g4"])
+        subprocess.run(["java", "-jar", ANTLR_JAR, "-o", "../target", "-no-listener", "-visitor", "main/mp/parser/MP.g4"])
     elif argv[0] == 'clean':
-        subprocess.run(["rm","-rf",TARGET_DIR + "/*"])
-               
-    elif argv[0] == 'test':     
+        subprocess.run(["rm", "-rf", TARGET_DIR + "/*"])
+
+    elif argv[0] == 'test':
         if not os.path.isdir(TARGET_DIR + "/" + GENERATE_DIR):
-            subprocess.run(["java","-jar",ANTLR_JAR,"-o",GENERATE_DIR,"-no-listener","-visitor","main/mp/parser/MP.g4"])
+            subprocess.run(["java", "-jar", ANTLR_JAR, "-o", GENERATE_DIR, "-no-listener", "-visitor", "main/mp/parser/MP.g4"])
         if not (TARGET_DIR + "/" + GENERATE_DIR) in sys.path:
             sys.path.append(TARGET_DIR + "/" + GENERATE_DIR)
         if len(argv) < 2:
@@ -41,7 +42,10 @@ def main(argv):
             from CheckerSuite import CheckerSuite
             getAndTest(CheckerSuite)
         elif argv[1] == 'CodeGenSuite':
-            from CodeGenSuite import CheckCodeGenSuite
+            # from CodeGenSuite import CheckCodeGenSuite
+            # from CodeGenSuite import CheckCodeGenSuite
+            # from CodeGenSuite import CheckCodeGenSuite
+            from CodeGenSuite_1 import CheckCodeGenSuite
             getAndTest(CheckCodeGenSuite)
         else:
             printUsage()
@@ -49,8 +53,7 @@ def main(argv):
         printUsage()
 
 
-
-def getAndTest(cls): 
+def getAndTest(cls):
     suite = unittest.makeSuite(cls)
     test(suite)
 
@@ -74,5 +77,6 @@ def printUsage():
     print("python3 run.py test CheckerSuite")
     print("python3 run.py test CodeGenSuite")
 
+
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
