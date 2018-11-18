@@ -9,28 +9,9 @@ class CheckCodeGenSuite(unittest.TestCase):
         
 procedure main();
 begin
-    putBoolLn(not false);
-    PutBooLLN(not true);
-    putbOOLLN(not not false);
-    PUtbOOLLN(not not true);
-    PutBoOLLN(not not not false);
-    PutBoOLLN(not not not true);
-    PutBoOLLN(not false and true);
-    PutBoOLLN(not true and false);
-    PutBoOLLN(not not false and not not not true or false and true);
-    PutBoOLLN(not not true or false);
+    putBool(false or else false or else true and then (true or else false) and (false or else true));
 end
 
 """
-        expect = r"""true
-false
-false
-true
-true
-false
-true
-false
-false
-true
-"""
+        expect = r"""true"""
         self.assertTrue(TestCodeGen.test(input,expect,1))

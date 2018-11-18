@@ -263,8 +263,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
             mType = BoolType()
             if op == 'or': return lCode + rCode + self.emit.emitOROP(frame), mType
             if op == 'and': return lCode + rCode + self.emit.emitANDOP(frame), mType
-            if op == 'orelse': return rCode + lCode + self.emit.emitORELSE(frame), mType
-            if op == 'andthen': return rCode + lCode + self.emit.emitANDTHEN(frame), mType
+            if op == 'orelse': return self.emit.emitORELSE(frame, lCode, rCode), mType
+            if op == 'andthen': return self.emit.emitANDTHEN(frame, lCode, rCode), mType
 
     def visitUnaryOp(self, ast: UnaryOp, o: Access):
         ctxt = o

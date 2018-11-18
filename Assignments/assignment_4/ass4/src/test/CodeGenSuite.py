@@ -1029,11 +1029,27 @@ true
 
 procedure main();
 begin
-    putInt(1);
+    putBoolLn(true and then false);
+    putBoolLn(false and then true);
+    putBoolLn(true and then (false and then true));
+    putBoolLn(true and then (false and then true) and then false);
+    
+    putBoolLn(true or else false);
+    putBoolLn(false or else true);
+    putBoolLn(true or else (false or else true));
+    putBoolLn(true or else (false or else true) or else false);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""false
+false
+false
+false
+true
+true
+true
+true
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 162))
 
 
@@ -1042,11 +1058,11 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putBool(false or else false or else true and then (true or else false) and (false or else true));
 end
 
 """
-        expect = r"""1"""
+        expect = r"""true"""
         self.assertTrue(TestCodeGen.test(input, expect, 163))
 
 

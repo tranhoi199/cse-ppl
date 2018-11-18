@@ -419,14 +419,18 @@ class Emitter():
         return self.jvm.emitIOR()
 
 
-    def emitANDTHEN(self, frame):
+    def emitANDTHEN(self, frame, lCode, rCode):
 
         result = list()
         labelF = frame.getNewLabel() # eval is false
         labelT = frame.getNewLabel() # eval is true
         
-        # first and second evaluation
+        # first evaluation
+        result.append(lCode)
         result.append(self.emitIFFALSE(labelF, frame)) # false
+
+        # second evaluation
+        result.append(rCode)
         result.append(self.emitIFFALSE(labelF, frame)) # false
 
         result.append(self.emitPUSHICONST("true", frame)) # push true
@@ -436,14 +440,18 @@ class Emitter():
         result.append(self.emitLABEL(labelT, frame))
         return ''.join(result)
 
-    def emitORELSE(self, frame):
+    def emitORELSE(self, frame, lCode, rCode):
 
         result = list()
         labelF = frame.getNewLabel() # eval is false
         labelT = frame.getNewLabel() # eval is true
         
-        # first and second evaluation
+        # first evaluation
+        result.append(lCode)
         result.append(self.emitIFTRUE(labelT, frame)) # true
+
+        # second evaluation
+        result.append(rCode)
         result.append(self.emitIFTRUE(labelT, frame)) # true
 
         result.append(self.emitPUSHICONST("false", frame)) # push false
