@@ -93,7 +93,7 @@ class Emitter():
             return self.emitPUSHICONST(in_, frame)
         elif type(typ) is StringType:
             frame.push()
-            return self.jvm.emitLDC(in_)
+            return self.jvm.emitLDC('"' + in_ + '"')
         else:
             raise IllegalOperandException(in_)
 

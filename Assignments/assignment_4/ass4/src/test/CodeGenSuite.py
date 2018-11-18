@@ -832,11 +832,21 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putIntLn(1);
+    putLn();
+    putLn();
+    putLn();
+    putLn();
+    putInt(2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+
+
+
+
+2"""
         self.assertTrue(TestCodeGen.test(input, expect, 153))
 
 
@@ -845,11 +855,21 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putIntLn(1000);
+    putLn();
+    putLn();
+    putLn();
+    putLn();
+    putInt(2000);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1000
+
+
+
+
+2000"""
         self.assertTrue(TestCodeGen.test(input, expect, 154))
 
 
@@ -858,11 +878,11 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putString("Hello World");
 end
 
 """
-        expect = r"""1"""
+        expect = r"""Hello World"""
         self.assertTrue(TestCodeGen.test(input, expect, 155))
 
 
@@ -871,11 +891,20 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putStringLn("Hello World 1");
+    putStringLn("Hello World 2");
+    putStringLn("3");
+    putStringLn("4.5");
+    putStringLn("-0.6");
 end
 
 """
-        expect = r"""1"""
+        expect = r"""Hello World 1
+Hello World 2
+3
+4.5
+-0.6
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 156))
 
 
@@ -884,11 +913,13 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putStringLn("Error: A JNI error has occurred, please check your installation and try again\nException in thread \"main\" java.lang.VerifyError: (class: MPClass, method: main signature: ([Ljava/lang/String;)V) Illegal type in constant pool");
 end
 
 """
-        expect = r"""1"""
+        expect = r"""Error: A JNI error has occurred, please check your installation and try again
+Exception in thread "main" java.lang.VerifyError: (class: MPClass, method: main signature: ([Ljava/lang/String;)V) Illegal type in constant pool
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 157))
 
 

@@ -233,10 +233,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         return self.emit.emitPUSHICONST(str(ast.value).lower(), frame), BoolType()
 
     def visitStringLiteral(self, ast: StringLiteral, o: Access):
-        pass
-        # ctxt = o
-        # frame = o.frame
-        # return self.emit.emitPUSHCONST(ast.value, StringType(), frame), StringType()
+        ctxt = o
+        frame = ctxt.frame
+        return self.emit.emitPUSHCONST(ast.value, StringType(), frame), StringType()
 
     def visitBinaryOp(self, ast: BinaryOp, o: Access):
         ctxt = o

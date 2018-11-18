@@ -9,14 +9,11 @@ class CheckCodeGenSuite(unittest.TestCase):
         
 procedure main();
 begin
-    putFloatLn(1.5*2 + 2 - 5.3*2.1);
-    putFloatLn(3*5 + 2*3/2 - 4*7.2/14 + 1);
-    putFloatLn(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1));
+    putStringLn("Error: A JNI error has occurred, please check your installation and try again\nException in thread \"main\" java.lang.VerifyError: (class: MPClass, method: main signature: ([Ljava/lang/String;)V) Illegal type in constant pool");
 end
 
 """
-        expect = r"""-6.13
-16.942858
--23.072857
+        expect = r"""Error: A JNI error has occurred, please check your installation and try again
+Exception in thread "main" java.lang.VerifyError: (class: MPClass, method: main signature: ([Ljava/lang/String;)V) Illegal type in constant pool
 """
         self.assertTrue(TestCodeGen.test(input,expect,1))
