@@ -262,8 +262,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
                 return lCode + rCode + self.emit.emitREOP(op, mType, frame), BoolType()
         else: # for boolean type
             mType = BoolType()
-            if op == 'and': return lCode + rCode + self.emit.emitANDOP(frame), mType
             if op == 'or': return lCode + rCode + self.emit.emitOROP(frame), mType
-            
-            if op == 'andthen': return lCode + rCode + self.emit.emitANDOP(frame), mType
-            if op == 'orelse': return lCode + rCode + self.emit.emitANDOP(frame), mType
+            if op == 'and': return lCode + rCode + self.emit.emitANDOP(frame), mType
+            if op == 'orelse': return rCode + lCode + self.emit.emitORELSE(frame), mType
+            if op == 'andthen': return rCode + lCode + self.emit.emitANDTHEN(frame), mType

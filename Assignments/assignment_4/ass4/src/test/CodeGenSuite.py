@@ -628,52 +628,76 @@ end
     def test_45(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(1 + 2 > 3);
+    putBool(1 + 2 < 3);
+    putBool(1 + 2 = 3);
+    putBool(1 + 2 >= 3);
+    putBool(1 + 2 <= 3);
+    putBool(1 + 2 <> 3);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsefalsetruetruetruefalse"""
         self.assertTrue(TestCodeGen.test(input, expect, 145))
 
 
     def test_46(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(1.5 + 2 > 3);
+    putBool(1.5 + 2 < 3);
+    putBool(1.5 + 2 = 3);
+    putBool(1.5 + 2 >= 3);
+    putBool(1.5 + 2 <= 3);
+    putBool(1.5 + 2 <> 3);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""truefalsefalsetruefalsetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 146))
 
 
     def test_47(self):
         input = r"""
 
-procedure main();
+procedure main(); 
 begin
-    putInt(1);
+    // 1.5*2 + 2 - 5.3*2.1 = -6.13
+    // 3*5 + 2*3/2 - 4*7.2/14 + 1 = 16.94
+    putBool(1.5*2 + 2 - 5.3*2.1 > 3*5 + 2*3/2 - 4*7.2/14 + 1);
+    putBool(1.5*2 + 2 - 5.3*2.1 < 3*5 + 2*3/2 - 4*7.2/14 + 1);
+    putBool(1.5*2 + 2 - 5.3*2.1 = 3*5 + 2*3/2 - 4*7.2/14 + 1);
+    putBool(1.5*2 + 2 - 5.3*2.1 >= 3*5 + 2*3/2 - 4*7.2/14 + 1);
+    putBool(1.5*2 + 2 - 5.3*2.1 <= 3*5 + 2*3/2 - 4*7.2/14 + 1);
+    putBool(1.5*2 + 2 - 5.3*2.1 <> 3*5 + 2*3/2 - 4*7.2/14 + 1);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 147))
 
 
     def test_48(self):
         input = r"""
 
-procedure main();
+procedure main(); 
 begin
-    putInt(1);
+    // 1.5*2 + 2 - 5.3*2.1 = -6.13
+    // 3*5 + 2*3/2 - 4*7.2/14 + 1 = 16.94
+    putBool(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1) > 0);
+    putBool(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1) < 0);
+    putBool(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1) = 0);
+    putBool(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1) >= 0);
+    putBool(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1) <= 0);
+    putBool(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1) <> 0);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 148))
 
 
@@ -682,11 +706,34 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putIntLn(5 mod 4);
+    putIntLn(15 mod 4);
+    putIntLn(52 mod 6);
+    putIntLn(56 mod 5);
+    putIntLn(9 mod 12);
+    putIntLn(1998 mod 46);
+    putIntLn(1998 mod 54);
+    putIntLn(1998 mod 87);
+    putIntLn(1998 mod 42);
+    putIntLn(1998 mod 16);
+    putIntLn(1998 mod 19);
+    putIntLn(1998 mod 24);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+3
+4
+1
+9
+20
+0
+84
+24
+14
+3
+6
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 149))
 
 
@@ -695,11 +742,34 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putIntLn(5 div 4);
+    putIntLn(15 div 4);
+    putIntLn(52 div 6);
+    putIntLn(56 div 5);
+    putIntLn(9 div 12);
+    putIntLn(1998 div 46);
+    putIntLn(1998 div 54);
+    putIntLn(1998 div 87);
+    putIntLn(1998 div 42);
+    putIntLn(1998 div 16);
+    putIntLn(1998 div 19);
+    putIntLn(1998 div 24);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+3
+8
+11
+0
+43
+37
+22
+47
+124
+105
+83
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 150))
 
 
@@ -708,11 +778,34 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putFloatLn(5 / 4);
+    putFloatLn(15 / 4);
+    putFloatLn(52 / 6);
+    putFloatLn(56 / 5);
+    putFloatLn(9 / 12);
+    putFloatLn(1998 / 46);
+    putFloatLn(1998 / 54);
+    putFloatLn(1998 / 87);
+    putFloatLn(1998 / 42);
+    putFloatLn(1998 / 16);
+    putFloatLn(1998 / 19);
+    putFloatLn(1998 / 24);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1.25
+3.75
+8.666667
+11.2
+0.75
+43.434784
+37.0
+22.965517
+47.57143
+124.875
+105.1579
+83.25
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 151))
 
 
@@ -721,11 +814,16 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putFloatLn(1.5*2 + 2 - 5.3*2.1);
+    putFloatLn(3*5 + 2*3/2 - 4*7.2/14 + 1);
+    putFloatLn(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1));
 end
 
 """
-        expect = r"""1"""
+        expect = r"""-6.13
+16.942858
+-23.072857
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 152))
 
 

@@ -483,7 +483,7 @@ class JasminCode(MachineCode):
         return JasminCode.INDENT + "ior" + JasminCode.END
     
     def emitIREM(self):
-        return JasminCode.INDENT + "rem" + JasminCode.END
+        return JasminCode.INDENT + "irem" + JasminCode.END
     
     def emitIFACMPEQ(self, label):
         #label: Int

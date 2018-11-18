@@ -417,6 +417,41 @@ class Emitter():
         frame.pop()
         return self.jvm.emitIOR()
 
+
+    def emitANDTHEN(self, frame):
+
+        result = list()
+        labelF = frame.getNewLabel() # eval is false
+        labelT = frame.getNewLabel() # eval is true
+        
+        # first and second evaluation
+        result.append(self.emitIFFALSE(labelF, frame)) # false
+        result.append(self.emitIFFALSE(labelF, frame)) # false
+
+        result.append(self.emitPUSHICONST("true", frame)) # push true
+        result.append(self.emitGOTO(labelT, frame)) # go to true
+        result.append(self.emitLABEL(labelF, frame)) # push false
+        result.append(self.emitPUSHICONST("false", frame))
+        result.append(self.emitLABEL(labelT, frame))
+        return ''.join(result)
+
+    def emitORELSE(self, frame):
+
+        result = list()
+        labelF = frame.getNewLabel() # eval is false
+        labelT = frame.getNewLabel() # eval is true
+        
+        # first and second evaluation
+        result.append(self.emitIFTRUE(labelT, frame)) # true
+        result.append(self.emitIFTRUE(labelT, frame)) # true
+
+        result.append(self.emitPUSHICONST("false", frame)) # push false
+        result.append(self.emitGOTO(labelF, frame)) # go to false
+        result.append(self.emitLABEL(labelT, frame)) # push true
+        result.append(self.emitPUSHICONST("true", frame))
+        result.append(self.emitLABEL(labelF, frame))
+        return ''.join(result)
+
     def emitREOP(self, op, in_, frame):
         # op: String
         # in_: Type
