@@ -136,6 +136,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.path = dir_
         self.emit = Emitter(self.path + "/" + self.className + ".j")
 
+
     def visitProgram(self, ast: Program, c):
         # c: Any
 
@@ -197,6 +198,14 @@ class CodeGenVisitor(BaseVisitor, Utils):
         return SubBody(None, [Symbol(ast.name.name, MType(list(), ast.returnType), CName(self.className))] + subctxt.sym)
 
 
+    def visitVarDecl(self, ast: VarDecl, o: SubBody):
+        subctxt = o
+        return SubBody(None, [Symbol(ast.variable.name, ast.varType)] + subctxt.sym)
+
+
+# ================   Visit Statements   =================
+# Param:    o: SubBody(frame, sym)
+
 
     def visitCallStmt(self, ast: CallStmt, o: SubBody):
         ctxt = o
@@ -213,6 +222,13 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.emit.printout(params[0])
         self.emit.printout(self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame))
 
+
+    def visitAssign(self, ast: Assign, o: SubBody):
+        ctxt = o
+        frame = ctxt.frame
+        nenv = ctxt.sym
+        lhsCode, lhsType = self.visit(ast.lhs, Access(frame, nenv, True, True))
+        expCode, expType = self.visit(ast.exp, Access(frame, nenv, False, True))
 
 
 # ================   Visit Expression   =================
@@ -258,6 +274,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         if op == '-': return bCode + self.emit.emitNEGOP(bType, frame), bType
         if op == 'not': return bCode + self.emit.emitNOT(bType, frame), bType
 
+
+    def visitId(self, ast: Id, o: Access):
+        pass
 
 
     def visitIntLiteral(self, ast: IntLiteral, o: Access):
