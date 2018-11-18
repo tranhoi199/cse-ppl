@@ -326,15 +326,16 @@ class Emitter():
         # in_: Type
         # frame: Frame
 
-        label1 = frame.getNewLabel()
-        label2 = frame.getNewLabel()
+        labelT = frame.getNewLabel() # true
+        labelF = frame.getNewLabel() # false
         result = list()
-        result.append(emitIFTRUE(label1, frame))
-        result.append(emitPUSHCONST("true", in_, frame))
-        result.append(emitGOTO(label2, frame))
-        result.append(emitLABEL(label1, frame))
-        result.append(emitPUSHCONST("false", in_, frame))
-        result.append(emitLABEL(label2, frame))
+
+        result.append(self.emitIFTRUE(labelF, frame)) # not true is false
+        result.append(self.emitPUSHICONST("true", frame)) # not false is true
+        result.append(self.emitGOTO(labelT, frame))
+        result.append(self.emitLABEL(labelF, frame))
+        result.append(self.emitPUSHICONST("false", frame))
+        result.append(self.emitLABEL(labelT, frame))
         return ''.join(result)
 
     '''

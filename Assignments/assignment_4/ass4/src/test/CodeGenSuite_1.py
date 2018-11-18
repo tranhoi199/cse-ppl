@@ -9,11 +9,28 @@ class CheckCodeGenSuite(unittest.TestCase):
         
 procedure main();
 begin
-    putStringLn("Error: A JNI error has occurred, please check your installation and try again\nException in thread \"main\" java.lang.VerifyError: (class: MPClass, method: main signature: ([Ljava/lang/String;)V) Illegal type in constant pool");
+    putBoolLn(not false);
+    PutBooLLN(not true);
+    putbOOLLN(not not false);
+    PUtbOOLLN(not not true);
+    PutBoOLLN(not not not false);
+    PutBoOLLN(not not not true);
+    PutBoOLLN(not false and true);
+    PutBoOLLN(not true and false);
+    PutBoOLLN(not not false and not not not true or false and true);
+    PutBoOLLN(not not true or false);
 end
 
 """
-        expect = r"""Error: A JNI error has occurred, please check your installation and try again
-Exception in thread "main" java.lang.VerifyError: (class: MPClass, method: main signature: ([Ljava/lang/String;)V) Illegal type in constant pool
+        expect = r"""true
+false
+false
+true
+true
+false
+true
+false
+false
+true
 """
         self.assertTrue(TestCodeGen.test(input,expect,1))

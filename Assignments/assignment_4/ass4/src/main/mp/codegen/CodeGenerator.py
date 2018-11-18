@@ -205,7 +205,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctxt = o
         frame = ctxt.frame
         nenv = ctxt.sym
-        sym = self.lookup(ast.method.name, nenv, lambda x: x.name)
+        sym = self.lookup(ast.method.name.lower(), nenv, lambda x: x.name.lower())
         cname = sym.value.value
 
         ctype = sym.mtype
@@ -215,7 +215,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
             str1, typ1 = self.visit(x, Access(frame, nenv, False, True))
             in_ = (in_[0] + str1, in_[1].append(typ1))
         self.emit.printout(in_[0])
-        self.emit.printout(self.emit.emitINVOKESTATIC(cname + "/" + ast.method.name, ctype, frame))
+        self.emit.printout(self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame))
 
     def visitIntLiteral(self, ast, o):
         ctxt = o
@@ -265,3 +265,11 @@ class CodeGenVisitor(BaseVisitor, Utils):
             if op == 'and': return lCode + rCode + self.emit.emitANDOP(frame), mType
             if op == 'orelse': return rCode + lCode + self.emit.emitORELSE(frame), mType
             if op == 'andthen': return rCode + lCode + self.emit.emitANDTHEN(frame), mType
+
+    def visitUnaryOp(self, ast: UnaryOp, o: Access):
+        ctxt = o
+        frame = ctxt.frame
+        op = str(ast.op).lower()
+        bCode, bType = self.visit(ast.body, ctxt)
+        if op == '-': return bCode + self.emit.emitNEGOP(bType, frame), bType
+        if op == 'not': return bCode + self.emit.emitNOT(bType, frame), bType

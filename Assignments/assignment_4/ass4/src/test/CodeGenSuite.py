@@ -928,11 +928,18 @@ Exception in thread "main" java.lang.VerifyError: (class: MPClass, method: main 
 
 procedure main();
 begin
-    putInt(1);
+    PutIntLN(-1);
+    PuTIntLn(-100);
+    PUtFLOATLN(-1.0);
+    PutfLOaTLN(-10000.0);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""-1
+-100
+-1.0
+-10000.0
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 158))
 
 
@@ -941,11 +948,27 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PutIntLN(--1);
+    PuTIntLn(--100);
+    PUtFLOATLN(--1.0);
+    PutfLOaTLN(--10000.0);
+
+    PutIntLN(---1);
+    PuTIntLn(---100);
+    PUtFLOATLN(---1.0);
+    PutfLOaTLN(---10000.0);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+100
+1.0
+10000.0
+-1
+-100
+-1.0
+-10000.0
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 159))
 
 
@@ -954,11 +977,18 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PutfloatLN(-(1.5*2 + 2 - 5.3*2.1 - (3*5 + 2*3/2 - 4*7.2/14 + 1)));
+    puTFloATLn(-(1.5*2 + 2 - 5.3*2.1) - (3*5 + 2*3/2 - 4*7.2/14 + 1));
+    PUtFLOATLN(--(1.5*2 + 2 - 5.3*2.1) --- (3*5 + 2*3/2 - 4*7.2/14 + 1));
+    PutfLOaTLN(-(-(-(-(1.5*2 + 2 - 5.3*2.1)))) ---- (3*5 + 2*3/2 - 4*7.2/14 + 1));
 end
 
 """
-        expect = r"""1"""
+        expect = r"""23.072857
+-10.812858
+-23.072857
+10.812858
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 160))
 
 
@@ -967,11 +997,30 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putBoolLn(not false);
+    PutBooLLN(not true);
+    putbOOLLN(not not false);
+    PUtbOOLLN(not not true);
+    PutBoOLLN(not not not false);
+    PutBoOLLN(not not not true);
+    PutBoOLLN(not false and true);
+    PutBoOLLN(not true and false);
+    PutBoOLLN(not not false and not not not true or false and true);
+    PutBoOLLN(not not true or false);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""true
+false
+false
+true
+true
+false
+true
+false
+false
+true
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 161))
 
 
