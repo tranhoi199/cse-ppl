@@ -247,9 +247,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         if ExpUtils.isOpForNumber(op): # for number type
             mType = ExpUtils.mergeNumberType(lType, rType)
             if op == '/': mType = FloatType() # mergeType >= lType, rType
+            lCode, rCode = (c if type(t) == type(mType) else c+self.emit.emitI2F(frame) \
+                            for c,t in [(lCode, lType), (rCode, rType)])
             if ExpUtils.isOpForNumberToNumber(op):
-                lCode, rCode = (c if type(t) == type(mType) else c+self.emit.emitI2F(frame) \
-                                    for c,t in [(lCode, lType), (rCode, rType)])
                 if op in ['+', '-']:
                     return lCode + rCode + self.emit.emitADDOP(op, mType, frame), mType
                 if op in ['*', '/']:
@@ -259,10 +259,11 @@ class CodeGenVisitor(BaseVisitor, Utils):
                 if op == 'mod':
                     return lCode + rCode + self.emit.emitMOD(frame), mType
             else: # op to boolean: > <= = <>, ...
-                pass
+                return lCode + rCode + self.emit.emitREOP(op, mType, frame), BoolType()
         else: # for boolean type
             mType = BoolType()
             if op == 'and': return lCode + rCode + self.emit.emitANDOP(frame), mType
             if op == 'or': return lCode + rCode + self.emit.emitOROP(frame), mType
+            
             if op == 'andthen': return lCode + rCode + self.emit.emitANDOP(frame), mType
             if op == 'orelse': return lCode + rCode + self.emit.emitANDOP(frame), mType

@@ -466,117 +466,162 @@ end
     def test_36(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(1 > 2);
+    putBool(1 < 2);
+    putBool(1 = 2);
+    putBool(1 >= 2);
+    putBool(1 <= 2);
+    putBool(1 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 136))
 
 
     def test_37(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(2 > 2);
+    putBool(2 < 2);
+    putBool(2 = 2);
+    putBool(2 >= 2);
+    putBool(2 <= 2);
+    putBool(2 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsefalsetruetruetruefalse"""
         self.assertTrue(TestCodeGen.test(input, expect, 137))
 
 
     def test_38(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(3 > 2);
+    putBool(3 < 2);
+    putBool(3 = 2);
+    putBool(3 >= 2);
+    putBool(3 <= 2);
+    putBool(3 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""truefalsefalsetruefalsetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 138))
 
 
     def test_39(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(1.0 > 2);
+    putBool(1.0 < 2);
+    putBool(1.0 = 2);
+    putBool(1.0 >= 2);
+    putBool(1.0 <= 2);
+    putBool(1.0 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 139))
 
 
     def test_40(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(1.9 > 2);
+    putBool(1.9 < 2);
+    putBool(1.9 = 2);
+    putBool(1.9 >= 2);
+    putBool(1.9 <= 2);
+    putBool(1.9 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 140))
 
 
     def test_41(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(2.1 > 2);
+    putBool(2.1 < 2);
+    putBool(2.1 = 2);
+    putBool(2.1 >= 2);
+    putBool(2.1 <= 2);
+    putBool(2.1 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""truefalsefalsetruefalsetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 141))
 
 
     def test_42(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(2.0 > 2);
+    putBool(2.0 < 2);
+    putBool(2.0 = 2);
+    putBool(2.0 >= 2);
+    putBool(2.0 <= 2);
+    putBool(2.0 <> 2);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsefalsetruetruetruefalse"""
         self.assertTrue(TestCodeGen.test(input, expect, 142))
 
 
     def test_43(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(2.1 > 2.1);
+    putBool(2.1 < 2.1);
+    putBool(2.1 = 2.1);
+    putBool(2.1 >= 2.1);
+    putBool(2.1 <= 2.1);
+    putBool(2.1 <> 2.1);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsefalsetruetruetruefalse"""
         self.assertTrue(TestCodeGen.test(input, expect, 143))
 
 
     def test_44(self):
         input = r"""
 
-procedure main();
-begin
-    putInt(1);
+procedure main(); 
+begin 
+    putBool(2 > 2.1);
+    putBool(2 < 2.1);
+    putBool(2 = 2.1);
+    putBool(2 >= 2.1);
+    putBool(2 <= 2.1);
+    putBool(2 <> 2.1);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input, expect, 144))
 
 

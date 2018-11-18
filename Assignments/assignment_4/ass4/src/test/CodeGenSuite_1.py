@@ -9,9 +9,14 @@ class CheckCodeGenSuite(unittest.TestCase):
         
 procedure main(); 
 begin 
-    putBool(FALSE OR TRUE and false or (False or true));
+    putBool(2 > 2.1);
+    putBool(2 < 2.1);
+    putBool(2 = 2.1);
+    putBool(2 >= 2.1);
+    putBool(2 <= 2.1);
+    putBool(2 <> 2.1);
 end
 
 """
-        expect = r"""true"""
+        expect = r"""falsetruefalsefalsetruetrue"""
         self.assertTrue(TestCodeGen.test(input,expect,1))

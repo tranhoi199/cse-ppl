@@ -6,6 +6,7 @@ from StaticCheck import *
 from StaticError import *
 import CodeGenerator as cgen
 from MachineCode import JasminCode
+from AST import *
 
 sys.path.append('../utils')
 sys.path.append('../checker')
@@ -422,25 +423,38 @@ class Emitter():
         # frame: Frame
         # ..., value1, value2 -> ..., result
 
+        isFloat = type(in_) is FloatType
+
         result = list()
         labelF = frame.getNewLabel()
         labelO = frame.getNewLabel()
 
         frame.pop()
         frame.pop()
+        
+        if isFloat: result.append(self.jvm.emitFCMPL()) # 1 >, 0 =, -1 <
+        
         if op == ">":
-            result.append(self.jvm.emitIFICMPLE(labelF))
+            if isFloat: result.append(self.jvm.emitIFLE(labelF))
+            else: result.append(self.jvm.emitIFICMPLE(labelF))
         elif op == ">=":
-            result.append(self.jvm.emitIFICMPLT(labelF))
+            if isFloat: result.append(self.jvm.emitIFLT(labelF))
+            else: result.append(self.jvm.emitIFICMPLT(labelF))
         elif op == "<":
-            result.append(self.jvm.emitIFICMPGE(labelF))
+            if isFloat: result.append(self.jvm.emitIFGE(labelF))
+            else: result.append(self.jvm.emitIFICMPGE(labelF))
         elif op == "<=":
-            result.append(self.jvm.emitIFICMPGT(labelF))
-        elif op == "!=":
-            result.append(self.jvm.emitIFICMPEQ(labelF))
-        elif op == "==":
-            result.append(self.jvm.emitIFICMPNE(labelF))
+            if isFloat: result.append(self.jvm.emitIFGT(labelF))
+            else: result.append(self.jvm.emitIFICMPGT(labelF))
+        elif op == "<>":
+            if isFloat: result.append(self.jvm.emitIFEQ(labelF))
+            else: result.append(self.jvm.emitIFICMPEQ(labelF))
+        elif op == "=":
+            if isFloat: result.append(self.jvm.emitIFNE(labelF))
+            else: result.append(self.jvm.emitIFICMPNE(labelF))
+
         result.append(self.emitPUSHCONST("1", IntType(), frame))
+        
         frame.pop()
         result.append(self.emitGOTO(labelO, frame))
         result.append(self.emitLABEL(labelF, frame))
@@ -469,9 +483,9 @@ class Emitter():
             result.append(self.jvm.emitIFICMPGE(falseLabel))
         elif op == "<=":
             result.append(self.jvm.emitIFICMPGT(falseLabel))
-        elif op == "!=":
+        elif op == "<>":
             result.append(self.jvm.emitIFICMPEQ(falseLabel))
-        elif op == "==":
+        elif op == "=":
             result.append(self.jvm.emitIFICMPNE(falseLabel))
         result.append(self.jvm.emitGOTO(trueLabel))
         return ''.join(result)
