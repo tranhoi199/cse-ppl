@@ -61,6 +61,7 @@ class CodeGenerator(Utils):
         gc = CodeGenVisitor(ast, gl, dir_)
         gc.visit(ast, None)
 
+
 # class StringType(Type):
 
 #     def __str__(self):
@@ -68,6 +69,7 @@ class CodeGenerator(Utils):
 
 #     def accept(self, v, param):
 #         return None
+
 
 class ArrayPointerType(Type):
     def __init__(self, ctype):
@@ -79,6 +81,8 @@ class ArrayPointerType(Type):
 
     def accept(self, v, param):
         return None
+
+
 class ClassType(Type):
     def __init__(self, cname):
         self.cname = cname
@@ -89,6 +93,7 @@ class ClassType(Type):
     def accept(self, v, param):
         return None
 
+
 class SubBody():
     def __init__(self, frame, sym):
         # frame: Frame
@@ -96,6 +101,7 @@ class SubBody():
 
         self.frame = frame
         self.sym = sym
+
 
 class Access():
     def __init__(self, frame, sym, isLeft, isFirst):
@@ -109,8 +115,10 @@ class Access():
         self.isLeft = isLeft
         self.isFirst = isFirst
 
+
 class Val(ABC):
     pass
+
 
 class Index(Val):
     def __init__(self, value):
@@ -118,11 +126,13 @@ class Index(Val):
 
         self.value = value
 
+
 class CName(Val):
     def __init__(self, value):
         # value: String
 
         self.value = value
+
 
 class CodeGenVisitor(BaseVisitor, Utils):
     def __init__(self, astTree, env, dir_):
@@ -141,9 +151,11 @@ class CodeGenVisitor(BaseVisitor, Utils):
         # c: Any
 
         self.emit.printout(self.emit.emitPROLOG(self.className, "java.lang.Object"))
+        
         e = SubBody(None, self.env)
         for x in ast.decl:
-            e = self.visit(x, e)
+            if type(x) is FuncDecl: e = self.visit(x, e)
+            else: pass
 
         # generate default constructor
         self.genMETHOD(FuncDecl(Id("<init>"), list(), list(), list(), None), c, Frame("<init>", VoidType))
@@ -151,8 +163,28 @@ class CodeGenVisitor(BaseVisitor, Utils):
         return c
 
 
+
+    def visitFuncDecl(self, ast: FuncDecl, o: SubBody):
+        subctxt = o
+        frame = Frame(ast.name.name, ast.returnType)
+        self.genMETHOD(ast, subctxt.sym, frame)
+        return SubBody(None, [Symbol(ast.name.name, MType(list(), ast.returnType), CName(self.className))] + subctxt.sym)
+
+
+    def visitVarDecl(self, ast: VarDecl, o: SubBody):
+        subctxt = o
+        frame = o.frame
+        varName = ast.variable.name
+        varType = ast.varType
+        self.emit.printout(self.emit.emitVAR(frame.getNewIndex(), varName, varType, frame.getStartLabel(), frame.getEndLabel(), frame))
+        return SubBody(frame, [Symbol(varName, varType)] + subctxt.sym)
+
+
+
     def genMETHOD(self, decl: FuncDecl, o, frame: Frame):
         # o: Any
+
+        glenv = o
 
         isInit = decl.returnType is None
         isMain = decl.name.name == "main" and len(decl.param) == 0 and type(decl.returnType) is VoidType
@@ -166,8 +198,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         frame.enterScope(isProc)
 
-        glenv = o
-
         # Generate code for parameter declarations
         if isInit:
             self.emit.printout(self.emit.emitVAR(frame.getNewIndex(), "this", ClassType(self.className), frame.getStartLabel(), frame.getEndLabel(), frame))
@@ -175,14 +205,18 @@ class CodeGenVisitor(BaseVisitor, Utils):
             self.emit.printout(self.emit.emitVAR(frame.getNewIndex(), "args", ArrayPointerType(
                 StringType()), frame.getStartLabel(), frame.getEndLabel(), frame))
 
-        body = decl.body
+        varList = SubBody(frame, glenv)
+        for x in decl.param + decl.local:
+            varList = self.visit(x, varList)
+
         self.emit.printout(self.emit.emitLABEL(frame.getStartLabel(), frame))
 
         # Generate code for statements
         if isInit:
             self.emit.printout(self.emit.emitREADVAR("this", ClassType(self.className), 0, frame))
             self.emit.printout(self.emit.emitINVOKESPECIAL(frame))
-        list(map(lambda x: self.visit(x, SubBody(frame, glenv)), body))
+        
+        list(map(lambda x: self.visit(x, varList), decl.body))
 
         self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
         if isProc:
@@ -191,16 +225,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         frame.exitScope()
 
 
-    def visitFuncDecl(self, ast: FuncDecl, o: SubBody):
-        subctxt = o
-        frame = Frame(ast.name.name, ast.returnType)
-        self.genMETHOD(ast, subctxt.sym, frame)
-        return SubBody(None, [Symbol(ast.name.name, MType(list(), ast.returnType), CName(self.className))] + subctxt.sym)
 
-
-    def visitVarDecl(self, ast: VarDecl, o: SubBody):
-        subctxt = o
-        return SubBody(None, [Symbol(ast.variable.name, ast.varType)] + subctxt.sym)
 
 
 # ================   Visit Statements   =================
@@ -229,6 +254,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         nenv = ctxt.sym
         lhsCode, lhsType = self.visit(ast.lhs, Access(frame, nenv, True, True))
         expCode, expType = self.visit(ast.exp, Access(frame, nenv, False, True))
+        self.emit.printout(self.emit.emitREADVAR())
 
 
 # ================   Visit Expression   =================
@@ -276,7 +302,11 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
 
     def visitId(self, ast: Id, o: Access):
-        pass
+        ctxt = o
+        frame = ctxt.frame
+        sym = ctxt.sym
+
+        return ast.name
 
 
     def visitIntLiteral(self, ast: IntLiteral, o: Access):
