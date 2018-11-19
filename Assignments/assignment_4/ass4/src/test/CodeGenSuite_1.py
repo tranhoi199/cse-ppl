@@ -7,18 +7,34 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
+procedure main();
+var a: real;
+begin
+    a := 100;
+    putFloatLn(a);
+    a := foo();
+    putFloatLn(a);
+    bar();
+end
+
 function foo(): integer;
 begin
-    return 100;
+    a := 10;
+    return a*5;
 end
 
-procedure main();
+procedure bar();
 begin
-    putInt(foo());
+    putIntLn(a);
 end
+
+var a: integer;
 
 """
-        expect = r"""100"""
+        expect = r"""100.0
+50.0
+10
+"""
         self.assertTrue(TestCodeGen.test(input,expect,1))
 
 

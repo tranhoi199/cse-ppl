@@ -1327,13 +1327,20 @@ end
     def test_74(self):
         input = r"""
 
+function foo(): integer;
+var a: integer;
+begin
+    a := 1000;
+    return a;
+end
+
 procedure main();
 begin
-    putInt(1);
+    putInt(foo());
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1000"""
         self.assertTrue(TestCodeGen.test(input, expect, 174))
 
 
@@ -1342,11 +1349,31 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putIntLn(fi());
+    putFloatLn(ff());
+    putBoolLn(fb());
+end
+
+function fi(): integer;
+begin
+    return 1;
+end
+
+function ff(): real;
+begin
+    return 5.0;
+end
+
+function fb(): boolean;
+begin
+    return false;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+5.0
+false
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 175))
 
 
@@ -1354,8 +1381,15 @@ end
         input = r"""
 
 procedure main();
+var a: integer;
 begin
-    putInt(1);
+    a := foo(1, 2);
+    putInt(a);
+end
+
+function foo(a,b: integer): integer;
+begin
+    return (a + b) div 2;
 end
 
 """
@@ -1367,12 +1401,19 @@ end
         input = r"""
 
 procedure main();
+var a: real;
 begin
-    putInt(1);
+    a := foo(2, false);
+    putFloat(a);
+end
+
+function foo(a: real; b: boolean): real;
+begin
+    return a*a*a + a/2;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""9.0"""
         self.assertTrue(TestCodeGen.test(input, expect, 177))
 
 
@@ -1381,11 +1422,14 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    a := 100;
+    putInt(a);
 end
 
+var a: integer;
+
 """
-        expect = r"""1"""
+        expect = r"""100"""
         self.assertTrue(TestCodeGen.test(input, expect, 178))
 
 
@@ -1393,12 +1437,33 @@ end
         input = r"""
 
 procedure main();
+var a: real;
 begin
-    putInt(1);
+    a := 100;
+    putFloatLn(a);
+    a := foo();
+    putFloatLn(a);
+    bar();
 end
 
+function foo(): integer;
+begin
+    a := 10;
+    return a*5;
+end
+
+procedure bar();
+begin
+    putIntLn(a);
+end
+
+var a: integer;
+
 """
-        expect = r"""1"""
+        expect = r"""100.0
+50.0
+10
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 179))
 
 

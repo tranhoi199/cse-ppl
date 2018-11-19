@@ -156,12 +156,15 @@ class CodeGenVisitor(BaseVisitor, Utils):
         for x in ast.decl:
             if type(x) is FuncDecl:
                 partype = [i.varType for i in x.param]
-                # staticDecl = [Symbol(x.name.name, MType(partype, x.returnType), None)] + staticDecl
                 staticDecl = [Symbol(x.name.name, MType(partype, x.returnType), CName(self.className))] + staticDecl
-            else: pass
+            else:
+                varName = x.variable.name
+                varType = x.varType
+                staticDecl = [Symbol(varName, varType)] + staticDecl
+                self.emit.printout(self.emit.emitGLOBALVAR(varName, varType))
         
         e = SubBody(None, staticDecl)
-        [self.visit(x, e) for x in ast.decl]
+        [self.visit(x, e) for x in ast.decl if type(x) is FuncDecl]
 
         # generate default constructor
         self.genMETHOD(FuncDecl(Id("<init>"), list(), list(), list(), None), c, Frame("<init>", VoidType))
@@ -174,7 +177,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
         subctxt = o
         frame = Frame(ast.name.name, ast.returnType)
         self.genMETHOD(ast, subctxt.sym, frame)
-        # return SubBody(None, [Symbol(ast.name.name, MType(partype, ast.returnType), None)] + subctxt.sym)
 
 
     def visitVarDecl(self, ast: VarDecl, o: SubBody):
@@ -198,7 +200,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         returnType = VoidType() if isInit else decl.returnType
         isProc = type(returnType) is VoidType
         methodName = "<init>" if isInit else decl.name.name
-        intype = [ArrayPointerType(StringType())] if isMain else list()
+        intype = [ArrayPointerType(StringType())] if isMain else [x.varType for x in decl.param]
         mtype = MType(intype, returnType)
 
         self.emit.printout(self.emit.emitMETHOD(methodName, mtype, not isInit, frame))
@@ -254,18 +256,18 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctype = sym.mtype
         paramTypes = ctype.partype
 
-        params = ("", list())
+        paramsCode = ""
         idx = 0
         for x in ast.param:
             pCode, pType = self.visit(x, Access(frame, symbols, False, True))
             if type(paramTypes[idx]) is FloatType and type(pType) is IntType:
                 pCode = pCode + self.emit.emitI2F(frame)
-            params = (params[0] + pCode, params[1].append(pType))
+            paramsCode = paramsCode + pCode
             idx = idx + 1
 
-        code = params[0] + self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame) 
+        code = paramsCode + self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame) 
         if isStmt: self.emit.printout(code)
-        else: return code, ctype
+        else: return code, ctype.rettype
 
 
 
@@ -279,7 +281,10 @@ class CodeGenVisitor(BaseVisitor, Utils):
         if type(lhsType) is FloatType and type(expType) is IntType:
             expCode = expCode + self.emit.emitI2F(frame)
         self.emit.printout(expCode)
-        self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
+        if lhsIndex is None: # global var - static field
+            self.emit.printout(self.emit.emitPUTSTATIC(self.className + "/" + lhsName, lhsType, frame))
+        else:
+            self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
 
 
 
@@ -351,6 +356,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
         isFirst = ctxt.isFirst
         sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
         if isLeft: return sym.name, sym.mtype, sym.value
+        if sym.value is None: # not index -> global var - static field
+            return self.emit.emitGETSTATIC(self.className + "/" + sym.name, sym.mtype, frame), sym.mtype
         return self.emit.emitREADVAR(sym.name, sym.mtype, sym.value.value, frame), sym.mtype
 
 

@@ -223,7 +223,14 @@ class Emitter():
         # isFinal: Boolean
         # value: String
 
-        return self.jvm.emitSTATICFIELD(lexeme, self.getJVMType(in_), false)
+        return self.jvm.emitSTATICFIELD(lexeme, self.getJVMType(in_), False)
+
+    def emitGLOBALVAR(self, lexeme, in_):
+        # lexeme: String
+        # in_: Type
+
+        return self.jvm.emitSTATICFIELD(lexeme, self.getJVMType(in_), False)
+
 
     def emitGETSTATIC(self, lexeme, in_, frame):
         # lexeme: String
@@ -659,7 +666,7 @@ class Emitter():
         if type(in_) is VoidType: return self.jvm.emitRETURN()
 
         frame.pop()
-        if type(in_) is IntType: return self.jvm.emitIRETURN()
+        if type(in_) in [IntType, BoolType]: return self.jvm.emitIRETURN()
         if type(in_) is FloatType: return self.jvm.emitFRETURN()
         return self.jvm.emitARETURN()
 
