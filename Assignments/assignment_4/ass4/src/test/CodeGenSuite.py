@@ -1309,13 +1309,18 @@ end
     def test_73(self):
         input = r"""
 
+function foo(): integer;
+begin
+    return 100;
+end
+
 procedure main();
 begin
-    putInt(1);
+    putInt(foo());
 end
 
 """
-        expect = r"""1"""
+        expect = r"""100"""
         self.assertTrue(TestCodeGen.test(input, expect, 173))
 
 

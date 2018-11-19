@@ -152,10 +152,16 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         self.emit.printout(self.emit.emitPROLOG(self.className, "java.lang.Object"))
         
-        e = SubBody(None, self.env)
+        staticDecl = self.env
         for x in ast.decl:
-            if type(x) is FuncDecl: e = self.visit(x, e)
+            if type(x) is FuncDecl:
+                partype = [i.varType for i in x.param]
+                # staticDecl = [Symbol(x.name.name, MType(partype, x.returnType), None)] + staticDecl
+                staticDecl = [Symbol(x.name.name, MType(partype, x.returnType), CName(self.className))] + staticDecl
             else: pass
+        
+        e = SubBody(None, staticDecl)
+        [self.visit(x, e) for x in ast.decl]
 
         # generate default constructor
         self.genMETHOD(FuncDecl(Id("<init>"), list(), list(), list(), None), c, Frame("<init>", VoidType))
@@ -168,7 +174,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         subctxt = o
         frame = Frame(ast.name.name, ast.returnType)
         self.genMETHOD(ast, subctxt.sym, frame)
-        return SubBody(None, [Symbol(ast.name.name, MType(list(), ast.returnType), CName(self.className))] + subctxt.sym)
+        # return SubBody(None, [Symbol(ast.name.name, MType(partype, ast.returnType), None)] + subctxt.sym)
 
 
     def visitVarDecl(self, ast: VarDecl, o: SubBody):
@@ -228,7 +234,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
 
 
-
 # ================   Visit Statements   =================
 # Param:    o: SubBody(frame, sym)
 
@@ -236,8 +241,15 @@ class CodeGenVisitor(BaseVisitor, Utils):
     def visitCallStmt(self, ast: CallStmt, o: SubBody):
         ctxt = o
         frame = ctxt.frame
-        nenv = ctxt.sym
-        sym = self.lookup(ast.method.name.lower(), nenv, lambda x: x.name.lower())
+        symbols = ctxt.sym
+        self.handleCall(ast, frame, symbols, isStmt=True)
+
+
+
+    def handleCall(self, ast, frame, symbols, isStmt=False):
+        # ast: CallStmt | CallExpr
+
+        sym = self.lookup(ast.method.name.lower(), symbols, lambda x: x.name.lower())
         cname = sym.value.value
         ctype = sym.mtype
         paramTypes = ctype.partype
@@ -245,13 +257,16 @@ class CodeGenVisitor(BaseVisitor, Utils):
         params = ("", list())
         idx = 0
         for x in ast.param:
-            pCode, pType = self.visit(x, Access(frame, nenv, False, True))
+            pCode, pType = self.visit(x, Access(frame, symbols, False, True))
             if type(paramTypes[idx]) is FloatType and type(pType) is IntType:
                 pCode = pCode + self.emit.emitI2F(frame)
             params = (params[0] + pCode, params[1].append(pType))
             idx = idx + 1
-        self.emit.printout(params[0])
-        self.emit.printout(self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame))
+
+        code = params[0] + self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame) 
+        if isStmt: self.emit.printout(code)
+        else: return code, ctype
+
 
 
     def visitAssign(self, ast: Assign, o: SubBody):
@@ -268,19 +283,17 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
 
 
-
-
-
-    def visitId(self, ast: Id, o: Access):
-        # Return (name, type, index)
+    def visitReturn(self, ast: Return, o: SubBody):
         ctxt = o
         frame = ctxt.frame
-        symbols = ctxt.sym
-        isLeft = ctxt.isLeft
-        isFirst = ctxt.isFirst
-        sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
-        if isLeft: return sym.name, sym.mtype, sym.value
-        return self.emit.emitREADVAR(sym.name, sym.mtype, sym.value.value, frame), sym.mtype
+        nenv = ctxt.sym
+        retType = frame.returnType
+        if not type(retType) is VoidType:
+            expCode, expType = self.visit(ast.expr, Access(frame, nenv, False, True))
+            if type(retType) is FloatType and type(expType) is IntType:
+                expCode = expCode + self.emit.emitI2F(frame)
+            self.emit.printout(expCode)
+        self.emit.printout(self.emit.emitRETURN(retType, frame))
 
 
 
@@ -326,6 +339,27 @@ class CodeGenVisitor(BaseVisitor, Utils):
         bCode, bType = self.visit(ast.body, ctxt)
         if op == '-': return bCode + self.emit.emitNEGOP(bType, frame), bType
         if op == 'not': return bCode + self.emit.emitNOT(bType, frame), bType
+
+
+
+    def visitId(self, ast: Id, o: Access):
+        # Return (name, type, index)
+        ctxt = o
+        frame = ctxt.frame
+        symbols = ctxt.sym
+        isLeft = ctxt.isLeft
+        isFirst = ctxt.isFirst
+        sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
+        if isLeft: return sym.name, sym.mtype, sym.value
+        return self.emit.emitREADVAR(sym.name, sym.mtype, sym.value.value, frame), sym.mtype
+
+
+
+    def visitCallExpr(self, ast: CallExpr, o: Access):
+        ctxt = o
+        frame = ctxt.frame
+        symbols = ctxt.sym
+        return self.handleCall(ast, frame, symbols, isStmt=False)
 
 
 
