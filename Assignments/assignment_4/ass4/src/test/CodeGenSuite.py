@@ -1070,12 +1070,24 @@ end
         input = r"""
 
 procedure main();
+var a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    putIntLn(a);
+    b := 2;
+    a := b;
+    putIntLn(b);
+    putIntLn(a);
+    a := b + 1;
+    putIntLn(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+2
+2
+3
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 164))
 
 
@@ -1083,12 +1095,24 @@ end
         input = r"""
 
 procedure main();
+var a, b: REAL;
 begin
-    putInt(1);
+    a := 1.0;
+    putFLOATLn(a);
+    b := 2.0;
+    a := b;
+    putFLOATLn(b);
+    putfloatln(a);
+    a := b + 1;
+    putFloatLn(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1.0
+2.0
+2.0
+3.0
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 165))
 
 
@@ -1096,12 +1120,24 @@ end
         input = r"""
 
 procedure main();
+var a, b: REAL;
 begin
-    putInt(1);
+    a := 1;
+    putFLOATLn(a);
+    b := 2;
+    a := b;
+    putFLOATLn(b);
+    putfloatln(a);
+    a := b + 1;
+    putFloatLn(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1.0
+2.0
+2.0
+3.0
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 166))
 
 
@@ -1109,12 +1145,38 @@ end
         input = r"""
 
 procedure main();
+var a, b: REAL;
+    x, y: integer;
 begin
-    putInt(1);
+    a := 1.05 * 25.4;
+    putFLOATLn(a);
+    b := 2.05 + a;
+    putFLOATLn(b);
+    a := a + 100 - b;
+    putFloatLn(a);
+    x := 1000;
+    y := 1;
+    x := x + y * 1000 div 5;
+    putIntLn(x);
+    putIntLn(y);
+    y := x*y + x*2 + 2*x - y*2 + 2*y;
+    putIntLn(y);
+    x := x * y * 2 * 5;
+    putIntLn(x);
+    a := (a * b + x) / y + y / (a*b + 2 mod x);
+    putFloatLn(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""26.669998
+28.719997
+97.95
+1200
+1
+6000
+72000000
+12002.601
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 167))
 
 
@@ -1122,12 +1184,38 @@ end
         input = r"""
 
 procedure main();
+var a, b: REAL;
+    x, y: integer;
 begin
-    putInt(1);
+    a := 1.05 * 25.4;
+    putFLOATLn(a);
+    B := 2.05 + a;
+    putFLOATLn(b);
+    A := a + 100 - b;
+    putFloatLn(a);
+    x := 1000;
+    y := 1;
+    X := x + Y * 1000 div 5;
+    putIntLn(x);
+    putIntLn(Y);
+    y := x*y + X*2 + 2*x - Y*2 + 2*y;
+    putIntLn(Y);
+    x := x * y * 2 * 5;
+    putIntLn(X);
+    a := (A * b + x) / y + Y / (a*B + 2 mod X);
+    putFloatLn(A);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""26.669998
+28.719997
+97.95
+1200
+1
+6000
+72000000
+12002.601
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 168))
 
 
@@ -1135,12 +1223,27 @@ end
         input = r"""
 
 procedure main();
+var a, b, c: REAL;
 begin
-    putInt(1);
+    a := 5.0;
+    b := 2.0;
+    a := b := a + b / 2 + 1;
+    putFloatLn(a);
+    putFloatLn(b);
+
+    c := a := b := (a+b)/4 + (a-b)/4 * 2 + 1;
+    putFloatLn(a);
+    putFloatLn(b);
+    putFloatLn(c);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""7.0
+7.0
+4.5
+4.5
+4.5
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 169))
 
 
@@ -1148,12 +1251,23 @@ end
         input = r"""
 
 procedure main();
+var a, b: REAL;
+    c: integer;
 begin
-    putInt(1);
+    a := 5.0;
+    b := 2.0;
+    c := 1000;
+    a := b := c + 1;
+    putFloatLn(a);
+    putFloatLn(b);
+    putIntLn(c);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1001.0
+1001.0
+1000
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 170))
 
 
@@ -1161,12 +1275,14 @@ end
         input = r"""
 
 procedure main();
+var a: integer;
 begin
-    putInt(1);
+    a := 5;
+    putFloat(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""5.0"""
         self.assertTrue(TestCodeGen.test(input, expect, 171))
 
 
@@ -1174,12 +1290,19 @@ end
         input = r"""
 
 procedure main();
+var a: integer;
 begin
-    putInt(1);
+    a := 5;
+    putIntLn(a);
+    putFloatLn(a);
+    putFloatLn(a + 5.0);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""5
+5.0
+10.0
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 172))
 
 

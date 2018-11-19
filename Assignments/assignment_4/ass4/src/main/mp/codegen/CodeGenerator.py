@@ -176,8 +176,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         frame = o.frame
         varName = ast.variable.name
         varType = ast.varType
-        self.emit.printout(self.emit.emitVAR(frame.getNewIndex(), varName, varType, frame.getStartLabel(), frame.getEndLabel(), frame))
-        return SubBody(frame, [Symbol(varName, varType)] + subctxt.sym)
+        idx = frame.getNewIndex()
+        self.emit.printout(self.emit.emitVAR(idx, varName, varType, frame.getStartLabel(), frame.getEndLabel(), frame))
+        return SubBody(frame, [Symbol(varName, varType, Index(idx))] + subctxt.sym)
 
 
 
@@ -239,11 +240,16 @@ class CodeGenVisitor(BaseVisitor, Utils):
         sym = self.lookup(ast.method.name.lower(), nenv, lambda x: x.name.lower())
         cname = sym.value.value
         ctype = sym.mtype
+        paramTypes = ctype.partype
 
         params = ("", list())
+        idx = 0
         for x in ast.param:
             pCode, pType = self.visit(x, Access(frame, nenv, False, True))
+            if type(paramTypes[idx]) is FloatType and type(pType) is IntType:
+                pCode = pCode + self.emit.emitI2F(frame)
             params = (params[0] + pCode, params[1].append(pType))
+            idx = idx + 1
         self.emit.printout(params[0])
         self.emit.printout(self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame))
 
@@ -252,9 +258,30 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctxt = o
         frame = ctxt.frame
         nenv = ctxt.sym
-        lhsCode, lhsType = self.visit(ast.lhs, Access(frame, nenv, True, True))
+        # Visit LHS: Id || ArrayCell, return name, type, index
+        lhsName, lhsType, lhsIndex = self.visit(ast.lhs, Access(frame, nenv, True, True))
         expCode, expType = self.visit(ast.exp, Access(frame, nenv, False, True))
-        self.emit.printout(self.emit.emitREADVAR())
+        if type(lhsType) is FloatType and type(expType) is IntType:
+            expCode = expCode + self.emit.emitI2F(frame)
+        self.emit.printout(expCode)
+        self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
+
+
+
+
+
+
+    def visitId(self, ast: Id, o: Access):
+        # Return (name, type, index)
+        ctxt = o
+        frame = ctxt.frame
+        symbols = ctxt.sym
+        isLeft = ctxt.isLeft
+        isFirst = ctxt.isFirst
+        sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
+        if isLeft: return sym.name, sym.mtype, sym.value
+        return self.emit.emitREADVAR(sym.name, sym.mtype, sym.value.value, frame), sym.mtype
+
 
 
 # ================   Visit Expression   =================
@@ -300,13 +327,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
         if op == '-': return bCode + self.emit.emitNEGOP(bType, frame), bType
         if op == 'not': return bCode + self.emit.emitNOT(bType, frame), bType
 
-
-    def visitId(self, ast: Id, o: Access):
-        ctxt = o
-        frame = ctxt.frame
-        sym = ctxt.sym
-
-        return ast.name
 
 
     def visitIntLiteral(self, ast: IntLiteral, o: Access):
