@@ -1,5 +1,3 @@
-# Huynh Sam Ha - 1610852
-
 import sys
 from Utils import *
 from StaticCheck import *
@@ -291,22 +289,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
             self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
 
 
-
-    def visitReturn(self, ast: Return, o: SubBody):
-        ctxt = o
-        frame = ctxt.frame
-        nenv = ctxt.sym
-        retType = frame.returnType
-        if not type(retType) is VoidType:
-            expCode, expType = self.visit(ast.expr, Access(frame, nenv, False, True))
-            if type(retType) is FloatType and type(expType) is IntType:
-                expCode = expCode + self.emit.emitI2F(frame)
-            self.emit.printout(expCode)
-        self.emit.printout(self.emit.emitRETURN(retType, frame))
-
-
-
-
     def visitIf(self, ast: If, o: SubBody):
         ctxt = o
         frame = ctxt.frame
@@ -330,9 +312,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.emit.printout(self.emit.emitLABEL(labelT, frame))
         self.emit.printout(self.emit.emitPUSHICONST("true", frame))
         [self.visit(x, o) for x in ast.thenStmt]
-        self.emit.printout(self.emit.emitGOTO(labelE, frame)) # go to end
 
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
+
 
 
 # ================   Visit Expression   =================
@@ -368,15 +350,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
             if op == 'orelse': return self.emit.emitORELSE(frame, lCode, rCode), mType
             if op == 'andthen': return self.emit.emitANDTHEN(frame, lCode, rCode), mType
 
-
-
-    def visitUnaryOp(self, ast: UnaryOp, o: Access):
-        ctxt = o
-        frame = ctxt.frame
-        op = str(ast.op).lower()
-        bCode, bType = self.visit(ast.body, ctxt)
-        if op == '-': return bCode + self.emit.emitNEGOP(bType, frame), bType
-        if op == 'not': return bCode + self.emit.emitNOT(bType, frame), bType
 
 
 

@@ -9,13 +9,19 @@ class CheckCodeGenSuite(unittest.TestCase):
 
 procedure main();
 begin
-    if 1 = 2 then putInt(100);
-    else if 2 = 2 then putInt(200);
-    else putInt(300);
+    if 5*2 + 3 - 5*2 - 3 = 0 then begin
+        putInt(100);
+        putFloat(100);
+        if true then putInt(101); else putInt(102);
+    end else begin
+        putInt(200);
+        putFloat(200);
+        if true then putInt(201); else putInt(202);
+    end
 end
 
 """
-        expect = r"""200"""
+        expect = r"""100100.0101"""
         self.assertTrue(TestCodeGen.test(input,expect,1))
 
 
