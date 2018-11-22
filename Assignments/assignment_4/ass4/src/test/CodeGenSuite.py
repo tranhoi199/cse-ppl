@@ -1961,12 +1961,58 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a to b do begin
+        putInt(i);
+        putString(": ");
+        for j := i+1 to b do begin
+            putInt(j);
+            putString(" ");
+        end
+        putLn();
+        putString("j = ");
+        putIntLn(j);
+        putString("i = "); 
+        putIntLn(i);
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1: 2 3 4 5 6 7 8 9 10 
+j = 11
+i = 1
+2: 3 4 5 6 7 8 9 10 
+j = 11
+i = 2
+3: 4 5 6 7 8 9 10 
+j = 11
+i = 3
+4: 5 6 7 8 9 10 
+j = 11
+i = 4
+5: 6 7 8 9 10 
+j = 11
+i = 5
+6: 7 8 9 10 
+j = 11
+i = 6
+7: 8 9 10 
+j = 11
+i = 7
+8: 9 10 
+j = 11
+i = 8
+9: 10 
+j = 11
+i = 9
+10: 
+j = 11
+i = 10
+11"""
         self.assertTrue(TestCodeGen.test(input, expect, 201))
 
 
@@ -1974,12 +2020,59 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a to b do begin
+        putInt(i);
+        putString(": ");
+        for j := i+1 to b do begin
+            if (j + i) * 2 > b then continue;
+            putInt(j);
+            putString(" ");
+        end
+        putLn();
+        putString("j = ");
+        putIntLn(j);
+        putString("i = "); 
+        putIntLn(i);
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1: 2 3 4 
+j = 11
+i = 1
+2: 3 
+j = 11
+i = 2
+3: 
+j = 11
+i = 3
+4: 
+j = 11
+i = 4
+5: 
+j = 11
+i = 5
+6: 
+j = 11
+i = 6
+7: 
+j = 11
+i = 7
+8: 
+j = 11
+i = 8
+9: 
+j = 11
+i = 9
+10: 
+j = 11
+i = 10
+11"""
         self.assertTrue(TestCodeGen.test(input, expect, 202))
 
 
@@ -1987,12 +2080,59 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a to b do begin
+        putInt(i);
+        putString(": ");
+        for j := i+1 to b do begin
+            if (j + i) * 2 > b then break;
+            putInt(j);
+            putString(" ");
+        end
+        putLn();
+        putString("j = ");
+        putIntLn(j);
+        putString("i = "); 
+        putIntLn(i);
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1: 2 3 4 
+j = 5
+i = 1
+2: 3 
+j = 4
+i = 2
+3: 
+j = 4
+i = 3
+4: 
+j = 5
+i = 4
+5: 
+j = 6
+i = 5
+6: 
+j = 7
+i = 6
+7: 
+j = 8
+i = 7
+8: 
+j = 9
+i = 8
+9: 
+j = 10
+i = 9
+10: 
+j = 11
+i = 10
+11"""
         self.assertTrue(TestCodeGen.test(input, expect, 203))
 
 
@@ -2000,12 +2140,45 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a to b do begin
+        putInt(i);
+        putString(": ");
+        for j := i+1 to b do begin
+            if (j + i) * 2 > b then break;
+            putInt(j);
+            putString(" ");
+        end
+        if i > 5 then continue;
+        putLn();
+        putString("j = ");
+        putIntLn(j);
+        putString("i = "); 
+        putIntLn(i);
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1: 2 3 4 
+j = 5
+i = 1
+2: 3 
+j = 4
+i = 2
+3: 
+j = 4
+i = 3
+4: 
+j = 5
+i = 4
+5: 
+j = 6
+i = 5
+6: 7: 8: 9: 10: 11"""
         self.assertTrue(TestCodeGen.test(input, expect, 204))
 
 
@@ -2013,12 +2186,45 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a to b do begin
+        putInt(i);
+        putString(": ");
+        for j := i+1 to b do begin
+            if (j + i) * 2 > b then break;
+            putInt(j);
+            putString(" ");
+        end
+        if i > 5 then break;
+        putLn();
+        putString("j = ");
+        putIntLn(j);
+        putString("i = "); 
+        putIntLn(i);
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1: 2 3 4 
+j = 5
+i = 1
+2: 3 
+j = 4
+i = 2
+3: 
+j = 4
+i = 3
+4: 
+j = 5
+i = 4
+5: 
+j = 6
+i = 5
+6: 6"""
         self.assertTrue(TestCodeGen.test(input, expect, 205))
 
 
