@@ -16,7 +16,7 @@ sys.path.append('../utils')
 sys.path.append('../checker')
 
 
-class ExpUtils:
+class StupidUtils:
     @staticmethod
     def isOpForNumberToNumber(operator):
         return str(operator).lower() in ['+', '-', '*', '/', 'div', 'mod']
@@ -27,18 +27,17 @@ class ExpUtils:
 
     @staticmethod
     def isOpForNumber(operator):
-        return ExpUtils.isOpForNumberToNumber(operator) or ExpUtils.isOpForNumberToBoolean(operator)
+        return StupidUtils.isOpForNumberToNumber(operator) or StupidUtils.isOpForNumberToBoolean(operator)
 
     @staticmethod
     def mergeNumberType(lType, rType):
         return FloatType() if FloatType in [type(x) for x in [lType, rType]] else IntType()
 
-
-class TypeUtils:
     @staticmethod
     def retrieveType(originType):
         if type(originType) is ArrayType: return ArrayPointerType(originType.eleType)
         return originType
+
 
 
 class CodeGenerator(Utils):
@@ -68,14 +67,6 @@ class CodeGenerator(Utils):
         gc = CodeGenVisitor(ast, gl, dir_)
         gc.visit(ast, None)
 
-
-# class StringType(Type):
-
-#     def __str__(self):
-#         return "StringType"
-
-#     def accept(self, v, param):
-#         return None
 
 
 class ArrayPointerType(Type):
@@ -194,13 +185,13 @@ class CodeGenVisitor(BaseVisitor, Utils):
         varName = ast.variable.name
         varType = ast.varType
         if isGlobal:
-            self.emit.printout(self.emit.emitATTRIBUTE(varName, TypeUtils.retrieveType(varType), False, ""))
+            self.emit.printout(self.emit.emitATTRIBUTE(varName, StupidUtils.retrieveType(varType), False, ""))
             if type(ast.varType) is ArrayType: 
                 self.listGlobalArray.append(ast)
             return Symbol(varName, varType)
         # params
         idx = frame.getNewIndex()
-        self.emit.printout(self.emit.emitVAR(idx, varName, TypeUtils.retrieveType(varType), frame.getStartLabel(), frame.getEndLabel(), frame))
+        self.emit.printout(self.emit.emitVAR(idx, varName, StupidUtils.retrieveType(varType), frame.getStartLabel(), frame.getEndLabel(), frame))
         return SubBody(frame, [Symbol(varName, varType, Index(idx))] + subctxt.sym)
 
 
@@ -215,7 +206,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         returnType = VoidType() if isInit else decl.returnType
         isProc = type(returnType) is VoidType
         methodName = "<init>" if isInit else decl.name.name
-        intype = [ArrayPointerType(StringType())] if isMain else [TypeUtils.retrieveType(x.varType) for x in decl.param]
+        intype = [ArrayPointerType(StringType())] if isMain else [StupidUtils.retrieveType(x.varType) for x in decl.param]
         mtype = MType(intype, returnType)
 
         self.emit.printout(self.emit.emitMETHOD(methodName, mtype, not isInit, frame))
@@ -463,43 +454,32 @@ class CodeGenVisitor(BaseVisitor, Utils):
         sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
 
         # recover status of stack in frame
-        if not isFirst:
-            if isLeft: frame.push()
-            else: frame.pop() 
-
+        if not isFirst and isLeft: frame.push()
+        elif not isFirst and not isLeft: frame.pop()
+        
+        emitType = StupidUtils.retrieveType(sym.mtype)
+        isArrayType = type(sym.mtype) is ArrayType
         if sym.value is None: # not index -> global var - static field
-            if isLeft: retCode = self.emit.emitPUTSTATIC(self.className + "/" + sym.name, sym.mtype, frame)
-            else: retCode = self.emit.emitGETSTATIC(self.className + "/" + sym.name, sym.mtype, frame)
+            if isLeft and not isArrayType: retCode = self.emit.emitPUTSTATIC(self.className + "/" + sym.name, emitType, frame)
+            else: retCode = self.emit.emitGETSTATIC(self.className + "/" + sym.name, emitType, frame)
         else:
-            if isLeft: retCode = self.emit.emitWRITEVAR(sym.name, sym.mtype, sym.value.value, frame)
-            else: retCode = self.emit.emitREADVAR(sym.name, sym.mtype, sym.value.value, frame)
+            if isLeft and not isArrayType: retCode = self.emit.emitWRITEVAR(sym.name, emitType, sym.value.value, frame)
+            else: retCode = self.emit.emitREADVAR(sym.name, emitType, sym.value.value, frame)
 
         return retCode, sym.mtype
 
 
     def visitArrayCell(self, ast: ArrayCell, o: Access):
-        pass
-        # ctxt = o
-        # frame = ctxt.frame
-        # symbols = ctxt.sym
-        # isLeft = ctxt.isLeft
-        # isFirst = ctxt.isFirst
-        # arrName, arrType, arrIndex = self.visit(ast.arr, Access(frame, sym, True, True))
-        # idxCode, idxType = self.visit(ast.idx, Access(frame, sym, False, True))
-        
-        # result = []
-        # if isLeft:
-
-        # else:
-        #     # steps: aload(address), iconst(index), iaload
-        #     if arrIndex is None: # global array - static field
-        #         result.append(self.emit.emitREADVAR(arrName, ArrayPointerType(IntType()), arrIndex, frame))
-        #     else:
-        #         result.append(self.emit.emitGETSTATIC(self.className + "/" + arrName, ArrayPointerType(IntType()), frame))
-        #     result.append(idxCode)
-        #     result.append(self.emit.emitALOAD(IntType(), frame))
-        #     return ''.join(result), arrType.eleType
-                
+        ctxt = o
+        frame = ctxt.frame
+        symbols = ctxt.sym
+        isLeft = ctxt.isLeft
+        isFirst = ctxt.isFirst
+        arrCode, arrType = self.visit(ast.arr, o)
+        idxCode, idxType = self.visit(ast.idx, o)
+        # aload(address) -> iconst(index) -> iaload
+        if isLeft: return arrCode + idxCode + self.emit.emitASTORE(IntType(), frame), arrType
+        return arrCode + idxCode + self.emit.emitALOAD(IntType(), frame), arrType
 
 
     def visitCallExpr(self, ast: CallExpr, o: Access):
@@ -516,12 +496,12 @@ class CodeGenVisitor(BaseVisitor, Utils):
         op = str(ast.op).lower()
         lCode, lType = self.visit(ast.left, ctxt)
         rCode, rType = self.visit(ast.right, ctxt)
-        if ExpUtils.isOpForNumber(op): # for number type
-            mType = ExpUtils.mergeNumberType(lType, rType)
+        if StupidUtils.isOpForNumber(op): # for number type
+            mType = StupidUtils.mergeNumberType(lType, rType)
             if op == '/': mType = FloatType() # mergeType >= lType, rType
             lCode, rCode = (c if type(t) == type(mType) else c+self.emit.emitI2F(frame) \
                             for c,t in [(lCode, lType), (rCode, rType)])
-            if ExpUtils.isOpForNumberToNumber(op):
+            if StupidUtils.isOpForNumberToNumber(op):
                 if op in ['+', '-']:
                     return lCode + rCode + self.emit.emitADDOP(op, mType, frame), mType
                 if op in ['*', '/']:

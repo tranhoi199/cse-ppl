@@ -7,16 +7,14 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
+
 procedure main();
-var i: integer;
+var a: array[2 .. 5] of integer;
 begin
-    i := 1;
-    //for i := 1 to 8 do begin
-    //end
+    a[2] := 10;
+    putInt(a[2]);
 end
 
 """
-        expect = r"""
-2.0 10.0
-1 5"""
+        expect = r""""""
         self.assertTrue(TestCodeGen.test(input,expect,1))
