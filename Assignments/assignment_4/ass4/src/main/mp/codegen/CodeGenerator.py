@@ -311,28 +311,75 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctxt = o
         frame = ctxt.frame
         nenv = ctxt.sym
-        returnType = frame.returnType
         expCode, expType = self.visit(ast.expr, Access(frame, nenv, False, True))
-
-        isProc = type(returnType) is VoidType
-
         self.emit.printout(expCode)
 
         labelT = frame.getNewLabel() # eval is true
         labelE = frame.getNewLabel() # label end
 
         self.emit.printout(self.emit.emitIFTRUE(labelT, frame)) # false
-
-        self.emit.printout(self.emit.emitPUSHICONST("false", frame)) # push true
+        # False
         [self.visit(x, o) for x in ast.elseStmt]
         self.emit.printout(self.emit.emitGOTO(labelE, frame)) # go to end
-
+        # True
         self.emit.printout(self.emit.emitLABEL(labelT, frame))
-        self.emit.printout(self.emit.emitPUSHICONST("true", frame))
         [self.visit(x, o) for x in ast.thenStmt]
-        self.emit.printout(self.emit.emitGOTO(labelE, frame)) # go to end
-
+        # End
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
+
+
+
+    def visitWhile(self, ast: While, o: SubBody):
+        ctxt = o
+        frame = ctxt.frame
+        nenv = ctxt.sym
+        expCode, expType = self.visit(ast.exp, Access(frame, nenv, False, True))
+        
+        labelS = frame.getNewLabel() # label start
+        labelE = frame.getNewLabel() # label end
+        self.emit.printout(self.emit.emitLABEL(labelS, frame))
+        self.emit.printout(expCode)
+        self.emit.printout(self.emit.emitIFFALSE(labelE, frame))
+        [self.visit(x, o) for x in ast.sl]
+        self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
+        self.emit.printout(self.emit.emitLABEL(labelE, frame))
+
+
+    def visitFor(self, ast: For, o: SubBody):
+        ctxt = o
+        frame = ctxt.frame
+        nenv = ctxt.sym
+
+        lhsName, lhsType, lhsIndex = self.visit(ast.id, Access(frame, nenv, True, True))
+        exp1Code, exp1Type = self.visit(ast.expr1, Access(frame, nenv, False, True))
+        exp2Code, exp2Type = self.visit(ast.expr2, Access(frame, nenv, False, True))
+        
+        labelS = frame.getNewLabel() # label start
+        labelE = frame.getNewLabel() # label end
+
+        # Init value
+        self.emit.printout(exp1Code)
+        self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
+        # Loop
+        self.emit.printout(self.emit.emitLABEL(labelS, frame))
+        # 1. Condition
+        self.emit.printout(self.emit.emitREADVAR(lhsName, lhsType, lhsIndex.value, frame))
+        self.emit.printout(exp2Code)
+        if ast.up:
+            self.emit.printout(self.emit.emitIFICMPGT(labelE, frame))
+        else:
+            self.emit.printout(self.emit.emitIFICMPLT(labelE, frame))
+        # 2. Statements
+        [self.visit(x, o) for x in ast.loop]
+        # 3. Update index
+        self.emit.printout(self.emit.emitREADVAR(lhsName, lhsType, lhsIndex.value, frame))
+        self.emit.printout(self.emit.emitPUSHICONST(1, frame))
+        self.emit.printout(self.emit.emitADDOP('+' if ast.up else '-', IntType(), frame))
+        self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
+
+        self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
+        self.emit.printout(self.emit.emitLABEL(labelE, frame))
+
 
 
 # ================   Visit Expression   =================

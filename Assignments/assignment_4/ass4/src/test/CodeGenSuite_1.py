@@ -8,26 +8,18 @@ class CheckCodeGenSuite(unittest.TestCase):
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    if 1 = 2 then putInt(100);
-    else if 2 = 2 then putInt(200);
-    else putInt(300);
+    a := 1;
+    b := 10;
+    for i := a-b to a+b do begin
+        putInt(i);
+        i := i+1;
+        a := a-1;
+        b := b+1;
+    end
 end
 
 """
-        expect = r"""200"""
+        expect = r"""-9-7-5-3-11357911"""
         self.assertTrue(TestCodeGen.test(input,expect,1))
-
-
-"""
-procedure foo(
-    a, b: Integer;
-    x, y: String;
-    u, v: Boolean
-);
-var e, f: Real;
-    i, j: integer;
-begin
-
-end
-"""

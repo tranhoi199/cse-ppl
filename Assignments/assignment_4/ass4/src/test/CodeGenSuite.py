@@ -1540,11 +1540,12 @@ true
 
 procedure main();
 begin
-    putInt(1);
+    if 1 = 2 then putInt(100);
+    else putInt(300);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""300"""
         self.assertTrue(TestCodeGen.test(input, expect, 182))
 
 
@@ -1553,11 +1554,21 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    if true then putInt(100);
+    else if true then putInt(200);
+    else putInt(300);
+
+    if false then putInt(100);
+    else if true then putInt(200);
+    else putInt(300);
+
+    if false then putInt(100);
+    else if false then putInt(200);
+    else putInt(300);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""100200300"""
         self.assertTrue(TestCodeGen.test(input, expect, 183))
 
 
@@ -1566,11 +1577,28 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    if true then begin
+        putInt(100);
+        if false then putInt(100);
+        else if true then putInt(200);
+        else putInt(300);
+    end
+    else if true then putInt(200);
+    else putInt(300);
+
+    if false then begin
+        putInt(100);
+    end
+    else if true then begin
+        putInt(200);
+        if false then putInt(100);
+        else if true then putInt(200);
+        else putInt(300);
+    end else putInt(300);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""100200200200"""
         self.assertTrue(TestCodeGen.test(input, expect, 184))
 
 
@@ -1578,12 +1606,17 @@ end
         input = r"""
 
 procedure main();
+var a: integer;
 begin
-    putInt(1);
+    a := 5;
+    while a > 0 do begin
+        putInt(a);
+        a := a-1;
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""54321"""
         self.assertTrue(TestCodeGen.test(input, expect, 185))
 
 
@@ -1591,12 +1624,33 @@ end
         input = r"""
 
 procedure main();
+var a, b: integer;
 begin
-    putInt(1);
+    a := 5;
+    while a > 0 do begin
+        putIntLn(a);
+        a := a-1;
+        b := 0;
+        while b < a do begin
+            b := b+1;
+            putInt(b);
+        end
+        putLn();
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""5
+1234
+4
+123
+3
+12
+2
+1
+1
+
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 186))
 
 
@@ -1604,12 +1658,13 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 to 5 do putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""12345"""
         self.assertTrue(TestCodeGen.test(input, expect, 187))
 
 
@@ -1617,12 +1672,14 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 to 5 do putInt(i);
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""123456"""
         self.assertTrue(TestCodeGen.test(input, expect, 188))
 
 
@@ -1630,12 +1687,23 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 to 5 do putInt(i);
+    putIntLn(i);
+
+    for i := 1 to 1 do putInt(i);
+    putIntLn(i);
+
+    for i := 5 to 1 do putInt(i);
+    putIntLn(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""123456
+12
+5
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 189))
 
 
@@ -1643,12 +1711,23 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 downto 5 do putInt(i);
+    putIntLn(i);
+
+    for i := 1 downto 1 do putInt(i);
+    putIntLn(i);
+
+    for i := 5 downto 1 do putInt(i);
+    putIntLn(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1
+10
+543210
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 190))
 
 
@@ -1656,12 +1735,15 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 to 10 do begin
+        if i > 4 then putInt(i); else putInt(-i);
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""-1-2-3-45678910"""
         self.assertTrue(TestCodeGen.test(input, expect, 191))
 
 
@@ -1669,12 +1751,46 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 5;
+    for i := a to b do begin
+        for j := b downto a do begin
+            putInt(i); putString(" + ");
+            putInt(j); putString(" = ");
+            putIntLn(i+j);
+        end
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1 + 5 = 6
+1 + 4 = 5
+1 + 3 = 4
+1 + 2 = 3
+1 + 1 = 2
+2 + 5 = 7
+2 + 4 = 6
+2 + 3 = 5
+2 + 2 = 4
+2 + 1 = 3
+3 + 5 = 8
+3 + 4 = 7
+3 + 3 = 6
+3 + 2 = 5
+3 + 1 = 4
+4 + 5 = 9
+4 + 4 = 8
+4 + 3 = 7
+4 + 2 = 6
+4 + 1 = 5
+5 + 5 = 10
+5 + 4 = 9
+5 + 3 = 8
+5 + 2 = 7
+5 + 1 = 6
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 192))
 
 
@@ -1682,12 +1798,26 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 5;
+    for i := a to b do begin
+        for j := b downto a do begin
+            putInt(i); putString(" + ");
+            putInt(j); putString(" = ");
+            putIntLn(i+j);
+            a := a+1;
+            b := b-1;
+        end
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1 + 5 = 6
+1 + 4 = 5
+1 + 3 = 4
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 193))
 
 
@@ -1695,12 +1825,18 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a to b do begin
+        putInt(i);
+        i := i+1;
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""13579"""
         self.assertTrue(TestCodeGen.test(input, expect, 194))
 
 
@@ -1708,12 +1844,20 @@ end
         input = r"""
 
 procedure main();
+var i, j, a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 10;
+    for i := a-b to a+b do begin
+        putInt(i);
+        i := i+1;
+        a := a-1;
+        b := b+1;
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""-9-7-5-3-11357911"""
         self.assertTrue(TestCodeGen.test(input, expect, 195))
 
 

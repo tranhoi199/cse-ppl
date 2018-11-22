@@ -58,6 +58,7 @@ class Emitter():
                 return self.jvm.emitBIPUSH(i)
             elif i >= -32768 and i <= 32767:
                 return self.jvm.emitSIPUSH(i)
+            return self.jvm.emitLDC(str(i))
         elif type(in_) is str:
             if in_ == "true":
                 return self.emitPUSHICONST(1, frame)
@@ -222,12 +223,6 @@ class Emitter():
         # in_: Type
         # isFinal: Boolean
         # value: String
-
-        return self.jvm.emitSTATICFIELD(lexeme, self.getJVMType(in_), False)
-
-    def emitGLOBALVAR(self, lexeme, in_):
-        # lexeme: String
-        # in_: Type
 
         return self.jvm.emitSTATICFIELD(lexeme, self.getJVMType(in_), False)
 
@@ -690,7 +685,7 @@ class Emitter():
         # label: Int
         # frame: Frame
 
-        return self.jvm.emitGOTO(label)
+        return self.jvm.emitGOTO(str(label))
 
     ''' generate some starting directives for a class.<p>
     *   .source MPC.CLASSNAME.java<p>
