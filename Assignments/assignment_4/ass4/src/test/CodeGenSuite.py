@@ -1865,12 +1865,19 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    i := 1;
+    while true do begin
+        putInt(i);
+        if i = 3 then break;
+        i := i+1;
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1233"""
         self.assertTrue(TestCodeGen.test(input, expect, 196))
 
 
@@ -1878,12 +1885,20 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    i := 1;
+    while i < 10 do begin
+        putInt(i);
+        i := i+1;
+        if i > 6 then continue;
+        i := i+1;
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""13578910"""
         self.assertTrue(TestCodeGen.test(input, expect, 197))
 
 
@@ -1891,12 +1906,17 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 to 10 do begin
+        putInt(i);
+        if i > 5 then break;
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1234566"""
         self.assertTrue(TestCodeGen.test(input, expect, 198))
 
 
@@ -1904,16 +1924,40 @@ end
         input = r"""
 
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    for i := 1 to 8 do begin
+        if i > 5 then continue;
+        putInt(i);
+    end
+    putInt(i);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""123459"""
         self.assertTrue(TestCodeGen.test(input, expect, 199))
 
 
     def test_100(self):
+        input = r"""
+
+procedure main();
+var i: integer;
+begin
+    for i := 8 downto 1 do begin
+        if i < 5 then continue;
+        putInt(i);
+    end
+    putInt(i);
+end
+
+"""
+        expect = r"""87650"""
+        self.assertTrue(TestCodeGen.test(input, expect, 200))
+
+
+
+    def test_101(self):
         input = r"""
 
 procedure main();
@@ -1923,5 +1967,643 @@ end
 
 """
         expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 200))
+        self.assertTrue(TestCodeGen.test(input, expect, 201))
+
+
+    def test_102(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 202))
+
+
+    def test_103(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 203))
+
+
+    def test_104(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 204))
+
+
+    def test_105(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 205))
+
+
+    def test_106(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 206))
+
+
+    def test_107(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 207))
+
+
+    def test_108(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 208))
+
+
+    def test_109(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 209))
+
+
+    def test_110(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 210))
+
+
+    def test_111(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 211))
+
+
+    def test_112(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 212))
+
+
+    def test_113(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 213))
+
+
+    def test_114(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 214))
+
+
+    def test_115(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 215))
+
+
+    def test_116(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 216))
+
+
+    def test_117(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 217))
+
+
+    def test_118(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 218))
+
+
+    def test_119(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 219))
+
+
+    def test_120(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 220))
+
+
+    def test_121(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 221))
+
+
+    def test_122(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 222))
+
+
+    def test_123(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 223))
+
+
+    def test_124(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 224))
+
+
+    def test_125(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 225))
+
+
+    def test_126(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 226))
+
+
+    def test_127(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 227))
+
+
+    def test_128(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 228))
+
+
+    def test_129(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 229))
+
+
+    def test_130(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 230))
+
+
+    def test_131(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 231))
+
+
+    def test_132(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 232))
+
+
+    def test_133(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 233))
+
+
+    def test_134(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 234))
+
+
+    def test_135(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 235))
+
+
+    def test_136(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 236))
+
+
+    def test_137(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 237))
+
+
+    def test_138(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 238))
+
+
+    def test_139(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 239))
+
+
+    def test_140(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 240))
+
+
+    def test_141(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 241))
+
+
+    def test_142(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 242))
+
+
+    def test_143(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 243))
+
+
+    def test_144(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 244))
+
+
+    def test_145(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 245))
+
+
+    def test_146(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 246))
+
+
+    def test_147(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 247))
+
+
+    def test_148(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 248))
+
+
+    def test_149(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 249))
+
+
+    def test_150(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 250))
+
 

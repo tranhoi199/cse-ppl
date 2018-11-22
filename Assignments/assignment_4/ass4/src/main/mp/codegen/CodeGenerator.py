@@ -337,12 +337,16 @@ class CodeGenVisitor(BaseVisitor, Utils):
         
         labelS = frame.getNewLabel() # label start
         labelE = frame.getNewLabel() # label end
+        frame.enterLoop()
         self.emit.printout(self.emit.emitLABEL(labelS, frame))
         self.emit.printout(expCode)
         self.emit.printout(self.emit.emitIFFALSE(labelE, frame))
         [self.visit(x, o) for x in ast.sl]
+        self.emit.printout(self.emit.emitLABEL(frame.getContinueLabel(), frame))
         self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
+        self.emit.printout(self.emit.emitLABEL(frame.getBreakLabel(), frame))
+        frame.exitLoop()
 
 
     def visitFor(self, ast: For, o: SubBody):
@@ -360,6 +364,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         # Init value
         self.emit.printout(exp1Code)
         self.emit.printout(self.emit.emitWRITEVAR(lhsName, lhsType, lhsIndex.value, frame))
+        frame.enterLoop()
         # Loop
         self.emit.printout(self.emit.emitLABEL(labelS, frame))
         # 1. Condition
@@ -371,6 +376,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
             self.emit.printout(self.emit.emitIFICMPLT(labelE, frame))
         # 2. Statements
         [self.visit(x, o) for x in ast.loop]
+        self.emit.printout(self.emit.emitLABEL(frame.getContinueLabel(), frame))
         # 3. Update index
         self.emit.printout(self.emit.emitREADVAR(lhsName, lhsType, lhsIndex.value, frame))
         self.emit.printout(self.emit.emitPUSHICONST(1, frame))
@@ -379,6 +385,20 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
+        self.emit.printout(self.emit.emitLABEL(frame.getBreakLabel(), frame))
+        frame.exitLoop()
+
+
+
+    def visitBreak(self, ast: Break, o: SubBody):
+        ctxt = o
+        frame = ctxt.frame
+        self.emit.printout(self.emit.emitGOTO(frame.getBreakLabel(), frame))
+
+    def visitContinue(self, ast: Continue, o: SubBody):
+        ctxt = o
+        frame = ctxt.frame
+        self.emit.printout(self.emit.emitGOTO(frame.getContinueLabel(), frame))
 
 
 

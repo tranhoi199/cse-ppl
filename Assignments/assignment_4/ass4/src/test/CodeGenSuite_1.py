@@ -8,18 +8,15 @@ class CheckCodeGenSuite(unittest.TestCase):
         input = r"""
 
 procedure main();
-var i, j, a, b: integer;
+var i: integer;
 begin
-    a := 1;
-    b := 10;
-    for i := a-b to a+b do begin
+    for i := 8 downto 1 do begin
+        if i < 5 then continue;
         putInt(i);
-        i := i+1;
-        a := a-1;
-        b := b+1;
     end
+    putInt(i);
 end
 
 """
-        expect = r"""-9-7-5-3-11357911"""
+        expect = r"""87650"""
         self.assertTrue(TestCodeGen.test(input,expect,1))

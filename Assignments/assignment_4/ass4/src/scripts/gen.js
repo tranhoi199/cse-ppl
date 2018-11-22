@@ -9,7 +9,7 @@ if (!fs.existsSync(dist)) {
 
 let text = '';
 
-for (let i = 1; i <= 100; i++) {
+for (let i = 101; i <= 150; i++) {
     text += `
     def test_${i}(self):
         input = r"""
