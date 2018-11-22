@@ -34,6 +34,13 @@ class ExpUtils:
         return FloatType() if FloatType in [type(x) for x in [lType, rType]] else IntType()
 
 
+class TypeUtils:
+    @staticmethod
+    def retrieveType(originType):
+        if type(originType) is ArrayType: return ArrayPointerType(originType.eleType)
+        return originType
+
+
 class CodeGenerator(Utils):
     def __init__(self):
         self.libName = "io"
@@ -147,6 +154,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.path = dir_
         self.emit = Emitter(self.path + "/" + self.className + ".j")
 
+        self.listGlobalArray = [] # list(VarDecl: array declare global)
+
 
     def visitProgram(self, ast: Program, c):
         # c: Any
@@ -185,11 +194,12 @@ class CodeGenVisitor(BaseVisitor, Utils):
         varName = ast.variable.name
         varType = ast.varType
         if isGlobal:
-            self.emit.printout(self.emit.emitATTRIBUTE(varName, varType, False, ""))
+            self.emit.printout(self.emit.emitATTRIBUTE(varName, TypeUtils.retrieveType(varType), False, ""))
+            self.listGlobalArray.append(ast)
             return Symbol(varName, varType)
         # params
         idx = frame.getNewIndex()
-        self.emit.printout(self.emit.emitVAR(idx, varName, varType, frame.getStartLabel(), frame.getEndLabel(), frame))
+        self.emit.printout(self.emit.emitVAR(idx, varName, TypeUtils.retrieveType(varType), frame.getStartLabel(), frame.getEndLabel(), frame))
         return SubBody(frame, [Symbol(varName, varType, Index(idx))] + subctxt.sym)
 
 
@@ -204,7 +214,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         returnType = VoidType() if isInit else decl.returnType
         isProc = type(returnType) is VoidType
         methodName = "<init>" if isInit else decl.name.name
-        intype = [ArrayPointerType(StringType())] if isMain else [x.varType for x in decl.param]
+        intype = [ArrayPointerType(StringType())] if isMain else [TypeUtils.retrieveType(x.varType) for x in decl.param]
         mtype = MType(intype, returnType)
 
         self.emit.printout(self.emit.emitMETHOD(methodName, mtype, not isInit, frame))
@@ -218,9 +228,12 @@ class CodeGenVisitor(BaseVisitor, Utils):
             self.emit.printout(self.emit.emitVAR(frame.getNewIndex(), "args", ArrayPointerType(
                 StringType()), frame.getStartLabel(), frame.getEndLabel(), frame))
 
+        listLocalArray = [] # list(Symbol(name, mtype, value: Index(idx)))
         varList = SubBody(frame, glenv)
         for x in decl.param + decl.local:
             varList = self.visit(x, varList)
+            if type(x.varType) is ArrayType:
+                listLocalArray.append(varList.sym[0])
 
         self.emit.printout(self.emit.emitLABEL(frame.getStartLabel(), frame))
 
@@ -228,7 +241,18 @@ class CodeGenVisitor(BaseVisitor, Utils):
         if isInit:
             self.emit.printout(self.emit.emitREADVAR("this", ClassType(self.className), 0, frame))
             self.emit.printout(self.emit.emitINVOKESPECIAL(frame))
+            # Init global array declare
+            for x in self.listGlobalArray:
+                size = x.varType.upper - x.varType.lower + 1
+                self.emit.printout(self.emit.emitInitNewStaticArray(x.variable.name, size, x.varType.eleType, frame))
         
+        # Init local array declare
+        for sym in listLocalArray:
+            index = sym.value.value
+            varType = sym.mtype
+            size = varType.upper - varType.lower + 1
+            self.emit.printout(self.emit.emitInitNewLocalArray(index, size, varType.eleType, frame))
+
         list(map(lambda x: self.visit(x, varList), decl.body))
 
         self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
@@ -483,6 +507,19 @@ class CodeGenVisitor(BaseVisitor, Utils):
             return self.emit.emitGETSTATIC(self.className + "/" + sym.name, sym.mtype, frame), sym.mtype
         return self.emit.emitREADVAR(sym.name, sym.mtype, sym.value.value, frame), sym.mtype
 
+
+
+    def visitArrayCell(self, ast: ArrayCell, o: Access):
+        # Return (name, type, index)
+        # ctxt = o
+        # frame = ctxt.frame
+        # symbols = ctxt.sym
+        # isLeft = ctxt.isLeft
+        # isFirst = ctxt.isFirst
+        # arr = ast.arr
+        # idx  ast.idx
+        # sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
+        pass
 
 
     def visitCallExpr(self, ast: CallExpr, o: Access):
