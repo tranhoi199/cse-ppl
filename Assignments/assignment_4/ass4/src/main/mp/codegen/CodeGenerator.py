@@ -390,6 +390,29 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
 
 
+    def visitWith(self, ast: With, o: SubBody):
+        ctxt = o
+        frame = ctxt.frame
+        nenv = ctxt.sym
+        retType = frame.returnType
+        isProc = type(retType) is VoidType
+
+        frame.enterScope(isProc)
+
+        varList = SubBody(frame, nenv)
+        for x in ast.decl:
+            varList = self.visit(x, varList)
+
+        self.emit.printout(self.emit.emitLABEL(frame.getStartLabel(), frame))
+        list(map(lambda x: self.visit(x, varList), ast.stmt))
+        self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
+        frame.exitScope()
+
+
+
+
+
+
     def visitBreak(self, ast: Break, o: SubBody):
         ctxt = o
         frame = ctxt.frame

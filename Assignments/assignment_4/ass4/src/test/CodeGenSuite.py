@@ -2232,12 +2232,25 @@ i = 5
         input = r"""
 
 procedure main();
+var a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 5;
+    putLn();
+    with a: integer; do begin
+        a := 2;
+        b := 10;
+        putInt(a); putString(" ");
+        putIntLn(b);
+    end
+    putInt(a); putString(" ");
+    putInt(b);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""
+2 10
+1 10"""
         self.assertTrue(TestCodeGen.test(input, expect, 206))
 
 
@@ -2245,12 +2258,25 @@ end
         input = r"""
 
 procedure main();
+var a, b: integer;
 begin
-    putInt(1);
+    a := 1;
+    b := 5;
+    putLn();
+    with a,b,c: real; do begin
+        a := 2;
+        b := 10;
+        putFloat(a); putString(" ");
+        putFloatLn(b);
+    end
+    putInt(a); putString(" ");
+    putInt(b);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""
+2.0 10.0
+1 5"""
         self.assertTrue(TestCodeGen.test(input, expect, 207))
 
 
