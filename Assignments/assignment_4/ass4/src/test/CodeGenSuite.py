@@ -2280,560 +2280,560 @@ end
         self.assertTrue(TestCodeGen.test(input, expect, 207))
 
 
-    def test_108(self):
-        input = r"""
+#     def test_108(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 208))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 208))
 
 
-    def test_109(self):
-        input = r"""
+#     def test_109(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 209))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 209))
 
 
-    def test_110(self):
-        input = r"""
+#     def test_110(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 210))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 210))
 
 
-    def test_111(self):
-        input = r"""
+#     def test_111(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 211))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 211))
 
 
-    def test_112(self):
-        input = r"""
+#     def test_112(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 212))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 212))
 
 
-    def test_113(self):
-        input = r"""
+#     def test_113(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 213))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 213))
 
 
-    def test_114(self):
-        input = r"""
+#     def test_114(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 214))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 214))
 
 
-    def test_115(self):
-        input = r"""
+#     def test_115(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 215))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 215))
 
 
-    def test_116(self):
-        input = r"""
+#     def test_116(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 216))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 216))
 
 
-    def test_117(self):
-        input = r"""
+#     def test_117(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 217))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 217))
 
 
-    def test_118(self):
-        input = r"""
+#     def test_118(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 218))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 218))
 
 
-    def test_119(self):
-        input = r"""
+#     def test_119(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 219))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 219))
 
 
-    def test_120(self):
-        input = r"""
+#     def test_120(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 220))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 220))
 
 
-    def test_121(self):
-        input = r"""
+#     def test_121(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 221))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 221))
 
 
-    def test_122(self):
-        input = r"""
+#     def test_122(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 222))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 222))
 
 
-    def test_123(self):
-        input = r"""
+#     def test_123(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 223))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 223))
 
 
-    def test_124(self):
-        input = r"""
+#     def test_124(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 224))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 224))
 
 
-    def test_125(self):
-        input = r"""
+#     def test_125(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 225))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 225))
 
 
-    def test_126(self):
-        input = r"""
+#     def test_126(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 226))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 226))
 
 
-    def test_127(self):
-        input = r"""
+#     def test_127(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 227))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 227))
 
 
-    def test_128(self):
-        input = r"""
+#     def test_128(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 228))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 228))
 
 
-    def test_129(self):
-        input = r"""
+#     def test_129(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 229))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 229))
 
 
-    def test_130(self):
-        input = r"""
+#     def test_130(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 230))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 230))
 
 
-    def test_131(self):
-        input = r"""
+#     def test_131(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 231))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 231))
 
 
-    def test_132(self):
-        input = r"""
+#     def test_132(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 232))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 232))
 
 
-    def test_133(self):
-        input = r"""
+#     def test_133(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 233))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 233))
 
 
-    def test_134(self):
-        input = r"""
+#     def test_134(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 234))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 234))
 
 
-    def test_135(self):
-        input = r"""
+#     def test_135(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 235))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 235))
 
 
-    def test_136(self):
-        input = r"""
+#     def test_136(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 236))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 236))
 
 
-    def test_137(self):
-        input = r"""
+#     def test_137(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 237))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 237))
 
 
-    def test_138(self):
-        input = r"""
+#     def test_138(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 238))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 238))
 
 
-    def test_139(self):
-        input = r"""
+#     def test_139(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 239))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 239))
 
 
-    def test_140(self):
-        input = r"""
+#     def test_140(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 240))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 240))
 
 
-    def test_141(self):
-        input = r"""
+#     def test_141(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 241))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 241))
 
 
-    def test_142(self):
-        input = r"""
+#     def test_142(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 242))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 242))
 
 
-    def test_143(self):
-        input = r"""
+#     def test_143(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 243))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 243))
 
 
-    def test_144(self):
-        input = r"""
+#     def test_144(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 244))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 244))
 
 
-    def test_145(self):
-        input = r"""
+#     def test_145(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 245))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 245))
 
 
-    def test_146(self):
-        input = r"""
+#     def test_146(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 246))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 246))
 
 
-    def test_147(self):
-        input = r"""
+#     def test_147(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 247))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 247))
 
 
-    def test_148(self):
-        input = r"""
+#     def test_148(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 248))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 248))
 
 
-    def test_149(self):
-        input = r"""
+#     def test_149(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 249))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 249))
 
 
-    def test_150(self):
-        input = r"""
+#     def test_150(self):
+#         input = r"""
 
-procedure main();
-begin
-    putInt(1);
-end
+# procedure main();
+# begin
+#     putInt(1);
+# end
 
-"""
-        expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 250))
+# """
+#         expect = r"""1"""
+#         self.assertTrue(TestCodeGen.test(input, expect, 250))

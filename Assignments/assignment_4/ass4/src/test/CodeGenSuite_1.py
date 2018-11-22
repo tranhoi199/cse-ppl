@@ -7,12 +7,12 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
-// var a: array[2 .. 5] of integer;
-
 procedure main();
-var a: array[5 .. 15] of integer;
+var i: integer;
 begin
-    a[6] := 4;
+    i := 1;
+    //for i := 1 to 8 do begin
+    //end
 end
 
 """
