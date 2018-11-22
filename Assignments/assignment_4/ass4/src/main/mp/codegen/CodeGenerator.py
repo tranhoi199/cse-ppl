@@ -195,7 +195,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
         varType = ast.varType
         if isGlobal:
             self.emit.printout(self.emit.emitATTRIBUTE(varName, TypeUtils.retrieveType(varType), False, ""))
-            self.listGlobalArray.append(ast)
+            if type(ast) is ArrayType: 
+                self.listGlobalArray.append(ast)
             return Symbol(varName, varType)
         # params
         idx = frame.getNewIndex()
@@ -511,14 +512,12 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
     def visitArrayCell(self, ast: ArrayCell, o: Access):
         # Return (name, type, index)
-        # ctxt = o
-        # frame = ctxt.frame
-        # symbols = ctxt.sym
-        # isLeft = ctxt.isLeft
-        # isFirst = ctxt.isFirst
-        # arr = ast.arr
-        # idx  ast.idx
-        # sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
+        ctxt = o
+        frame = ctxt.frame
+        symbols = ctxt.sym
+        isLeft = ctxt.isLeft
+        isFirst = ctxt.isFirst
+        sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
         pass
 
 

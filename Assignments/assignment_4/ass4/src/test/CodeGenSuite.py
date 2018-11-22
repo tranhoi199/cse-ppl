@@ -2837,5 +2837,3 @@ end
 """
         expect = r"""1"""
         self.assertTrue(TestCodeGen.test(input, expect, 250))
-
-
