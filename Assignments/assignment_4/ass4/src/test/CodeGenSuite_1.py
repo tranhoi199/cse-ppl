@@ -7,15 +7,32 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
+var a: array[-10000 .. 10000] of integer;
+procedure main();
+var
+    i, l, r: integer;
+begin
+    l := -20;
+    r := 20;
+    a[l] := 1;
+    a[l+1] := 1;
+    for i := l+2 to r do begin
+        a[i] := a[i-1] + a[i-2];
+    end
+    putInt(a[r]);
+end
+
+"""
+        expect = r"""165580141"""
+        self.assertTrue(TestCodeGen.test(input,expect,1))
+
+
+"""
+
+
 var a, b: integer;
 var x, y: real;
 var u, v: boolean;
-
-procedure main();
-var n: integer;
-begin
-
-end
 
 function mid(a, b: integer): real; begin return (a + b) / 2; end
 
@@ -27,12 +44,6 @@ function ha_str_1(): string; begin return "0852 1"; end
 function ha_str_2(): string; begin return "0852 2"; end
 function ha_str_3(): string; begin return "0852 3"; end
 
-"""
-        expect = r""""""
-        self.assertTrue(TestCodeGen.test(input,expect,1))
-
-
-"""
 
 procedure main();
 var a: array[0 .. 10] of integer;

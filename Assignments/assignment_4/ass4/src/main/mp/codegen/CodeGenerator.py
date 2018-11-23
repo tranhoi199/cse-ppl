@@ -167,6 +167,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         # generate default constructor
         self.genMETHOD(FuncDecl(Id("<init>"), list(), list(), list(), None), c, Frame("<init>", VoidType))
+        # class init - static field
+        self.genMETHOD(FuncDecl(Id("<clinit>"), list(), list(), list(), None), c, Frame("<clinit>", VoidType))
+        
         self.emit.emitEPILOG()
         return c
 
@@ -201,11 +204,12 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         glenv = o
 
-        isInit = decl.returnType is None
-        isMain = decl.name.name == "main" and len(decl.param) == 0 and type(decl.returnType) is VoidType
-        returnType = VoidType() if isInit else decl.returnType
+        methodName = decl.name.name
+        isInit = decl.returnType is None and methodName == "<init>"
+        isClassInit = decl.returnType is None and methodName == "<clinit>"
+        isMain = methodName == "main" and len(decl.param) == 0 and type(decl.returnType) is VoidType
+        returnType = VoidType() if isInit or isClassInit else decl.returnType
         isProc = type(returnType) is VoidType
-        methodName = "<init>" if isInit else decl.name.name
         intype = [ArrayPointerType(StringType())] if isMain else [StupidUtils.retrieveType(x.varType) for x in decl.param]
         mtype = MType(intype, returnType)
 
@@ -233,7 +237,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         if isInit:
             self.emit.printout(self.emit.emitREADVAR("this", ClassType(self.className), 0, frame))
             self.emit.printout(self.emit.emitINVOKESPECIAL(frame))
-            # Init global array declare
+        
+        # Init global array declare
+        if isClassInit:
             for x in self.listGlobalArray:
                 size = x.varType.upper - x.varType.lower + 1
                 self.emit.printout(self.emit.emitInitNewStaticArray(self.className + "/" + x.variable.name, size, x.varType.eleType, frame))

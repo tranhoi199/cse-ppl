@@ -2985,91 +2985,230 @@ function ha_str_3(): string; begin return "0852 3"; end
     def test_133(self):
         input = r"""
 
+var a: array[3 .. 5] of integer;
 procedure main();
 begin
-    putInt(1);
+    a[5] := 10;
+    putInt(a[5]);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""10"""
         self.assertTrue(TestCodeGen.test(input, expect, 233))
 
 
     def test_134(self):
         input = r"""
 
+var a: array[0 .. 10] of integer;
 procedure main();
+var 
+    i: integer;
 begin
-    putInt(1);
+    a[0] := 1;
+    a[1] := 2;
+    putInt(a[0]);
+    putInt(a[1]);
+
+    i := 5;
+    a[i] := 5;
+    putInt(a[i]);
+
+    i := 6;
+    a[i+1] := 6;
+    putInt(a[i+1]);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1256"""
         self.assertTrue(TestCodeGen.test(input, expect, 234))
 
 
     def test_135(self):
         input = r"""
 
+var a: array[0 .. 8] of integer;
 procedure main();
+var
+    i, l, r: integer;
 begin
-    putInt(1);
+    l := 0;
+    r := 8;
+    for i := l to r do begin
+        a[i] := i + 1;
+        putInt(a[i]); putString(" ");
+    end
+    putLn();
+    for i := l to r do begin
+        putInt(i); putString(": "); putIntLn(a[i]);
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1 2 3 4 5 6 7 8 9 
+0: 1
+1: 2
+2: 3
+3: 4
+4: 5
+5: 6
+6: 7
+7: 8
+8: 9
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 235))
 
 
     def test_136(self):
         input = r"""
 
+var a: array[1000000000 .. 1000000010] of integer;
+
 procedure main();
+var
+    i, l, r: integer;
 begin
-    putInt(1);
+    l := 1000000000;
+    r := 1000000010;
+    for i := l to r do begin
+        a[i] := i + 1;
+        putInt(a[i]); putString(" ");
+    end
+    putLn();
+    for i := l to r do begin
+        putInt(i); putString(": "); putIntLn(a[i]);
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""1000000001 1000000002 1000000003 1000000004 1000000005 1000000006 1000000007 1000000008 1000000009 1000000010 1000000011 
+1000000000: 1000000001
+1000000001: 1000000002
+1000000002: 1000000003
+1000000003: 1000000004
+1000000004: 1000000005
+1000000005: 1000000006
+1000000006: 1000000007
+1000000007: 1000000008
+1000000008: 1000000009
+1000000009: 1000000010
+1000000010: 1000000011
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 236))
 
 
     def test_137(self):
         input = r"""
 
+var a: array[-1000000010 .. -1000000000] of integer;
 procedure main();
+var
+    i, l, r: integer;
 begin
-    putInt(1);
+    l := -1000000010;
+    r := -1000000000;
+    for i := l to r do begin
+        a[i] := i + 1;
+        putInt(a[i]); putString(" ");
+    end
+    putLn();
+    for i := l to r do begin
+        putInt(i); putString(": "); putIntLn(a[i]);
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""-1000000009 -1000000008 -1000000007 -1000000006 -1000000005 -1000000004 -1000000003 -1000000002 -1000000001 -1000000000 -999999999 
+-1000000010: -1000000009
+-1000000009: -1000000008
+-1000000008: -1000000007
+-1000000007: -1000000006
+-1000000006: -1000000005
+-1000000005: -1000000004
+-1000000004: -1000000003
+-1000000003: -1000000002
+-1000000002: -1000000001
+-1000000001: -1000000000
+-1000000000: -999999999
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 237))
 
 
     def test_138(self):
         input = r"""
 
+var a: array[0 .. 10] of integer;
 procedure main();
+var i, l, r: integer;
 begin
-    putInt(1);
+    i := 0;
+    a[i] := 1;
+    i := a[i];
+    putInt(i);
+
+    i := 0;
+    i := a[i] := 1;
+    putInt(i);
+
+    i := 1;
+    a[i] := 1;
+    a[i-1] := 2;
+    i := a[i] + a[i-1];
+    putInt(i);
+
+    a[0] := 1;
+    a[1] := a[0];
+    putInt(a[1]);
+
+    i := 1;
+    a[0] := 1;
+    a[i] := a[i-1];
+    putInt(a[i]);
+    a[i] := a[i-1] + 1;
+    putInt(a[i]);
+    a[i] := a[i-1] * 2 + 1;
+    putInt(a[i]);
+    a[i] := a[i-1] * 2 + a[i];
+    putInt(a[i]);
+    a[i] := a[i-1] := a[i-1] * 2 + a[i] * 3 + a[i-1] * a[i];
+    putInt(a[i]);
+    putInt(a[i-1]);
+
+    l := 0;
+    r := 10;
+    a[l] := 1;
+    a[l+1] := 1;
+    for i := l+2 to r do begin
+        a[i] := a[i-1] + a[i-2];
+    end
+    putInt(a[r]);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""11311235222289"""
         self.assertTrue(TestCodeGen.test(input, expect, 238))
 
 
     def test_139(self):
         input = r"""
 
+var a: array[-10000 .. 10000] of integer;
 procedure main();
+var
+    i, l, r: integer;
 begin
-    putInt(1);
+    l := -20;
+    r := 20;
+    a[l] := 1;
+    a[l+1] := 1;
+    for i := l+2 to r do begin
+        a[i] := a[i-1] + a[i-2];
+    end
+    putInt(a[r]);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""165580141"""
         self.assertTrue(TestCodeGen.test(input, expect, 239))
 
 
