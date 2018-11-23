@@ -2684,11 +2684,21 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    if 6/3 = foo(3,6) then putString("Ha"); 
+    else putString("aH");
+end
+
+function foo(a, b: integer): integer;
+var i: integer;
+begin
+    for i := 0 to b do begin
+        if a * i = b then return i;
+    end
+    return -1;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""Ha"""
         self.assertTrue(TestCodeGen.test(input, expect, 224))
 
 
@@ -2697,102 +2707,278 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    if 8/3 = foo(3,9) then putString("Ha"); 
+    else putString("aH");
+end
+
+function foo(a, b: integer): integer;
+var i: integer;
+begin
+    for i := 0 to b do begin
+        if a * i = b then return i;
+    end
+    return -1;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""aH"""
         self.assertTrue(TestCodeGen.test(input, expect, 225))
 
 
     def test_126(self):
         input = r"""
 
+var a, b: integer;
+
 procedure main();
 begin
-    putInt(1);
+    a := 5;
+    b := 100;
+    if b/a = foo(a,b) then putString("Ha"); 
+    else putString("aH");
+    putInt(a);
+    putInt(b);
+end
+
+function foo(a, b: integer): integer;
+var i: integer;
+begin
+    for i := 0 to b do begin
+        if a * i = b then begin
+            a := b := -1;
+            return i;
+        end
+    end
+    a := b := 0;
+    return -1;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""Ha5100"""
         self.assertTrue(TestCodeGen.test(input, expect, 226))
 
 
     def test_127(self):
         input = r"""
 
+var a, b: integer;
+
 procedure main();
 begin
-    putInt(1);
+    a := 24;
+    b := 100;
+    if b/a = foo(a,b) then putString("Ha"); 
+    else putString("aH");
+    putInt(a);
+    putInt(b);
+end
+
+function foo(a, b: integer): integer;
+var i: integer;
+begin
+    for i := 0 to b do begin
+        if a * i = b then begin
+            a := b := -1;
+            return i;
+        end
+    end
+    a := b := 0;
+    return -1;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""aH24100"""
         self.assertTrue(TestCodeGen.test(input, expect, 227))
 
 
     def test_128(self):
         input = r"""
 
+var a, b: integer;
+
 procedure main();
 begin
-    putInt(1);
+    putStringLn(str_ha_1());
+    putStringLn(str_ha_2());
+    putStringLn(str_ha_3());
+    putStringLn(str_ha_4());
+    putStringLn(str_ha_5());
 end
 
+function str_ha_1(): string; begin return "Ha 1"; end
+function str_ha_2(): string; begin return "Ha 2"; end
+function str_ha_3(): string; begin return "Ha 3"; end
+function str_ha_4(): string; begin return "Ha 4"; end
+function str_ha_5(): string; begin return "Ha 5"; end
+
 """
-        expect = r"""1"""
+        expect = r"""Ha 1
+Ha 2
+Ha 3
+Ha 4
+Ha 5
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 228))
 
 
     def test_129(self):
         input = r"""
 
+var a, b: integer;
+
 procedure main();
 begin
-    putInt(1);
+    ha_str_proc(ha_str_func(), 9);
 end
 
+procedure ha_str_proc(ha: string; times: integer); 
+var i: integer;
+begin
+    for i := 1 to times do begin
+        putString(ha); putIntLn(i);
+    end
+end
+
+function ha_str_func(): string; begin return "Ha "; end
+
 """
-        expect = r"""1"""
+        expect = r"""Ha 1
+Ha 2
+Ha 3
+Ha 4
+Ha 5
+Ha 6
+Ha 7
+Ha 8
+Ha 9
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 229))
 
 
     def test_130(self):
         input = r"""
 
+var a, b: integer;
+var x, y: real;
+var u, v: boolean;
+
 procedure main();
 begin
-    putInt(1);
+    updateHA(5, 10);
+    ha_i_space(a);
+    ha_i_space(b);
+    ha_f_space(x);
+    ha_f_space(y);
 end
 
+procedure updateHA(ha1, ha2: integer);
+begin
+    a := ha1 + ha2;
+    b := ha1 - ha2;
+    x := a + b;
+    y := a - b;
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""15 -5 10.0 20.0 """
         self.assertTrue(TestCodeGen.test(input, expect, 230))
 
 
     def test_131(self):
         input = r"""
 
+var a, b: integer;
+var x, y: real;
+var u, v: boolean;
+
 procedure main();
+var n: integer;
 begin
-    putInt(1);
+    n := 10;
+    while true do begin
+        with i: integer; do begin
+            a := 1;
+            b := n;
+            ha_i_space(n);
+            for i := a to b do begin
+                ha_f_space(mid(a,b));
+            end
+            if n = 0 break;
+        end
+        n := n-1;
+        putLn();
+    end
 end
 
+function mid(a, b: integer): real; begin return (a + b) / 2; end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""10 5.5 5.5 5.5 5.5 5.5 5.5 5.5 5.5 5.5 5.5 
+9 5.0 5.0 5.0 5.0 5.0 5.0 5.0 5.0 5.0 
+8 4.5 4.5 4.5 4.5 4.5 4.5 4.5 4.5 
+7 4.0 4.0 4.0 4.0 4.0 4.0 4.0 
+6 3.5 3.5 3.5 3.5 3.5 3.5 
+5 3.0 3.0 3.0 3.0 3.0 
+4 2.5 2.5 2.5 2.5 
+3 2.0 2.0 2.0 
+2 1.5 1.5 
+1 1.0 
+0 """
         self.assertTrue(TestCodeGen.test(input, expect, 231))
 
 
     def test_132(self):
         input = r"""
 
+var a, b: integer;
+var x, y: real;
+var u, v: boolean;
+
 procedure main();
+var n: integer;
 begin
-    putInt(1);
+    ha0852_proc();
 end
 
+procedure ha0852_proc();
+var i, j: integer;
+begin
+    for i := 1 to 10 do begin
+        for j := 1 to 10 do begin
+            if i = 10 and then j = 5 then return;
+            ha_i_space(i);
+        end
+    end
+end
+
+function mid(a, b: integer): real; begin return (a + b) / 2; end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 10 10 10 10 """
         self.assertTrue(TestCodeGen.test(input, expect, 232))
 
 
