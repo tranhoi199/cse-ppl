@@ -1,4 +1,10 @@
+import sys
+
 from Utils import *
+from CodeGenError import *
+
+sys.path.append('../codegen')
+sys.path.append('../utils')
 
 class Frame():
     def __init__(self, name, returnType):

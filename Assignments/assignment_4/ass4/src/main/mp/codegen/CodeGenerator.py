@@ -435,8 +435,10 @@ class CodeGenVisitor(BaseVisitor, Utils):
         lhsCode, lhsType = self.visit(ast.lhs, Access(frame, nenv, True, True))
         if type(lhsType) is FloatType and type(expType) is IntType:
             expCode = expCode + self.emit.emitI2F(frame)
-        self.emit.printout(expCode)
-        self.emit.printout(lhsCode)
+        if type(lhsCode) is str:
+            self.emit.printout(expCode + lhsCode)
+        else:
+            self.emit.printout(lhsCode[0] + expCode + lhsCode[1])
 
 
 
@@ -456,9 +458,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         # recover status of stack in frame
         if not isFirst and isLeft: frame.push()
         elif not isFirst and not isLeft: frame.pop()
-        
-        emitType = StupidUtils.retrieveType(sym.mtype)
+
         isArrayType = type(sym.mtype) is ArrayType
+        emitType = StupidUtils.retrieveType(sym.mtype)
         if sym.value is None: # not index -> global var - static field
             if isLeft and not isArrayType: retCode = self.emit.emitPUTSTATIC(self.className + "/" + sym.name, emitType, frame)
             else: retCode = self.emit.emitGETSTATIC(self.className + "/" + sym.name, emitType, frame)
@@ -475,11 +477,15 @@ class CodeGenVisitor(BaseVisitor, Utils):
         symbols = ctxt.sym
         isLeft = ctxt.isLeft
         isFirst = ctxt.isFirst
-        arrCode, arrType = self.visit(ast.arr, o)
-        idxCode, idxType = self.visit(ast.idx, o)
-        # aload(address) -> iconst(index) -> iaload
-        if isLeft: return arrCode + idxCode + self.emit.emitASTORE(IntType(), frame), arrType
-        return arrCode + idxCode + self.emit.emitALOAD(IntType(), frame), arrType
+        arrCode, arrType = self.visit(ast.arr, Access(frame, symbols, True, True))
+        idxCode, idxType = self.visit(ast.idx, Access(frame, symbols, False, True))
+        # update index jvm, i.e [3..5] -> [0..2], access [4] -> [1]
+        idxCode = idxCode + self.emit.emitPUSHICONST(arrType.lower, frame) + self.emit.emitADDOP('-', IntType(), frame)
+        # Steps: aload(address index) -> iconst(access index) -> iaload
+        if isLeft:
+            frame.push()
+            return [arrCode + idxCode, self.emit.emitASTORE(arrType.eleType, frame)], arrType.eleType
+        return arrCode + idxCode + self.emit.emitALOAD(arrType.eleType, frame), arrType.eleType
 
 
     def visitCallExpr(self, ast: CallExpr, o: Access):

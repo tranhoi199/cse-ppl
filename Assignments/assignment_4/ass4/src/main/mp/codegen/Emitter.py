@@ -4,6 +4,7 @@ import sys
 from Utils import *
 from StaticCheck import *
 from StaticError import *
+from CodeGenError import *
 import CodeGenerator as cgen
 from MachineCode import JasminCode
 from AST import *
@@ -107,7 +108,7 @@ class Emitter():
     def emitALOAD(self, in_, frame):
         # in_: Type
         # frame: Frame
-        # ..., arrayref, index, value -> ...
+        # ..., arrayref, index -> ..., value
 
         frame.pop()
         if type(in_) is IntType:
@@ -201,7 +202,6 @@ class Emitter():
         # ..., value -> ...
 
         frame.pop()
-
         if type(inType) in [IntType, BoolType]:
             return self.jvm.emitISTORE(index)
         elif type(inType) is FloatType:
@@ -344,6 +344,7 @@ class Emitter():
     def emitNOT(self, in_, frame):
         # in_: Type
         # frame: Frame
+        # ..., T/F -> ..., F/T
 
         labelT = frame.getNewLabel() # true
         labelF = frame.getNewLabel() # false
@@ -407,12 +408,14 @@ class Emitter():
 
     def emitDIV(self, frame):
         # frame: Frame
+        # ..., value1, value2 -> ..., result
 
         frame.pop()
         return self.jvm.emitIDIV()
 
     def emitMOD(self, frame):
         # frame: Frame
+        # ..., value1, value2 -> ..., result
 
         frame.pop()
         return self.jvm.emitIREM()
@@ -423,6 +426,7 @@ class Emitter():
 
     def emitANDOP(self, frame):
         # frame: Frame
+        # ..., value1, value2 -> ..., result
 
         frame.pop()
         return self.jvm.emitIAND()
@@ -433,12 +437,16 @@ class Emitter():
 
     def emitOROP(self, frame):
         # frame: Frame
+        # ..., value1, value2 -> ..., result
 
         frame.pop()
         return self.jvm.emitIOR()
 
 
     def emitANDTHEN(self, frame, lCode, rCode):
+        # ..., value1, value2 -> ..., result
+        
+        frame.pop()
 
         result = list()
         labelF = frame.getNewLabel() # eval is false
@@ -460,6 +468,9 @@ class Emitter():
         return ''.join(result)
 
     def emitORELSE(self, frame, lCode, rCode):
+        # ..., value1, value2 -> ..., result
+        
+        frame.pop()
 
         result = list()
         labelF = frame.getNewLabel() # eval is false
