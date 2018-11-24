@@ -618,6 +618,15 @@ class Emitter():
         result.append(self.jvm.emitASTORE(addressIndex))
         return ''.join(result)
 
+    def emitCloneArray(self, addressIndex, eleType, frame):
+        result = []
+        result.append(self.emitREADVAR("", cgen.ArrayPointerType(eleType), addressIndex, frame))
+        result.append(JasminCode.INDENT + "invokevirtual " + "[" + self.getJVMType(eleType) + "/clone()Ljava/lang/Object;" + JasminCode.END)
+        result.append(JasminCode.INDENT + "checkcast [" + self.getJVMType(eleType) + JasminCode.END)
+        result.append(self.jvm.emitASTORE(addressIndex))
+        frame.pop()
+        return ''.join(result)
+
 
     '''   generate code to initialize local array variables.
     *   @param in the list of symbol entries corresponding to local array variable.    

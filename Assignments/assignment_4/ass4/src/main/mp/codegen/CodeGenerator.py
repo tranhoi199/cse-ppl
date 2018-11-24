@@ -224,9 +224,14 @@ class CodeGenVisitor(BaseVisitor, Utils):
             self.emit.printout(self.emit.emitVAR(frame.getNewIndex(), "args", ArrayPointerType(
                 StringType()), frame.getStartLabel(), frame.getEndLabel(), frame))
 
+        listParamArray = [] # list(Symbol(name, mtype, value: Index(idx)))
         listLocalArray = [] # list(Symbol(name, mtype, value: Index(idx)))
         varList = SubBody(frame, glenv)
-        for x in decl.param + decl.local:
+        for x in decl.param:
+            varList = self.visit(x, varList)
+            if type(x.varType) is ArrayType:
+                listParamArray.append(varList.sym[0])
+        for x in decl.local:
             varList = self.visit(x, varList)
             if type(x.varType) is ArrayType:
                 listLocalArray.append(varList.sym[0])
@@ -250,6 +255,12 @@ class CodeGenVisitor(BaseVisitor, Utils):
             varType = sym.mtype
             size = varType.upper - varType.lower + 1
             self.emit.printout(self.emit.emitInitNewLocalArray(index, size, varType.eleType, frame))
+
+        # Clone params array
+        for sym in listParamArray:
+            index = sym.value.value
+            eleType = sym.mtype.eleType
+            self.emit.printout(self.emit.emitCloneArray(index, eleType, frame))
 
         list(map(lambda x: self.visit(x, varList), decl.body))
 
