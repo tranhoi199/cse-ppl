@@ -7,20 +7,25 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
-var a: array[-10000 .. 10000] of integer;
 procedure main();
-var
-    i, l, r: integer;
+var a: array[0 .. 10] of integer;
+    b: integer;
 begin
-    l := -20;
-    r := 20;
-    a[l] := 1;
-    a[l+1] := 1;
-    for i := l+2 to r do begin
-        a[i] := a[i-1] + a[i-2];
-    end
-    putInt(a[r]);
+    a[0] := 1;
+    b := 5;
+    foo(a, b);
+    putInt(a[0]);
+    putInt(b);
 end
+
+procedure foo(a: array[0 .. 10] of integer; b: integer);
+begin
+    putInt(a[0]);
+    putInt(b);
+    a[0] := 2;
+    b := 6;
+end
+
 
 """
         expect = r"""165580141"""

@@ -288,9 +288,10 @@ class CodeGenVisitor(BaseVisitor, Utils):
             pCode, pType = self.visit(x, Access(frame, symbols, False, True))
             if type(paramTypes[idx]) is FloatType and type(pType) is IntType:
                 pCode = pCode + self.emit.emitI2F(frame)
+            if type(paramTypes[idx]) is ArrayType:
+                pass
             paramsCode = paramsCode + pCode
             idx = idx + 1
-
         code = paramsCode + self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame) 
         if isStmt: self.emit.printout(code)
         else: return code, ctype.rettype

@@ -32,6 +32,8 @@ class Emitter():
             return "Z"
         elif typeIn is cgen.ArrayPointerType:
             return "[" + self.getJVMType(inType.eleType)
+        elif typeIn is ArrayType:
+            return self.getJVMType(cgen.ArrayPointerType(inType.eleType))
         elif typeIn is MType:
             return "(" + "".join(list(map(lambda x: self.getJVMType(x), inType.partype))) + ")" + self.getJVMType(inType.rettype)
         elif typeIn is cgen.ClassType:
