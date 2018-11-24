@@ -32,6 +32,8 @@ class Emitter():
             return "Z"
         elif typeIn is cgen.ArrayPointerType:
             return "[" + self.getJVMType(inType.eleType)
+        elif typeIn is ArrayType:
+            return self.getJVMType(cgen.ArrayPointerType(inType.eleType))
         elif typeIn is MType:
             return "(" + "".join(list(map(lambda x: self.getJVMType(x), inType.partype))) + ")" + self.getJVMType(inType.rettype)
         elif typeIn is cgen.ClassType:
@@ -614,6 +616,15 @@ class Emitter():
         frame.pop()
         result.append(self.jvm.emitNEWARRAY(self.getFullType(eleType)))
         result.append(self.jvm.emitASTORE(addressIndex))
+        return ''.join(result)
+
+    def emitCloneArray(self, addressIndex, eleType, frame):
+        result = []
+        result.append(self.emitREADVAR("", cgen.ArrayPointerType(eleType), addressIndex, frame))
+        result.append(JasminCode.INDENT + "invokevirtual " + "[" + self.getJVMType(eleType) + "/clone()Ljava/lang/Object;" + JasminCode.END)
+        result.append(JasminCode.INDENT + "checkcast [" + self.getJVMType(eleType) + JasminCode.END)
+        result.append(self.jvm.emitASTORE(addressIndex))
+        frame.pop()
         return ''.join(result)
 
 

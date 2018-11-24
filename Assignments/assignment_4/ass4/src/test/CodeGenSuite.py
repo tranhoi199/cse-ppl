@@ -3216,12 +3216,29 @@ end
         input = r"""
 
 procedure main();
+var a: array[4 .. 10] of integer;
 begin
-    putInt(1);
+    a[5] := 5;
+    foo(4, a);
+    ha_i_space(a[5]);
 end
 
+procedure foo(i: integer; a: array[4 .. 10] of integer);
+begin
+    ha_i_space(a[5]);
+    a[5] := 8;
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""5 5 """
         self.assertTrue(TestCodeGen.test(input, expect, 240))
 
 
@@ -3229,12 +3246,38 @@ end
         input = r"""
 
 procedure main();
+var a: array[4 .. 10] of integer;
+    i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do begin
+        a[i] := i * i;
+    end
+    foo(a);
+    putLN();
+    for i := 4 to 10 do ha_i_space(a[i]);
 end
 
+procedure foo(a: array[4 .. 10] of integer);
+var i: integer;
+begin
+    for i := 4 to 10 do ha_i_space(a[i]);
+    for i := 4 to 10 do begin
+        a[i] := i + i;
+    end
+    for i := 4 to 10 do ha_i_space(a[i]);
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""16 25 36 49 64 81 100 8 10 12 14 16 18 20 
+16 25 36 49 64 81 100 """
         self.assertTrue(TestCodeGen.test(input, expect, 241))
 
 
@@ -3242,12 +3285,38 @@ end
         input = r"""
 
 procedure main();
+var a: array[4 .. 10] of real;
+    i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do begin
+        a[i] := i * i;
+    end
+    foo(a);
+    putLN();
+    for i := 4 to 10 do ha_f_space(a[i]);
 end
 
+procedure foo(a: array[4 .. 10] of real);
+var i: integer;
+begin
+    for i := 4 to 10 do ha_f_space(a[i]);
+    for i := 4 to 10 do begin
+        a[i] := i + i;
+    end
+    for i := 4 to 10 do ha_f_space(a[i]);
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""16.0 25.0 36.0 49.0 64.0 81.0 100.0 8.0 10.0 12.0 14.0 16.0 18.0 20.0 
+16.0 25.0 36.0 49.0 64.0 81.0 100.0 """
         self.assertTrue(TestCodeGen.test(input, expect, 242))
 
 
@@ -3255,12 +3324,38 @@ end
         input = r"""
 
 procedure main();
+var a: array[4 .. 10] of boolean;
+    i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do begin
+        a[i] := i div 3 < 3 or else i div 3 > 5;
+    end
+    foo(a);
+    putLN();
+    for i := 4 to 10 do ha_b_space(a[i]);
 end
 
+procedure foo(a: array[4 .. 10] of boolean);
+var i: integer;
+begin
+    for i := 4 to 10 do ha_b_space(a[i]);
+    for i := 4 to 10 do begin
+        a[i] := not (i div 3 < 3 or else i div 3 > 5);
+    end
+    for i := 4 to 10 do ha_b_space(a[i]);
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""true true true true true false false false false false false false true true 
+true true true true true false false """
         self.assertTrue(TestCodeGen.test(input, expect, 243))
 
 
@@ -3268,88 +3363,404 @@ end
         input = r"""
 
 procedure main();
+var a: array[4 .. 10] of integer;
+    b: array[5 .. 20] of real;
+    i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do begin
+        a[i] := i * i;
+        b[i+1] := i * i;
+    end
+    foo(b, a);
+    putLN();
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+        ha_f_space(b[i+1]);
+    end
 end
 
+procedure foo(
+    a: array[5 .. 20] of real;
+    b: array[4 .. 10] of integer
+);
+var i: integer;
+begin
+    for i := 4 to 10 do begin
+        ha_f_space(a[i+1]);
+        ha_f_space(b[i]);
+    end
+    for i := 4 to 10 do begin
+        a[i+1] := b[i];
+        if i+1 > 10 then continue;
+        b[i+1] := (i+1) * i div 2 + 1;
+    end
+    putLn();
+    for i := 4 to 10 do begin
+        ha_f_space(a[i+1]);
+        ha_f_space(b[i]);
+    end
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""16.0 16.0 25.0 25.0 36.0 36.0 49.0 49.0 64.0 64.0 81.0 81.0 100.0 100.0 
+16.0 16.0 11.0 11.0 16.0 16.0 22.0 22.0 29.0 29.0 37.0 37.0 46.0 46.0 
+16.0 16.0 25.0 25.0 36.0 36.0 49.0 49.0 64.0 64.0 81.0 81.0 100.0 100.0 """
         self.assertTrue(TestCodeGen.test(input, expect, 244))
 
 
     def test_145(self):
         input = r"""
 
-procedure main();
+function ha_arr(): array[4 .. 10] of integer;
+var a: array[4 .. 10] of integer;
+    i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do a[i] := i * i;
+    return a;
 end
 
+procedure main();
+begin
+    foo(ha_arr());
+end
+
+procedure foo(a: array[4 .. 10] of integer);
+var i: integer;
+begin
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+    end
+    for i := 4 to 10 do begin
+        a[i] := i + 1;
+    end
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""16.0 25.0 36.0 49.0 64.0 81.0 100.0 """
         self.assertTrue(TestCodeGen.test(input, expect, 245))
 
 
     def test_146(self):
         input = r"""
 
-procedure main();
+var a: array[4 .. 10] of integer;
+
+function ha_arr(): array[4 .. 10] of integer;
+var i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do a[i] := i * i;
+    return a;
 end
 
+procedure main();
+var i: integer;
+begin
+    putLn();
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+    end
+    putLn();
+    foo(ha_arr());
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+    end
+end
+
+procedure foo(a: array[4 .. 10] of integer);
+var i: integer;
+begin
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+        a[i] := i + 1;
+    end
+    putLn();
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+16.0 25.0 36.0 49.0 64.0 81.0 100.0 
+16.0 25.0 36.0 49.0 64.0 81.0 100.0 """
         self.assertTrue(TestCodeGen.test(input, expect, 246))
 
 
     def test_147(self):
         input = r"""
 
-procedure main();
+var a: array[4 .. 10] of integer;
+
+function ha_arr(): array[4 .. 10] of integer;
+var i: integer;
 begin
-    putInt(1);
+    for i := 4 to 10 do a[i] := i * i;
+    return a;
 end
 
+procedure ha_arr_buff(x: array[4 .. 10] of integer); begin end
+
+procedure main();
+var i: integer;
+begin
+    putLn();
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+    end
+    putLn();
+    foo(ha_arr());
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+    end
+    ha_arr_buff(ha_arr());
+    putLn();
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+    end
+end
+
+procedure foo(x: array[4 .. 10] of integer);
+var i: integer;
+begin
+    for i := 4 to 10 do begin
+        ha_f_space(x[i]);
+        x[i] := i + 1;
+    end
+    putLn();
+    for i := 4 to 10 do begin
+        ha_f_space(a[i]);
+        a[i] := i - 1;
+    end
+    putLn();
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+procedure ha_b_space(ha0852b: boolean); begin putBool(ha0852b); putString(" "); end
+
+function ha_str_1(): string; begin return "0852 1"; end
+function ha_str_2(): string; begin return "0852 2"; end
+function ha_str_3(): string; begin return "0852 3"; end
+
 """
-        expect = r"""1"""
+        expect = r"""
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+16.0 25.0 36.0 49.0 64.0 81.0 100.0 
+16.0 25.0 36.0 49.0 64.0 81.0 100.0 
+3.0 4.0 5.0 6.0 7.0 8.0 9.0 
+16.0 25.0 36.0 49.0 64.0 81.0 100.0 """
         self.assertTrue(TestCodeGen.test(input, expect, 247))
 
 
     def test_148(self):
         input = r"""
 
+var n, m: integer;
+
 procedure main();
+var a: array[0 .. 100000] of integer;
+    i: integer;
 begin
-    putInt(1);
+    n := 10000;
+    m := 1000000009;
+    a[0] := 1;
+    a[1] := 2;
+    for i := 2 to n do a[i] := (a[i-1] + a[i-2]) mod m;
+    // for i := 0 to n do putIntLn(a[i]);
+    ha_i_space(indexOf(a, 1597));
+    ha_i_space(indexOf(a, 10946));
+    ha_i_space(indexOf(a, 1346269));
+    ha_i_space(indexOf(a, 165580141));
+    ha_i_space(indexOf(a, 784974805));
+    ha_i_space(indexOf(a, 337007687));
+    ha_i_space(indexOf(a, 807526340));
+    ha_i_space(indexOf(a, 147860051));
+    ha_i_space(indexOf(a, 274044507));
+    ha_i_space(indexOf(a, 203070066));
+    ha_i_space(indexOf(a, 150716683));
+    ha_i_space(indexOf(a, 992750503));
+    ha_i_space(indexOf(a, 453021451));
+    ha_i_space(indexOf(a, 941642764));
+    ha_i_space(indexOf(a, 163684284));
+    ha_i_space(indexOf(a, 564665913));
+    ha_i_space(indexOf(a, 102915696));
 end
 
+function indexOf(a: array[0 .. 100000] of integer; x: integer): integer;
+var i: integer;
+begin
+    for i := 0 to n do begin
+        if a[i] = x then return i;
+    end
+    return -1;
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+
 """
-        expect = r"""1"""
+        expect = r"""15 19 29 39 302 318 -1 332 364 379 419 999 874 481 443 749 1000 """
         self.assertTrue(TestCodeGen.test(input, expect, 248))
 
 
     def test_149(self):
         input = r"""
 
+var n, m: integer;
+var a: array[0 .. 100000] of integer;
+
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    n := 50; m := 1997;
+    // n := 5000; m := 1000000009;
+    a[1] := 1;
+    a[2] := 2;
+    for i := 3 to n do a[i] := ((3 * a[i-1]) mod m - (4 * a[i-2]) mod m + m) mod m;
+
+    ha_log_arr();
+    // ha_i_space(ha_check_arr());
+
+    sort(1, n);
+
+    ha_log_arr();
+    // ha_i_space(ha_check_arr());
 end
 
+procedure sort(l, r: integer);
+var x,i,j: integer;
+begin
+    if l >= r then return;
+    x := (l+r) div 2;
+    i := l;
+    j := r;
+    while i <= j do begin
+        while a[i] < a[x] do i := i+1;
+        while a[j] > a[x] do j := j-1;
+        if i <= j then begin
+            with tmp: integer; do begin 
+                tmp := a[i]; a[i] := a[j]; a[j] := tmp;
+            end
+            i := i+1;
+            j := j-1;
+        end
+    end
+    sort(l, j);
+    sort(i, r);
+end
+
+function ha_check_arr(): integer;
+var i: integer;
+begin
+    with res: integer; do begin
+        res := 0;
+        for i := 1 to n do res := (res + a[i] * i mod m) mod m;
+        return res;
+    end
+end
+
+procedure ha_log_arr();
+var i: integer;
+begin
+    for i := 1 to n do ha_i_space(a[i]);
+    putLn();
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+
 """
-        expect = r"""1"""
+        expect = r"""1 2 2 1995 1983 1963 1951 1995 178 542 914 574 63 1887 1415 691 407 454 1731 1380 1210 107 1472 1991 85 279 497 375 1134 1902 1170 1893 999 1416 252 1083 244 394 206 1039 296 726 994 78 252 444 324 1193 286 80 
+1 2 2 63 78 80 85 107 178 407 454 542 574 691 914 1415 1210 1380 1472 1731 1887 1951 206 252 252 279 375 286 296 324 444 497 726 994 999 1039 244 394 1083 1134 1170 1193 1416 1893 1902 1963 1983 1991 1995 1995 
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 249))
 
 
     def test_150(self):
         input = r"""
 
+var n, m: integer;
+var a: array[0 .. 100000] of integer;
+
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    // n := 50; m := 1997;
+    n := 50000; m := 1000000009;
+    a[1] := 1;
+    a[2] := 2;
+    for i := 3 to n do a[i] := ((3 * a[i-1]) mod m - (4 * a[i-2]) mod m + m) mod m;
+
+    // ha_log_arr();
+    ha_i_space(ha_check_arr());
+
+    sort(1, n);
+
+    // ha_log_arr();
+    ha_i_space(ha_check_arr());
 end
 
+procedure sort(l, r: integer);
+var x,i,j: integer;
+begin
+    if l >= r then return;
+    x := (l+r) div 2;
+    i := l;
+    j := r;
+    while i <= j do begin
+        while a[i] < a[x] do i := i+1;
+        while a[j] > a[x] do j := j-1;
+        if i <= j then begin
+            with tmp: integer; do begin 
+                tmp := a[i]; a[i] := a[j]; a[j] := tmp;
+            end
+            i := i+1;
+            j := j-1;
+        end
+    end
+    sort(l, j);
+    sort(i, r);
+end
+
+function ha_check_arr(): integer;
+var i: integer;
+begin
+    with res: integer; do begin
+        res := 0;
+        for i := 1 to n do res := (res + a[i] * i mod m) mod m;
+        return res;
+    end
+end
+
+procedure ha_log_arr();
+var i: integer;
+begin
+    for i := 1 to n do ha_i_space(a[i]);
+    putLn();
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+
 """
-        expect = r"""1"""
+        expect = r"""15123137 270342704 """
         self.assertTrue(TestCodeGen.test(input, expect, 250))
