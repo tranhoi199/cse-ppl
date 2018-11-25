@@ -3974,39 +3974,123 @@ procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); en
     def test_155(self):
         input = r"""
 
+var n: integer;
+var a: array[0 .. 100000] of real;
+
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    n := 20;
+    for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
+    ha_log_arr(a);
+    ha_log_arr(SETRANGE(a, 3, 8, 1.9));
 end
 
+function setRange(
+    a: array[0 .. 100000] of real; 
+    l, r: integer; 
+    v: real): array[0 .. 100000] of real; 
+var i: integer;
+begin
+    for i := l to r do a[i] := v;
+    return a;
+end
+
+procedure ha_log_arr(a: array[0 .. 100000] of real);
+var i: integer;
+begin
+    for i := 1 to n do ha_f_space(a[i]);
+    putLN();
+end
+
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+
 """
-        expect = r"""1"""
+        expect = r"""1.0 4.0 10.0 20.0 35.0 56.0 84.0 120.0 165.0 220.0 286.0 364.0 455.0 560.0 680.0 816.0 969.0 1140.0 1330.0 1540.0 
+1.0 4.0 1.9 1.9 1.9 1.9 1.9 1.9 165.0 220.0 286.0 364.0 455.0 560.0 680.0 816.0 969.0 1140.0 1330.0 1540.0 
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 255))
 
 
     def test_156(self):
         input = r"""
 
+var n: integer;
+var a: array[0 .. 100000] of real;
+
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    n := 20;
+    for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
+    ha_log_arr(a);
+    ha_log_arr(SETrange(SETRANGE(a, 3, 8, 1.9), 5, 15, 4.6));
 end
 
+function setRange(
+    a: array[0 .. 100000] of real; 
+    l, r: integer; 
+    v: real): array[0 .. 100000] of real; 
+var i: integer;
+begin
+    for i := l to r do a[i] := v;
+    return a;
+end
+
+procedure ha_log_arr(a: array[0 .. 100000] of real);
+var i: integer;
+begin
+    for i := 1 to n do ha_f_space(a[i]);
+    putLN();
+end
+
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+
 """
-        expect = r"""1"""
+        expect = r"""1.0 4.0 10.0 20.0 35.0 56.0 84.0 120.0 165.0 220.0 286.0 364.0 455.0 560.0 680.0 816.0 969.0 1140.0 1330.0 1540.0 
+1.0 4.0 1.9 1.9 4.6 4.6 4.6 4.6 4.6 4.6 4.6 4.6 4.6 4.6 4.6 816.0 969.0 1140.0 1330.0 1540.0 
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 256))
 
 
     def test_157(self):
         input = r"""
 
+var n: integer;
+var a: array[0 .. 100000] of real;
+
 procedure main();
+var i: integer;
 begin
-    putInt(1);
+    n := 20;
+    for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
+    ha_log_arr(a);
+    ha_log_arr(setRange(SETrange(SETRANGE(a, 3, 8, 1.9), 5, 15, 4.6), 1, n-5, 1000.00001));
 end
 
+function setRange(
+    a: array[0 .. 100000] of real; 
+    l, r: integer; 
+    v: real): array[0 .. 100000] of real; 
+var i: integer;
+begin
+    for i := l to r do a[i] := v;
+    return a;
+end
+
+procedure ha_log_arr(a: array[0 .. 100000] of real);
+var i: integer;
+begin
+    for i := 1 to n do ha_f_space(a[i]);
+    putLN();
+end
+
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+
 """
-        expect = r"""1"""
+        expect = r"""1.0 4.0 10.0 20.0 35.0 56.0 84.0 120.0 165.0 220.0 286.0 364.0 455.0 560.0 680.0 816.0 969.0 1140.0 1330.0 1540.0 
+1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 1000.0 816.0 969.0 1140.0 1330.0 1540.0 
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 257))
 
 

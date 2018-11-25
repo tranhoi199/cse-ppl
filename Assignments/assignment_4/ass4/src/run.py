@@ -42,8 +42,8 @@ def main(argv):
             from CheckerSuite import CheckerSuite
             getAndTest(CheckerSuite)
         elif argv[1] == 'CodeGenSuite':
-            from CodeGenSuite import CheckCodeGenSuite
-            # from CodeGenSuite_1 import CheckCodeGenSuite
+            # from CodeGenSuite import CheckCodeGenSuite
+            from CodeGenSuite_1 import CheckCodeGenSuite
             getAndTest(CheckCodeGenSuite)
         else:
             printUsage()

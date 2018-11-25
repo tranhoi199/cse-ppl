@@ -16,7 +16,7 @@ begin
     n := 20;
     for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
     ha_log_arr(a);
-    ha_log_arr(SETRANGE(a));
+    ha_log_arr(setRange(SETrange(SETRANGE(a, 3, 8, 1.9), 5, 15, 4.6), 1, n-5, 1000.00001));
 end
 
 function setRange(
