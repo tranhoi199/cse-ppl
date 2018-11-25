@@ -103,7 +103,7 @@ class SubBody():
 
 
 class Access():
-    def __init__(self, frame, sym, isLeft, isFirst):
+    def __init__(self, frame, sym, isLeft, isFirst, checkArrayType=False):
         # frame: Frame
         # sym: List[Symbol]
         # isLeft: Boolean
@@ -113,6 +113,7 @@ class Access():
         self.sym = sym
         self.isLeft = isLeft
         self.isFirst = isFirst
+        self.checkArrayType = checkArrayType
 
 
 class Val(ABC):
@@ -448,15 +449,24 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctxt = o
         frame = ctxt.frame
         nenv = ctxt.sym
+
+        # Pre-prepare for assign to array cell
+        # stack: ..., arrayref, index, value -> ...
+        # push 2 slot for arrayref and index, visit exp first
+        isArray, _ = self.visit(ast.lhs, Access(frame, nenv, True, True, checkArrayType=True))
+        if isArray: [frame.push() for i in range(0,2)]
+
         # Visit LHS: Id || ArrayCell
         expCode, expType = self.visit(ast.exp, Access(frame, nenv, False, True))
         lhsCode, lhsType = self.visit(ast.lhs, Access(frame, nenv, True, True))
         if type(lhsType) is FloatType and type(expType) is IntType:
             expCode = expCode + self.emit.emitI2F(frame)
-        if type(lhsCode) is str:
+        if not isArray:
             self.emit.printout(expCode + lhsCode)
         else:
             self.emit.printout(lhsCode[0] + expCode + lhsCode[1])
+            # recover stack status
+            [frame.pop() for i in range(0,2)]
 
 
 
@@ -471,6 +481,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
         symbols = ctxt.sym
         isLeft = ctxt.isLeft
         isFirst = ctxt.isFirst
+
+        if isLeft and ctxt.checkArrayType: return False, None
+
         sym = self.lookup(ast.name.lower(), symbols, lambda x: x.name.lower())
 
         # recover status of stack in frame
@@ -495,13 +508,15 @@ class CodeGenVisitor(BaseVisitor, Utils):
         symbols = ctxt.sym
         isLeft = ctxt.isLeft
         isFirst = ctxt.isFirst
+
+        if isLeft and ctxt.checkArrayType: return True, None
+
         arrCode, arrType = self.visit(ast.arr, Access(frame, symbols, True, True))
         idxCode, idxType = self.visit(ast.idx, Access(frame, symbols, False, True))
         # update index jvm, i.e [3..5] -> [0..2], access [4] -> [1]
         idxCode = idxCode + self.emit.emitPUSHICONST(arrType.lower, frame) + self.emit.emitADDOP('-', IntType(), frame)
         # Steps: aload(address index) -> iconst(access index) -> iaload
         if isLeft:
-            frame.push()
             return [arrCode + idxCode, self.emit.emitASTORE(arrType.eleType, frame)], arrType.eleType
         return arrCode + idxCode + self.emit.emitALOAD(arrType.eleType, frame), arrType.eleType
 

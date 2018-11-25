@@ -7,70 +7,39 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
-var n, m: integer;
-var a: array[0 .. 100000] of integer;
+var n: integer;
+var a: array[0 .. 100000] of real;
 
 procedure main();
 var i: integer;
 begin
-    // n := 50; m := 1997;
-    n := 50000; m := 1000000009;
-    a[1] := 1;
-    a[2] := 2;
-    for i := 3 to n do a[i] := ((3 * a[i-1]) mod m - (4 * a[i-2]) mod m + m) mod m;
-
-    // ha_log_arr();
-    ha_i_space(ha_check_arr());
-
-    sort(1, n);
-
-    // ha_log_arr();
-    ha_i_space(ha_check_arr());
+    n := 20;
+    for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
+    ha_log_arr(a);
+    ha_log_arr(SETRANGE(a));
 end
 
-procedure sort(l, r: integer);
-var x,i,j: integer;
-begin
-    if l >= r then return;
-    x := (l+r) div 2;
-    i := l;
-    j := r;
-    while i <= j do begin
-        while a[i] < a[x] do i := i+1;
-        while a[j] > a[x] do j := j-1;
-        if i <= j then begin
-            with tmp: integer; do begin 
-                tmp := a[i]; a[i] := a[j]; a[j] := tmp;
-            end
-            i := i+1;
-            j := j-1;
-        end
-    end
-    sort(l, j);
-    sort(i, r);
-end
-
-function ha_check_arr(): integer;
+function setRange(
+    a: array[0 .. 100000] of real; 
+    l, r: integer; 
+    v: real): array[0 .. 100000] of real; 
 var i: integer;
 begin
-    with res: integer; do begin
-        res := 0;
-        for i := 1 to n do res := (res + a[i] * i mod m) mod m;
-        return res;
-    end
+    for i := l to r do a[i] := v;
+    return a;
 end
 
-procedure ha_log_arr();
+procedure ha_log_arr(a: array[0 .. 100000] of real);
 var i: integer;
 begin
-    for i := 1 to n do ha_i_space(a[i]);
-    putLn();
+    for i := 1 to n do ha_f_space(a[i]);
+    putLN();
 end
 
-procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
 
 """
-        expect = r"""15123137 270342704 """
+        expect = r""""""
         self.assertTrue(TestCodeGen.test(input,expect,1))
 
 

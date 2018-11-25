@@ -3764,3 +3764,547 @@ procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); e
 """
         expect = r"""15123137 270342704 """
         self.assertTrue(TestCodeGen.test(input, expect, 250))
+
+
+
+    def test_151(self):
+        input = r"""
+
+var x, n, m: integer;
+var a: array[0 .. 100000] of integer;
+
+procedure main();
+var i, j: integer;
+begin
+    m := 10007;
+    for i := 1 to 8 do begin
+        with l, r: integer; do begin
+            if i > 4 then begin
+                l := 50; r := 55;
+            end else begin
+                l := 0; r := 5;
+            end
+            for j := l to r do begin
+                ha_i_space(i); putString("^ ");
+                ha_i_space(j); putString("= ");
+                putIntLn(pow(i,j));
+            end
+        end
+    end
+end
+
+function pow(x, n: integer): integer;
+begin
+    if n = 0 then return 1;
+    with res: integer; do begin
+        res := pow(x, n div 2);
+        res := (res * res) mod m;
+        if n mod 2 = 1 then res := (res * x) mod m;
+        return res;
+    end
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+
+
+"""
+        expect = r"""1 ^ 0 = 1
+1 ^ 1 = 1
+1 ^ 2 = 1
+1 ^ 3 = 1
+1 ^ 4 = 1
+1 ^ 5 = 1
+2 ^ 0 = 1
+2 ^ 1 = 2
+2 ^ 2 = 4
+2 ^ 3 = 8
+2 ^ 4 = 16
+2 ^ 5 = 32
+3 ^ 0 = 1
+3 ^ 1 = 3
+3 ^ 2 = 9
+3 ^ 3 = 27
+3 ^ 4 = 81
+3 ^ 5 = 243
+4 ^ 0 = 1
+4 ^ 1 = 4
+4 ^ 2 = 16
+4 ^ 3 = 64
+4 ^ 4 = 256
+4 ^ 5 = 1024
+5 ^ 50 = 434
+5 ^ 51 = 2170
+5 ^ 52 = 843
+5 ^ 53 = 4215
+5 ^ 54 = 1061
+5 ^ 55 = 5305
+6 ^ 50 = 1855
+6 ^ 51 = 1123
+6 ^ 52 = 6738
+6 ^ 53 = 400
+6 ^ 54 = 2400
+6 ^ 55 = 4393
+7 ^ 50 = 6035
+7 ^ 51 = 2217
+7 ^ 52 = 5512
+7 ^ 53 = 8563
+7 ^ 54 = 9906
+7 ^ 55 = 9300
+8 ^ 50 = 2485
+8 ^ 51 = 9873
+8 ^ 52 = 8935
+8 ^ 53 = 1431
+8 ^ 54 = 1441
+8 ^ 55 = 1521
+"""
+        self.assertTrue(TestCodeGen.test(input, expect, 251))
+
+
+    def test_152(self):
+        input = r"""
+
+var x, n, m: integer;
+var a: array[0 .. 100000] of integer;
+
+procedure main();
+var i, j: integer;
+begin
+    m := 10007;
+    ha_i_space(pow(1, 2000000000));
+    ha_i_space(pow(4, 2000000000));
+    ha_i_space(pow(15, 2000000000));
+    ha_i_space(pow(27, 2000000000));
+    ha_i_space(pow(79, 2000000000));
+    ha_i_space(pow(128, 2000000000));
+    ha_i_space(pow(9246, 2000000000));
+    ha_i_space(pow(14942, 2000000000));
+    ha_i_space(pow(29265, 2000000000));
+    ha_i_space(pow(667999, 2000000000));
+    ha_i_space(pow(1937815, 2000000000));
+    ha_i_space(pow(6111917, 2000000000));
+    ha_i_space(pow(59684905, 2000000000));
+    ha_i_space(pow(793800323, 2000000000));
+end
+
+function pow(x, n: integer): integer;
+begin
+    if n = 0 then return 1;
+    with res: integer; do begin
+        res := pow(x, n div 2);
+        res := (res * res) mod m;
+        if n mod 2 = 1 then res := (res * x) mod m;
+        return res;
+    end
+end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+
+
+"""
+        expect = r"""1 3443 4095 9151 1264 3505 7134 1733 1738 9785 647 5510 7772 1554 """
+        self.assertTrue(TestCodeGen.test(input, expect, 252))
+
+
+    def test_153(self):
+        input = r"""
+
+var x, n, m: integer;
+var a: array[0 .. 100000] of integer;
+
+procedure main();
+var i, j: integer;
+begin
+    ha_i_space(inc(1));
+    ha_i_space(inc(inc(1)));
+    ha_i_space(inc(inc(inc(1))));
+    ha_i_space(inc(inc(inc(inc(1)))));
+    ha_i_space(inc(inc(inc(inc(inc(1))))));
+    ha_i_space(inc(inc(inc(inc(inc(inc(1)))))));
+end
+
+function inc(i: integer): integer; begin return i+1; end
+
+procedure ha_i_space(ha0852i: integer); begin putInt(ha0852i); putString(" "); end
+
+
+"""
+        expect = r"""2 3 4 5 6 7 """
+        self.assertTrue(TestCodeGen.test(input, expect, 253))
+
+
+    def test_154(self):
+        input = r"""
+
+var n: integer;
+var a: array[0 .. 100000] of real;
+
+procedure main();
+var i: integer;
+begin
+    n := 20;
+    for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
+    ha_log_arr(a);
+end
+
+// function setRange(
+//     a: array[0 .. 100000] of real; 
+//     l, r: integer; 
+//     v: real): array[0 .. 100000] of real; 
+// var i: integer;
+// begin
+//     for i := l to r do a[i] := v;
+//     return a;
+// end
+
+procedure ha_log_arr(a: array[0 .. 100000] of real);
+var i: integer;
+begin
+    for i := 1 to n do ha_f_space(a[i]);
+    putLN();
+end
+
+procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
+
+"""
+        expect = r"""1.0 4.0 10.0 20.0 35.0 56.0 84.0 120.0 165.0 220.0 286.0 364.0 455.0 560.0 680.0 816.0 969.0 1140.0 1330.0 1540.0 
+"""
+        self.assertTrue(TestCodeGen.test(input, expect, 254))
+
+
+    def test_155(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 255))
+
+
+    def test_156(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 256))
+
+
+    def test_157(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 257))
+
+
+    def test_158(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 258))
+
+
+    def test_159(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 259))
+
+
+    def test_160(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 260))
+
+
+    def test_161(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 261))
+
+
+    def test_162(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 262))
+
+
+    def test_163(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 263))
+
+
+    def test_164(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 264))
+
+
+    def test_165(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 265))
+
+
+    def test_166(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 266))
+
+
+    def test_167(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 267))
+
+
+    def test_168(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 268))
+
+
+    def test_169(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 269))
+
+
+    def test_170(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 270))
+
+
+    def test_171(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 271))
+
+
+    def test_172(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 272))
+
+
+    def test_173(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 273))
+
+
+    def test_174(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 274))
+
+
+    def test_175(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 275))
+
+
+    def test_176(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 276))
+
+
+    def test_177(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 277))
+
+
+    def test_178(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 278))
+
+
+    def test_179(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 279))
+
+
+    def test_180(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 280))
+
