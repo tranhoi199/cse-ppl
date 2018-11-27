@@ -2911,7 +2911,7 @@ begin
             for i := a to b do begin
                 ha_f_space(mid(a,b));
             end
-            if n = 0 break;
+            if n = 0 then break;
         end
         n := n-1;
         putLn();

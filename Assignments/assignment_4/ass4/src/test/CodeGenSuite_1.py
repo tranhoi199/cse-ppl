@@ -7,36 +7,10 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
-var n: integer;
-var a: array[0 .. 100000] of real;
-
 procedure main();
 var i: integer;
 begin
-    n := 20;
-    for i := 1 to n do a[i] := i * (i+1) * (i+2) / 6;
-    ha_log_arr(a);
-    ha_log_arr(setRange(SETrange(SETRANGE(a, 3, 8, 1.9), 5, 15, 4.6), 1, n-5, 1000.00001));
 end
-
-function setRange(
-    a: array[0 .. 100000] of real; 
-    l, r: integer; 
-    v: real): array[0 .. 100000] of real; 
-var i: integer;
-begin
-    for i := l to r do a[i] := v;
-    return a;
-end
-
-procedure ha_log_arr(a: array[0 .. 100000] of real);
-var i: integer;
-begin
-    for i := 1 to n do ha_f_space(a[i]);
-    putLN();
-end
-
-procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); end
 
 """
         expect = r""""""
