@@ -7,8 +7,14 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
+var a: array[1 .. 10] of integer;
+
 procedure main();
-var i: integer;
+begin
+    foo(a);
+end
+
+procedure foo(b: array[1 .. 10] of integer);
 begin
 end
 
