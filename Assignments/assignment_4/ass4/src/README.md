@@ -8,6 +8,7 @@ http://www.cs.sjsu.edu/~pearce/modules/lectures/co/jvm/jasmin/data.html
 + MachineCode.py:
     + rem -> irem
     + label -> str(label)
+    + iconst_ml -> iconst_m1
 
 
 + Frame.py:

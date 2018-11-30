@@ -44,6 +44,11 @@ def main(argv):
         elif argv[1] == 'CodeGenSuite':
             # from CodeGenSuite import CheckCodeGenSuite
             from CodeGenSuite_1 import CheckCodeGenSuite
+            # from CodeGenSuite_AAA import CheckCodeGenSuite
+            # from CodeGenSuite_BBB import CheckCodeGenSuite
+            # from CodeGenSuite_Huy import CheckCodeGenSuite
+            # from CodeGenSuite_Nghia import CheckCodeGenSuite
+            # from CodeGenSuite_Tan import CheckCodeGenSuite
             getAndTest(CheckCodeGenSuite)
         else:
             printUsage()

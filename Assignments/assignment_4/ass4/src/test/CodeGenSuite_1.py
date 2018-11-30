@@ -7,19 +7,30 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
-var a: array[1 .. 10] of integer;
-
 procedure main();
 begin
-    foo(a);
+    putBoolln(retTrue() and then retTrue() and then retFalse() and then retTrue());
+    putBoolln(retFalse() or else retFalse() or else retTrue() or else retFalse());
+    putBoolln(retFalse() or else retFalse() or else retTrue() and then retTrue() and then retFalse() and then retTrue());
 end
 
-procedure foo(b: array[1 .. 10] of integer);
+function retTrue(): boolean;
 begin
+    putString("retTrue; ");
+    return true;
+end
+
+function retFalse(): boolean;
+begin
+    putString("retFalse; ");
+    return false;
 end
 
 """
-        expect = r""""""
+        expect = r"""retTrue; retTrue; retFalse; false
+retFalse; retFalse; retTrue; true
+retFalse; retFalse; retTrue; retTrue; retFalse; false
+"""
         self.assertTrue(TestCodeGen.test(input,expect,1))
 
 

@@ -268,6 +268,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
         if isProc:
             self.emit.printout(self.emit.emitRETURN(VoidType(), frame))
+        else:
+            self.emit.printout(self.emit.emitRETURN(returnType, frame))
         self.emit.printout(self.emit.emitENDMETHOD(frame))
         frame.exitScope()
 
@@ -320,7 +322,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
             if type(retType) is FloatType and type(expType) is IntType:
                 expCode = expCode + self.emit.emitI2F(frame)
             self.emit.printout(expCode)
-        self.emit.printout(self.emit.emitRETURN(retType, frame))
+        self.emit.printout(self.emit.emitGOTO(frame.getEndLabel(), frame))
+        # self.emit.printout(self.emit.emitRETURN(retType, frame))
 
 
 
@@ -418,11 +421,23 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         frame.enterScope(isProc)
 
+        listLocalArray = [] # list(Symbol(name, mtype, value: Index(idx)))
+
         varList = SubBody(frame, nenv)
         for x in ast.decl:
             varList = self.visit(x, varList)
+            if type(x.varType) is ArrayType:
+                listLocalArray.append(varList.sym[0])
 
         self.emit.printout(self.emit.emitLABEL(frame.getStartLabel(), frame))
+        
+        # Init local array declare
+        for sym in listLocalArray:
+            index = sym.value.value
+            varType = sym.mtype
+            size = varType.upper - varType.lower + 1
+            self.emit.printout(self.emit.emitInitNewLocalArray(index, size, varType.eleType, frame))
+
         list(map(lambda x: self.visit(x, varList), ast.stmt))
         self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
         frame.exitScope()
@@ -533,13 +548,45 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctxt = o
         frame = ctxt.frame
         op = str(ast.op).lower()
+        
+        if op in ['orelse', 'andthen']:
+            result = []
+            lCode, lType = self.visit(ast.left, ctxt)
+            result.append(lCode)
+
+            labelF = frame.getNewLabel() # eval is false
+            labelT = frame.getNewLabel() # eval is true
+
+            if op == 'andthen': result.append(self.emit.emitIFFALSE(labelF, frame)) # false
+            else: result.append(self.emit.emitIFTRUE(labelT, frame)) # true
+
+            rCode, rType = self.visit(ast.right, ctxt)
+            result.append(rCode)
+
+            if op == 'andthen':
+                result.append(self.emit.emitIFFALSE(labelF, frame)) # false
+                result.append(self.emit.emitPUSHICONST("true", frame)) # push true
+                result.append(self.emit.emitGOTO(labelT, frame)) # go to true
+                result.append(self.emit.emitLABEL(labelF, frame)) # push false
+                result.append(self.emit.emitPUSHICONST("false", frame))
+                result.append(self.emit.emitLABEL(labelT, frame))
+            else:
+                result.append(self.emit.emitIFTRUE(labelT, frame)) # true
+                result.append(self.emit.emitPUSHICONST("false", frame)) # push false
+                result.append(self.emit.emitGOTO(labelF, frame)) # go to false
+                result.append(self.emit.emitLABEL(labelT, frame)) # push true
+                result.append(self.emit.emitPUSHICONST("true", frame))
+                result.append(self.emit.emitLABEL(labelF, frame))
+
+            return ''.join(result), BoolType()
+        
         lCode, lType = self.visit(ast.left, ctxt)
         rCode, rType = self.visit(ast.right, ctxt)
         if StupidUtils.isOpForNumber(op): # for number type
             mType = StupidUtils.mergeNumberType(lType, rType)
             if op == '/': mType = FloatType() # mergeType >= lType, rType
-            lCode, rCode = (c if type(t) == type(mType) else c+self.emit.emitI2F(frame) \
-                            for c,t in [(lCode, lType), (rCode, rType)])
+            if type(lType) is IntType and type(mType) != type(lType): lCode = lCode + self.emit.emitI2F(frame)
+            if type(rType) is IntType and type(mType) != type(rType): rCode = rCode + self.emit.emitI2F(frame)
             if StupidUtils.isOpForNumberToNumber(op):
                 if op in ['+', '-']:
                     return lCode + rCode + self.emit.emitADDOP(op, mType, frame), mType
@@ -555,8 +602,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
             mType = BoolType()
             if op == 'or': return lCode + rCode + self.emit.emitOROP(frame), mType
             if op == 'and': return lCode + rCode + self.emit.emitANDOP(frame), mType
-            if op == 'orelse': return self.emit.emitORELSE(frame, lCode, rCode), mType
-            if op == 'andthen': return self.emit.emitANDTHEN(frame, lCode, rCode), mType
 
 
 

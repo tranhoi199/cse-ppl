@@ -444,55 +444,6 @@ class Emitter():
         frame.pop()
         return self.jvm.emitIOR()
 
-
-    def emitANDTHEN(self, frame, lCode, rCode):
-        # ..., value1, value2 -> ..., result
-        
-        frame.pop()
-
-        result = list()
-        labelF = frame.getNewLabel() # eval is false
-        labelT = frame.getNewLabel() # eval is true
-        
-        # first evaluation
-        result.append(lCode)
-        result.append(self.emitIFFALSE(labelF, frame)) # false
-
-        # second evaluation
-        result.append(rCode)
-        result.append(self.emitIFFALSE(labelF, frame)) # false
-
-        result.append(self.emitPUSHICONST("true", frame)) # push true
-        result.append(self.emitGOTO(labelT, frame)) # go to true
-        result.append(self.emitLABEL(labelF, frame)) # push false
-        result.append(self.emitPUSHICONST("false", frame))
-        result.append(self.emitLABEL(labelT, frame))
-        return ''.join(result)
-
-    def emitORELSE(self, frame, lCode, rCode):
-        # ..., value1, value2 -> ..., result
-        
-        frame.pop()
-
-        result = list()
-        labelF = frame.getNewLabel() # eval is false
-        labelT = frame.getNewLabel() # eval is true
-        
-        # first evaluation
-        result.append(lCode)
-        result.append(self.emitIFTRUE(labelT, frame)) # true
-
-        # second evaluation
-        result.append(rCode)
-        result.append(self.emitIFTRUE(labelT, frame)) # true
-
-        result.append(self.emitPUSHICONST("false", frame)) # push false
-        result.append(self.emitGOTO(labelF, frame)) # go to false
-        result.append(self.emitLABEL(labelT, frame)) # push true
-        result.append(self.emitPUSHICONST("true", frame))
-        result.append(self.emitLABEL(labelF, frame))
-        return ''.join(result)
-
     def emitREOP(self, op, in_, frame):
         # op: String
         # in_: Type
@@ -606,7 +557,10 @@ class Emitter():
         result = []
         result.append(self.emitPUSHICONST(size, frame))
         frame.pop()
-        result.append(self.jvm.emitNEWARRAY(self.getFullType(eleType)))
+        if type(eleType) is StringType:
+            result.append(self.jvm.emitANEWARRAY(self.getFullType(eleType)))
+        else:
+            result.append(self.jvm.emitNEWARRAY(self.getFullType(eleType)))
         result.append(self.jvm.emitPUTSTATIC(name, self.getJVMType(cgen.ArrayPointerType(eleType))))
         return ''.join(result)
 
@@ -614,7 +568,10 @@ class Emitter():
         result = []
         result.append(self.emitPUSHICONST(size, frame))
         frame.pop()
-        result.append(self.jvm.emitNEWARRAY(self.getFullType(eleType)))
+        if type(eleType) is StringType:
+            result.append(self.jvm.emitANEWARRAY(self.getFullType(eleType)))
+        else:
+            result.append(self.jvm.emitNEWARRAY(self.getFullType(eleType)))
         result.append(self.jvm.emitASTORE(addressIndex))
         return ''.join(result)
 

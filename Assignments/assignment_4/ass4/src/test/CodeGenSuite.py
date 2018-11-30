@@ -4099,24 +4099,36 @@ procedure ha_f_space(ha0852f: real); begin putFloat(ha0852f); putString(" "); en
 
 procedure main();
 begin
-    putInt(1);
+    with 
+        i,j,k: integer;
+        a,b,c: array[-1 .. 100000] of integer;
+    do begin
+        for i := -1 to 1000 do begin
+            a[i] := i*i -i + 1000 mod (i+i*i*i-5*(i*i+4*3) mod (i+i-i*2*3*4 mod (1+2-3*4 mod 5+1)+1)+1);
+        end
+        for i := -1 to 50 do putInt(a[i] + b[i]);
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""20012145244162350541342931110113211561182121012401272130613421380142014621506155216001650170217561812187019301992205621222190226023322406248225602640272228062892298030703162325633523450"""
         self.assertTrue(TestCodeGen.test(input, expect, 258))
 
 
     def test_159(self):
         input = r"""
 
+var a: array[-1000 .. 1000] of string;
+
 procedure main();
+var a: array[-1000 .. 1000] of string;
 begin
-    putInt(1);
+    with a: array[-1000 .. 1000] of string; do begin
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r""""""
         self.assertTrue(TestCodeGen.test(input, expect, 259))
 
 
@@ -4124,12 +4136,14 @@ end
         input = r"""
 
 procedure main();
+var a: boolean;
 begin
-    putInt(1);
+    a := True and then True and then False and then 5 mod 0 = 0;
+    putBool(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""false"""
         self.assertTrue(TestCodeGen.test(input, expect, 260))
 
 
@@ -4137,12 +4151,14 @@ end
         input = r"""
 
 procedure main();
+var a: boolean;
 begin
-    putInt(1);
+    a := false or else true or else 5 mod 0 = 0;
+    putBool(a);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""true"""
         self.assertTrue(TestCodeGen.test(input, expect, 261))
 
 
@@ -4151,11 +4167,28 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putBoolln(retTrue() and then retTrue() and then retFalse() and then retTrue());
+    putBoolln(retFalse() or else retFalse() or else retTrue() or else retFalse());
+    putBoolln(retFalse() or else retFalse() or else retTrue() and then retTrue() and then retFalse() and then retTrue());
+end
+
+function retTrue(): boolean;
+begin
+    putString("retTrue; ");
+    return true;
+end
+
+function retFalse(): boolean;
+begin
+    putString("retFalse; ");
+    return false;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""retTrue; retTrue; retFalse; false
+retFalse; retFalse; retTrue; true
+retFalse; retFalse; retTrue; retTrue; retFalse; false
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 262))
 
 
