@@ -8,10 +8,16 @@ if (!fs.existsSync(dist)) {
     fs.mkdirSync(dist)
 }
 
-let text = fs.readFileSync(path.join(__dirname, '../test/CheckerSuite.py'));
+let text = fs.readFileSync(path.join(__dirname, '../test/CodeGenSuite_ALL.py'));
 
-text = String(text).replace(/test_.*\(/g, (num) => {
-    return 'test_' + crypto.randomBytes(10).toString('hex') + '(';
+text = String(text).replace(/def test.*\(/g, () => {
+    return 'def test_' + crypto.randomBytes(10).toString('hex') + '(';
 })
 
-fs.writeFileSync(path.join(dist, './CheckerSuite.py'), text, 'utf8');
+let numfile = 100;
+
+text = String(text).replace(/TestCodeGen.test\(input\s*,\s*expect\s*,\s*.*\)\)/g, () => {
+    return 'TestCodeGen.test(input, expect, ' + ++numfile + '))';
+})
+
+fs.writeFileSync(path.join(__dirname, '../test/CodeGenSuite_MIN.py'), text, 'utf8');

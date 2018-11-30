@@ -44,7 +44,7 @@ def main(argv):
         elif argv[1] == 'CodeGenSuite':
             # from CodeGenSuite import CheckCodeGenSuite
             from CodeGenSuite_1 import CheckCodeGenSuite
-            # from CodeGenSuite_ALL import CheckCodeGenSuite
+            # from CodeGenSuite_MIN import CheckCodeGenSuite
 
             # from CodeGenSuite_AAA import CheckCodeGenSuite
             # from CodeGenSuite_BBB import CheckCodeGenSuite
