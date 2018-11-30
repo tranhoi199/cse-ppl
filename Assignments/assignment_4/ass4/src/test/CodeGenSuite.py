@@ -4195,39 +4195,95 @@ retFalse; retFalse; retTrue; retTrue; retFalse; false
     def test_163(self):
         input = r"""
 
-procedure main();
+procedure Main();
+var a: integer;
 begin
-    putInt(1);
+    a := 1;
+
+    if a = 1 then
+        with b: integer; do begin 
+            putInt(a);
+            b := 2;
+            if b = 2 then
+                with a: integer; do begin 
+                    putInt(b);
+                    a := 3;
+                end
+            else
+                with b: integer; do begin 
+                    putInt(a);
+                    b := 4;
+                end
+        end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""12"""
         self.assertTrue(TestCodeGen.test(input, expect, 263))
 
 
     def test_164(self):
         input = r"""
 
-procedure main();
+procedure Main();
 begin
-    putInt(1);
+    FOO(10);
+end
+
+procedure FOO(x: integer);
+var i: integer;
+begin
+    if x = 1 then return;
+    else begin
+        for i := x downto 1 do begin
+            putIntLn(i);
+            if i = 3 then return;
+        end
+    end
+    FOO(x-1);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""10
+9
+8
+7
+6
+5
+4
+3
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 264))
 
 
     def test_165(self):
         input = r"""
 
-procedure main();
+procedure Main();
+var x: array[0 .. 10] of string;
 begin
-    putInt(1);
+    foo(x);
+end
+
+procedure FOO(a: array[0 .. 10] of string);
+var i: integer;
+begin
+    for i := 0 to 10 do putStringLN(a[i]);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 265))
 
 

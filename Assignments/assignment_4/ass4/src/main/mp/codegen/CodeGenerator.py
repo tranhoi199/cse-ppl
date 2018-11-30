@@ -158,7 +158,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         for x in ast.decl:
             if type(x) is FuncDecl:
                 partype = [i.varType for i in x.param]
-                staticDecl = [Symbol(x.name.name, MType(partype, x.returnType), CName(self.className))] + staticDecl
+                staticDecl = [Symbol(x.name.name.lower(), MType(partype, x.returnType), CName(self.className))] + staticDecl
             else:
                 newSym = self.visit(x, SubBody(None, None, isGlobal=True))
                 staticDecl = [newSym] + staticDecl
@@ -205,7 +205,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         glenv = o
 
-        methodName = decl.name.name
+        methodName = decl.name.name.lower()
         isInit = decl.returnType is None and methodName == "<init>"
         isClassInit = decl.returnType is None and methodName == "<clinit>"
         isMain = methodName == "main" and len(decl.param) == 0 and type(decl.returnType) is VoidType
@@ -306,6 +306,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
                 pass
             paramsCode = paramsCode + pCode
             idx = idx + 1
+        
+        # if sym.name.lower() == "main": ctype = MType([ArrayPointerType(StringType())], VoidType())
         code = paramsCode + self.emit.emitINVOKESTATIC(cname + "/" + sym.name, ctype, frame) 
         if isStmt: self.emit.printout(code)
         else: return code, ctype.rettype
@@ -419,7 +421,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         retType = frame.returnType
         isProc = type(retType) is VoidType
 
-        frame.enterScope(isProc)
+        frame.enterScope(False)
 
         listLocalArray = [] # list(Symbol(name, mtype, value: Index(idx)))
 
