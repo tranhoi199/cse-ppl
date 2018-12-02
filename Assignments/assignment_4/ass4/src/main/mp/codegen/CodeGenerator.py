@@ -268,8 +268,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.emit.printout(self.emit.emitLABEL(frame.getEndLabel(), frame))
         if isProc:
             self.emit.printout(self.emit.emitRETURN(VoidType(), frame))
-        else:
-            self.emit.printout(self.emit.emitRETURN(returnType, frame))
+        # else:
+        #     self.emit.printout(self.emit.emitRETURN(returnType, frame))
         self.emit.printout(self.emit.emitENDMETHOD(frame))
         frame.exitScope()
 
@@ -324,8 +324,9 @@ class CodeGenVisitor(BaseVisitor, Utils):
             if type(retType) is FloatType and type(expType) is IntType:
                 expCode = expCode + self.emit.emitI2F(frame)
             self.emit.printout(expCode)
-        self.emit.printout(self.emit.emitGOTO(frame.getEndLabel(), frame))
-        # self.emit.printout(self.emit.emitRETURN(retType, frame))
+        # self.emit.printout(self.emit.emitGOTO(frame.getEndLabel(), frame))
+        self.emit.printout(self.emit.emitRETURN(retType, frame))
+        return True
 
 
 
@@ -342,13 +343,15 @@ class CodeGenVisitor(BaseVisitor, Utils):
 
         self.emit.printout(self.emit.emitIFTRUE(labelT, frame)) # false
         # False
-        [self.visit(x, o) for x in ast.elseStmt]
-        self.emit.printout(self.emit.emitGOTO(labelE, frame)) # go to end
+        hasReturnStmt = True in [self.visit(x, o) for x in ast.elseStmt]
+        if not hasReturnStmt:
+            self.emit.printout(self.emit.emitGOTO(labelE, frame)) # go to end
         # True
         self.emit.printout(self.emit.emitLABEL(labelT, frame))
-        [self.visit(x, o) for x in ast.thenStmt]
+        hasReturnStmt = True in [self.visit(x, o) for x in ast.thenStmt] and hasReturnStmt
         # End
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
+        return hasReturnStmt
 
 
 
@@ -364,9 +367,10 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.emit.printout(self.emit.emitLABEL(labelS, frame))
         self.emit.printout(expCode)
         self.emit.printout(self.emit.emitIFFALSE(labelE, frame))
-        [self.visit(x, o) for x in ast.sl]
+        hasReturnStmt = True in [self.visit(x, o) for x in ast.sl]
         self.emit.printout(self.emit.emitLABEL(frame.getContinueLabel(), frame))
-        self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
+        if not hasReturnStmt:
+            self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
         self.emit.printout(self.emit.emitLABEL(frame.getBreakLabel(), frame))
         frame.exitLoop()
@@ -399,7 +403,7 @@ class CodeGenVisitor(BaseVisitor, Utils):
         else:
             self.emit.printout(self.emit.emitIFICMPLT(labelE, frame))
         # 2. Statements
-        [self.visit(x, o) for x in ast.loop]
+        hasReturnStmt = True in [self.visit(x, o) for x in ast.loop]
         self.emit.printout(self.emit.emitLABEL(frame.getContinueLabel(), frame))
         # 3. Update index
         self.emit.printout(lhsRCode)
@@ -407,7 +411,8 @@ class CodeGenVisitor(BaseVisitor, Utils):
         self.emit.printout(self.emit.emitADDOP('+' if ast.up else '-', IntType(), frame))
         self.emit.printout(lhsWCode)
 
-        self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
+        if not hasReturnStmt:
+            self.emit.printout(self.emit.emitGOTO(labelS, frame)) # loop
         self.emit.printout(self.emit.emitLABEL(labelE, frame))
         self.emit.printout(self.emit.emitLABEL(frame.getBreakLabel(), frame))
         frame.exitLoop()
@@ -418,8 +423,6 @@ class CodeGenVisitor(BaseVisitor, Utils):
         ctxt = o
         frame = ctxt.frame
         nenv = ctxt.sym
-        retType = frame.returnType
-        isProc = type(retType) is VoidType
 
         frame.enterScope(False)
 

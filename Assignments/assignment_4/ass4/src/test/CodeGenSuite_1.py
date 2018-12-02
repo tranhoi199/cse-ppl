@@ -7,29 +7,21 @@ class CheckCodeGenSuite(unittest.TestCase):
     def test_(self):
         input = r"""
 
-procedure Main();
-var x: array[0 .. 10] of string;
+procedure main();
 begin
-    foo(x);
+    putint(foo());
 end
 
-procedure FOO(a: array[0 .. 10] of string);
+function foo(): integer;
 var i: integer;
 begin
-    for i := 0 to 10 do putStringLN(a[i]);
+    for i := 1 to 10 do begin
+        return 5;
+    end
+    return 6;
 end
 
+
 """
-        expect = r"""null
-null
-null
-null
-null
-null
-null
-null
-null
-null
-null
-"""
+        expect = r"""5"""
         self.assertTrue(TestCodeGen.test(input,expect,1))

@@ -4290,52 +4290,166 @@ null
     def test_166(self):
         input = r"""
 
-procedure main();
+procedure Main();
 begin
-    putInt(1);
+    putFloatLn(1 / 0);
+    putBoolLn(1/0 > 1000000000);
+    putBoolLn(-1/0 > 1000000000);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""Infinity
+true
+false
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 266))
 
 
     def test_167(self):
         input = r"""
 
-procedure main();
+procedure Main();
 begin
-    putInt(1);
+    putboolln(true and then true and then 1 < 0 and then 5 div 0);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""false
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 267))
 
 
     def test_168(self):
         input = r"""
 
+function getInt2(): integer; begin return 100; end
+function getFloat2(): real; begin return 100.000005; end
+
 procedure main();
+var i,j,k: integer;
+    main: string;
+    a: array[-10000000 .. 10000000] of real;
+    p,q: boolean;
 begin
-    putInt(1);
+    j := 2; k := 3;
+    for i := 1 to 5 do begin
+        a[i+j*k] := a[j+i*k] := a[1] := a[0] := 5;
+        putIntLN(i+j*k);
+        putIntLN(j+i*k);
+        for j := i+j*k downto i do begin
+            p := false;
+            while p do begin
+                with main: integer; p: string; do begin
+                    main := 5;
+                    if main > j then break;
+                    if getInt2() < main then continue;
+                    main := getInt2();
+                    putIntln(getInt2());
+                    putIntLn(main);
+                    with p: boolean; do begin
+                        p := main < i+j*2 mod 5;
+                        if i < j and then p then main := k;
+                        else break;
+                    end
+                end
+                p := false;
+                break;
+            end
+            a[1] := getFloat2();
+            putFloatLn(a[1]);
+            PutFloat(GetFloat2());
+        end
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""7
+5
+100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.000012
+6
+100.00001
+100.000016
+10
+100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.0000110
+14
+100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.0000114
+18
+100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001100.00001
+100.00001"""
         self.assertTrue(TestCodeGen.test(input, expect, 268))
 
 
     def test_169(self):
         input = r"""
 
+function getInt2(): integer; begin return 100; end
+function getFloat2(): real; begin return 100.000005; end
+
 procedure main();
+var i,j,k: integer;
+    main: string;
+    a: array[-10000000 .. 10000000] of real;
+    p,q: boolean;
 begin
-    putInt(1);
+    i := 1; j := 2;
+    for i := i+j to i+j+20 do begin
+        putInt(i); putString(" "); putINtln(j);
+        j := j - 1;
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""3 2
+4 1
+5 0
+6 -1
+7 -2
+8 -3
+9 -4
+10 -5
+11 -6
+12 -7
+13 -8
+14 -9
+15 -10
+16 -11
+17 -12
+18 -13
+19 -14
+20 -15
+21 -16
+22 -17
+23 -18
+24 -19
+25 -20
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 269))
 
 
@@ -4344,11 +4458,57 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
 end
 
+function FOO(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+BEGIN
+    i := x; j := y;
+    while i < 1000 do begin
+        a := a and then True and then False;
+        putString(arr[100]);
+        // if a then continue; else begin
+        //     if a then return "1";
+        //     else if a then return "2";
+        //     else if a then return "3";
+        //     else begin
+        //         with a: integer; g: boolean; do begin
+        //             a := x+y;
+        //             g := b or else x>y;
+        //             if a mod 10 = x and then b or else g then return "4";
+        //             else continue;
+        //         end
+        //     end
+        // end
+        i := 1000;
+        while i < 1000 do main();
+        while i < 1000 do main();
+        // with i: string; do begin
+        //     while b do begin
+        //         putString("7");
+        //         break;
+        //     end
+        //     return foo(True, True, j,x,y);
+        // end
+    end
+    while i < 1000 do main();
+    while i < 1000 do main();
+    // with i: string; do begin
+    //     while b do begin
+    //         putString("8");
+    //         break;
+    //     end
+    //     return foo(True, True, j,x,y);
+    // end
+    return "OK";
+END
+
 """
-        expect = r"""1"""
+        expect = r"""nullOK
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 270))
 
 
@@ -4357,11 +4517,56 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
 end
 
+function FOO(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+BEGIN
+    i := x; j := y;
+    while i < 1000 do begin
+        a := a and then True and then False;
+        putString(arr[100]);
+        // if a then continue; else begin
+        //     if a then return "1";
+        //     else if a then return "2";
+        //     else if a then return "3";
+        //     else begin
+        //         with a: integer; g: boolean; do begin
+        //             a := x+y;
+        //             g := b or else x>y;
+        //             if a mod 10 = x and then b or else g then return "4";
+        //             else continue;
+        //         end
+        //     end
+        // end
+        i := 1000;
+        while i < 1000 do main();
+        while i < 1000 do main();
+        // with i: string; do begin
+        //     while b do begin
+        //         putString("7");
+        //         break;
+        //     end
+        //     return foo(True, True, j,x,y);
+        // end
+    end
+    while i < 1000 do main();
+    while i < 1000 do main();
+    with i: string; do begin
+        while b do begin
+            putString("8");
+            break;
+        end
+    end
+    return "OK";
+END
+
 """
-        expect = r"""1"""
+        expect = r"""nullOK
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 271))
 
 
@@ -4370,11 +4575,56 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
 end
 
+function FOO(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+BEGIN
+    i := x; j := y;
+    while i < 1000 do begin
+        a := a and then True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "2";
+            else if a then return "3";
+            else begin
+                with a: integer; g: boolean; do begin
+                    a := x+y;
+                    g := b or else x>y;
+                    // if a mod 10 = x and then b or else g then return "4";
+                    // else continue;
+                end
+            end
+        end
+        i := 1000;
+        while i < 1000 do main();
+        while i < 1000 do main();
+        // with i: string; do begin
+        //     while b do begin
+        //         putString("7");
+        //         break;
+        //     end
+        //     return foo(True, True, j,x,y);
+        // end
+    end
+    while i < 1000 do main();
+    while i < 1000 do main();
+    with i: string; do begin
+        while b do begin
+            putString("8");
+            break;
+        end
+    end
+    return "OK";
+END
+
 """
-        expect = r"""1"""
+        expect = r"""nullOK
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 272))
 
 
@@ -4383,11 +4633,30 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putint(iSqrt(5));
+end
+
+function isqrt(a: integer): integer;
+begin
+    with l,r,x,m: integer; do begin
+        l := 1;
+        r := a;
+        x := -1;
+        while L <= R do begin
+            M := (l+r) div 2;
+            if m * M <= a then begin
+                x := M;
+                l := m+1;
+            end else begin
+                r := m-1;
+            end
+        end
+        return x;
+    end
 end
 
 """
-        expect = r"""1"""
+        expect = r"""2"""
         self.assertTrue(TestCodeGen.test(input, expect, 273))
 
 
@@ -4396,11 +4665,27 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putintln(foo(5));
+end
+
+function foo(a: integer): integer;
+begin
+    while true do begin
+        with i: integer; do begin
+            if false then return 2;
+        end
+        putLN();
+        break;
+    end
+    putLn();
+    return 5;
 end
 
 """
-        expect = r"""1"""
+        expect = r"""
+
+5
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 274))
 
 
@@ -4409,11 +4694,56 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
 end
 
+function FOO(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+BEGIN
+    i := x; j := y;
+    while i < 1000 do begin
+        a := a and then True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "2";
+            else if a then return "3";
+            else begin
+                with a: integer; g: boolean; do begin
+                    a := x+y;
+                    g := b or else x>y;
+                    if a mod 10 = x and then b or else g then return "4";
+                    // else continue;
+                end
+            end
+        end
+        i := 1000;
+        while i < 1000 do main();
+        while i < 1000 do main();
+        with i: string; do begin
+            while b do begin
+                putString("7");
+                break;
+            end
+            return foo(True, True, j,x,y);
+        end
+    end
+    while i < 1000 do main();
+    while i < 1000 do main();
+    with i: string; do begin
+        while b do begin
+            putString("8");
+            break;
+        end
+    end
+    return "OK";
+END
+
 """
-        expect = r"""1"""
+        expect = r"""nullnull4
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 275))
 
 
@@ -4422,11 +4752,59 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    PUTSTRINGLN(foo(True, False, 1, 2, 3));
 end
 
+function FOO(a: Boolean; b: Boolean; x,y: Integer; z: Real): String;
+var
+    arr: array [1 .. 100] of String;
+    i,j: integer;
+BEGIN
+    i := x; j := y;
+    while i < 1000 do begin
+        a := a and then True and then False;
+        putString(arr[100]);
+        if a then continue; else begin
+            if a then return "1";
+            else if a then return "2";
+            else if a then return "3";
+            else begin
+                with a: integer; g: boolean; do begin
+                    a := x+y;
+                    g := b or else x>y;
+                    if a mod 10 = x and then b or else g then return "4";
+                    else begin 
+                        i := 1000;
+                        continue;
+                    end
+                end
+            end
+        end
+        i := 1000;
+        while i < 1000 do main();
+        while i < 1000 do main();
+        with i: string; do begin
+            while b do begin
+                putString("7");
+                break;
+            end
+            return foo(True, True, j,x,y);
+        end
+    end
+    while i < 1000 do main();
+    while i < 1000 do main();
+    with i: string; do begin
+        while b do begin
+            putString("8");
+            break;
+        end
+    end
+    return "OK";
+END
+
 """
-        expect = r"""1"""
+        expect = r"""nullOK
+"""
         self.assertTrue(TestCodeGen.test(input, expect, 276))
 
 
@@ -4435,11 +4813,16 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    foo();
+end
+
+procedure foo();
+begin
+    return;
 end
 
 """
-        expect = r"""1"""
+        expect = r""""""
         self.assertTrue(TestCodeGen.test(input, expect, 277))
 
 
@@ -4448,11 +4831,17 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    foo();
+    return;
+end
+
+procedure foo();
+begin
+    return;
 end
 
 """
-        expect = r"""1"""
+        expect = r""""""
         self.assertTrue(TestCodeGen.test(input, expect, 278))
 
 
@@ -4461,15 +4850,301 @@ end
 
 procedure main();
 begin
-    putInt(1);
+    putInt(foo(3));
+end
+
+function foo(n: integer): integer;
+begin
+    if n <= 1 then return 1;
+    else return n*foo(n-1);
 end
 
 """
-        expect = r"""1"""
+        expect = r"""6"""
         self.assertTrue(TestCodeGen.test(input, expect, 279))
 
 
     def test_180(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(foo(3));
+end
+
+function foo(n: integer): integer;
+begin
+    if n <= 1 then return 1;
+    return 5;
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 280))
+
+
+
+    def test_181(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+begin
+    if true then begin
+        while true do return 5;
+    end
+    return 6;
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 281))
+
+
+    def test_182(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    if true then begin
+        for i := 1 to 10 do return 5;
+    end
+    return 6;
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 282))
+
+
+    def test_183(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    if true then begin
+        while true do begin
+            if true then begin
+                return 5;
+            end
+        end
+    end
+    return 6;
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 283))
+
+
+    def test_184(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    if true then begin
+        while true do begin
+            if true then begin
+                return 5;
+            end
+        end
+        return 6;
+    end else begin
+        return 7;
+    end
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 284))
+
+
+    def test_185(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    if true then begin
+        while true do begin
+            if true then begin
+                return 5;
+            end
+        end
+        return 6;
+    end else begin
+        while true do begin
+            if true then begin
+                return 7;
+            end
+        end
+        return 8;
+    end
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 285))
+
+
+    def test_186(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    while true do begin
+        if true then begin
+            return 1;
+        end else return 2;
+    end
+    if true then begin
+        while true do begin
+            if true then begin
+                return 5;
+            end
+        end
+        return 6;
+    end else begin
+        while true do begin
+            if true then begin
+                return 7;
+            end
+        end
+        return 8;
+    end
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 286))
+
+
+    def test_187(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    while false do begin
+        if true then begin
+            return 1;
+        end else return 2;
+    end
+    if true then begin
+        while true do begin
+            if true then begin
+                break;
+            end
+        end
+        return 6;
+    end else begin
+        while true do begin
+            if true then begin
+                return 7;
+            end
+        end
+        return 8;
+    end
+end
+
+"""
+        expect = r"""6"""
+        self.assertTrue(TestCodeGen.test(input, expect, 287))
+
+
+    def test_188(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    if true then begin
+        while true do begin
+            with i: integer; do begin
+                if true then break;
+            end
+        end
+        with i: integer; do begin
+            if true then return 5;
+            else return 6;
+        end
+    end else begin
+        return 7;
+    end
+end
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 288))
+
+
+    def test_189(self):
+        input = r"""
+
+procedure main();
+begin
+    putint(foo());
+end
+
+function foo(): integer;
+var i: integer;
+begin
+    for i := 1 to 10 do begin
+        return 5;
+    end
+    return 6;
+end
+
+
+"""
+        expect = r"""5"""
+        self.assertTrue(TestCodeGen.test(input, expect, 289))
+
+
+    def test_190(self):
         input = r"""
 
 procedure main();
@@ -4479,5 +5154,135 @@ end
 
 """
         expect = r"""1"""
-        self.assertTrue(TestCodeGen.test(input, expect, 280))
+        self.assertTrue(TestCodeGen.test(input, expect, 290))
+
+
+    def test_191(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 291))
+
+
+    def test_192(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 292))
+
+
+    def test_193(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 293))
+
+
+    def test_194(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 294))
+
+
+    def test_195(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 295))
+
+
+    def test_196(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 296))
+
+
+    def test_197(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 297))
+
+
+    def test_198(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 298))
+
+
+    def test_199(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 299))
+
+
+    def test_200(self):
+        input = r"""
+
+procedure main();
+begin
+    putInt(1);
+end
+
+"""
+        expect = r"""1"""
+        self.assertTrue(TestCodeGen.test(input, expect, 300))
 

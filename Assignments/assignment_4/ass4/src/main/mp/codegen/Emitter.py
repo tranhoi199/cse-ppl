@@ -52,6 +52,24 @@ class Emitter():
         elif typeIn is VoidType:
             return "void"
 
+    #######################################################################3
+    # Override errors in file MachineCode.py
+    #######################################################################3
+
+    def emitICONST(self, i):
+        # i: Int
+        if i == -1:
+            return JasminCode.INDENT + "iconst_m1" + JasminCode.END
+        elif i >= 0 or i <= 5:
+            return JasminCode.INDENT + "iconst_" + str(i) + JasminCode.END
+        else:
+            raise IllegalOperandException(str(i))
+
+    def emitIREM(self):
+        return JasminCode.INDENT + "irem" + JasminCode.END
+
+    #######################################################################3
+
     def emitPUSHICONST(self, in_, frame):
         # in: Int or String
         # frame: Frame
@@ -60,7 +78,8 @@ class Emitter():
         if type(in_) is int:
             i = in_
             if i >= -1 and i <= 5:
-                return self.jvm.emitICONST(i)
+                # return self.jvm.emitICONST(i)
+                return self.emitICONST(i)
             elif i >= -128 and i <= 127:
                 return self.jvm.emitBIPUSH(i)
             elif i >= -32768 and i <= 32767:
@@ -420,7 +439,8 @@ class Emitter():
         # ..., value1, value2 -> ..., result
 
         frame.pop()
-        return self.jvm.emitIREM()
+        return self.emitIREM()
+        # return self.jvm.emitIREM()
 
     '''
     *   generate iand

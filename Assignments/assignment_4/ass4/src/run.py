@@ -46,8 +46,8 @@ def main(argv):
             from CodeGenSuite_1 import CheckCodeGenSuite
             # from CodeGenSuite_MIN import CheckCodeGenSuite
 
-            # from CodeGenSuite_AAA import CheckCodeGenSuite
-            # from CodeGenSuite_BBB import CheckCodeGenSuite
+            # from CodeGenSuite_B1 import CheckCodeGenSuite
+            # from CodeGenSuite_B2 import CheckCodeGenSuite
             # from CodeGenSuite_Huy import CheckCodeGenSuite
             # from CodeGenSuite_Nghia import CheckCodeGenSuite
             # from CodeGenSuite_Tan import CheckCodeGenSuite
