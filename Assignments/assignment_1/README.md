@@ -19,4 +19,4 @@ Hiện thực lexer và parser cho ngôn ngữ MP
 
 ## Chạy src
 
-+ Có các file scripts cho việc chạy nhanh các lệnh Python từ bước chuyển ANTLR thành mã Python và chạy testcases, vẽ cây Parse Tree. Các file [scripts]("./src/scripts/README.md").
++ Có các file scripts cho việc chạy nhanh các lệnh Python từ bước chuyển ANTLR thành mã Python và chạy testcases, vẽ cây Parse Tree. Các file [scripts](./src/scripts/README.md).

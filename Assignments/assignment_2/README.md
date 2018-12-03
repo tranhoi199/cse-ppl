@@ -11,8 +11,8 @@ Hiện thực cây AST cho ngôn ngữ MP
 
 ## Quickstart
 + Thư mục chính: `./src/`
-+ Công cụ cho việc sinh test nhanh `./toolkit.zip`, Hướng dẫn trong `zip`, hoặc xem [ở đây]("./toolkit/README.md")
++ Công cụ cho việc sinh test nhanh `./toolkit.zip`, Hướng dẫn trong `zip`, hoặc xem [ở đây](./toolkit/README.md)
 
 ## Chạy src
 
-+ Có các file scripts cho việc chạy nhanh các lệnh Python từ bước chuyển ANTLR thành mã Python và chạy testcases. Các file [scripts]("./src/scripts/README.md").
++ Có các file scripts cho việc chạy nhanh các lệnh Python từ bước chuyển ANTLR thành mã Python và chạy testcases. Các file [scripts](./src/scripts/README.md).

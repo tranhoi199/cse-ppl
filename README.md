@@ -1,6 +1,6 @@
 # Principles of Programming Language - HCMUT
 
-Môn Nguyên lý ngôn ngữ lập trình - Trường Đại học Bách Khoa TPHCM.
+Môn Nguyên lý ngôn ngữ lập trình - Trường Đại học Bách Khoa HCM.
 
 
 
